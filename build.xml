@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="okua" basedir="." default="dist">
+
+    <property name="distPath" value="dist" />
+    <property name="distVendorPath" value="${distPath}/vendor" />
+
+    <!-- Fileset for all files -->
+    <fileset dir="app" id="allfilesMain">
+        <include name="**" />
+    </fileset>
+
+    <fileset dir="resources" id="allfilesResources">
+        <include name="**" />
+    </fileset>
+
+    <fileset dir="public" id="allfilesPublic">
+        <include name="**" />
+    </fileset>
+
+    <!-- ============================================  -->
+    <!-- Target: clean                                 -->
+    <!-- ============================================  -->
+    <target name="clean">
+        <echo msg="Cleaning dist directory" />
+        <delete dir="${distPath}" quiet='true'/>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <echo msg="Making directory ${distPath}" />
+        <mkdir dir="${distPath}" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build" depends="prepare">
+        <echo msg="Copying files to dist directory..." />
+
+        <echo msg="Copying app directory..." />
+        <copy todir="${distPath}/app" >
+            <fileset refid="allfilesMain" />
+        </copy>
+
+        <echo msg="Copying resources directory..." />
+        <copy todir="${distPath}/resources" >
+            <fileset refid="allfilesResources" />
+        </copy>
+
+        <echo msg="Copying public directory..." />
+        <copy todir="${distPath}/public" >
+            <fileset refid="allfilesPublic" />
+        </copy>
+
+        <echo msg="Copying root files..." />
+        <copy todir="${distPath}/" >
+            <filelist dir="" files="LICENSE,README.md,bootstrap.php,.env.tpl" />
+        </copy>
+
+        <echo msg="Copying vendor to dist folder..." />
+        <phingcall target="dist-vendor" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Dist vendor                           -->
+    <!-- ============================================  -->
+    <target name="dist-vendor">
+        <phingcall target="rm-dist-vendor" />
+        <mkdir dir="${distVendorPath}" />
+
+        <copy todir="${distVendorPath}/composer">
+            <fileset dir="vendor/composer">
+                <include name="**" />
+                <exclude name="installed.json" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/container-interop">
+            <fileset dir="vendor/container-interop">
+                <include name="container-interop/LICENSE" />
+                <include name="container-interop/README*" />
+                <include name="container-interop/src/**/" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/guzzlehttp">
+            <fileset dir="vendor/guzzlehttp">
+                <include name="guzzle/LICENSE" />
+                <include name="guzzle/README*" />
+                <include name="guzzle/src/**/" />
+
+                <include name="promises/LICENSE" />
+                <include name="promises/README*" />
+                <include name="promises/src/**/" />
+
+                <include name="psr7/LICENSE" />
+                <include name="psr7/README*" />
+                <include name="psr7/src/**/" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/league">
+            <fileset dir="vendor/league">
+                <include name="container/src/**" />
+                <include name="container/CONTRIBUTING.md" />
+                <include name="container/LICENSE*" />
+                <include name="container/README*" />
+
+                <include name="fractal/src/**" />
+                <include name="fractal/LICENSE*" />
+
+                <include name="plates/src/**" />
+                <include name="plates/CONTRIBUTING*" />
+                <include name="plates/README*" />
+                <include name="plates/LICENSE*" />
+
+                <include name="route/src/**" />
+                <include name="route/CONTRIBUTING*" />
+                <include name="route/LICENSE*" />
+                <include name="route/README*" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/legierski/aes">
+            <fileset dir="vendor/legierski/aes">
+                <include name="src/**" />
+                <include name="LICENSE" />
+                <include name="README.md" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/nikic">
+            <fileset dir="vendor/nikic">
+                <include name="fast-route/src/**" />
+                <include name="fast-route/LICENSE*" />
+                <include name="fast-route/README*" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/psr">
+            <fileset dir="vendor/psr">
+                <include name="container/src/**" />
+                <include name="container/LICENSE*" />
+                <include name="container/README*" />
+                
+                <include name="http-message/src/**" />
+                <include name="http-message/LICENSE*" />
+                <include name="http-message/README*" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/symfony">
+            <fileset dir="vendor/symfony">
+                <include name="polyfill-ctype/bootstrap.php" />
+                <include name="polyfill-ctype/Ctype.php" />
+                <include name="polyfill-ctype/LICENSE*" />
+                <include name="polyfill-ctype/README*" />
+
+                <include name="yaml/Command/**" />
+                <include name="yaml/Exception/**" />
+                <include name="yaml/Tag/**" />
+                <include name="yaml/Dumper.php" />
+                <include name="yaml/Escaper.php" />
+                <include name="yaml/Inline.php" />
+                <include name="yaml/Parser.php" />
+                <include name="yaml/Unescaper.php" />
+                <include name="yaml/Yaml.php" />
+                <include name="yaml/LICENSE*" />
+                <include name="yaml/README*" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/vlucas">
+            <fileset dir="vendor/vlucas">
+                <include name="phpdotenv/src/**" />
+                <include name="phpdotenv/LICENSE*" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/zendframework">
+            <fileset dir="vendor/zendframework">
+                <include name="zend-diactoros/src/**" />
+                <include name="zend-diactoros/CONTRIBUTING*" />
+                <include name="zend-diactoros/LICENSE*" />
+                <include name="zend-diactoros/README*" />
+            </fileset>
+        </copy>
+        
+        <copy todir="${distVendorPath}" file="vendor/autoload.php" />
+    </target>
+
+    <target name="rm-dist-vendor">
+        <echo message="Removing dist vendor folder..." />
+        <delete dir="${distVendorPath}" quiet='true'/>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: dist                       -->
+    <!-- ============================================  -->
+    <target name="dist" >
+        <phingcall target="clean" />
+        <phingcall target="build" />
+    </target>
+</project>

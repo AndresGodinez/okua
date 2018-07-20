@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source .env-bash
+
+php -S $DEV_HOST:$DEV_PORT -t public/

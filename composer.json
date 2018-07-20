@@ -1,0 +1,28 @@
+{
+  "license": "CC-BY-SA-4.0",
+  "authors": [
+    {
+      "name": "Carlos Hernandez",
+      "email": "carlos.hernandez@connectit.com.mx",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\":"app/"
+    }
+  },
+  "require": {
+    "php" : ">=7.0",
+    "league/fractal": "^0.17.0",
+    "league/route": "^3.0",
+    "zendframework/zend-diactoros": "^1.7",
+    "vlucas/phpdotenv": "^2.4",
+    "league/plates": "^3.3",
+    "guzzlehttp/guzzle": "^6.3",
+    "legierski/aes": "^0.1.0"
+  },
+  "require-dev": {
+    "phing/phing": "^2.16"
+  }
+}

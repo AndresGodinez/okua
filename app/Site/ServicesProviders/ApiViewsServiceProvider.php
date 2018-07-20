@@ -1,0 +1,57 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: alberto
+ * Date: 21/05/18
+ * Time: 04:40 PM
+ */
+
+namespace App\Site\ServicesProviders;
+
+
+use App\Api\BaseApiView;
+use App\Api\LoginApiView;
+use App\Api\ReportsApiView;
+use App\Api\TestApiView;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
+
+/**
+ * Class ApiViewsServiceProvider
+ * @package App\Site\ServicesProviders
+ */
+class ApiViewsServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
+{
+    /**
+     * @var array
+     */
+    protected $provides = [
+        TestApiView::class,
+    ];
+
+    /**
+     * Use the register method to register items with the container via the
+     * protected $this->container property or the `getContainer` method
+     * from the ContainerAwareTrait.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $container = $this->getContainer();
+
+        $container->add(TestApiView::class);
+    }
+
+    /**
+     * Method will be invoked on registration of a service provider implementing
+     * this interface. Provides ability for eager loading of Service Providers.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->getContainer()->inflector(BaseApiView::class)
+            ->invokeMethod('setConfig', ['config']);
+    }
+}
