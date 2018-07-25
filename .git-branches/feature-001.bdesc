@@ -1,0 +1,6 @@
+Adding base routes and views for front-end screens (sections):
+
+/app/login
+/app, /app/home, /app/dashboard
+/app/bills
+/app/movements-log

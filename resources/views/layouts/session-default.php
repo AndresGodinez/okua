@@ -3,7 +3,7 @@
 <head>
     <?=$this->insert('/partials/global-metas')?>
 
-    <title><?=$title ?? ''?> | POS - Connect IT</title>
+    <title><?=$title ?? ''?> | OKUA - Connect IT</title>
 
     <?=$this->section('meta-content')?>
 

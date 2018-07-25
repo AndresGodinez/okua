@@ -13,10 +13,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class HomeView
+ * Class BillsView
  * @package App\Views
  */
-class HomeView extends BaseView
+class BillsView extends BaseView
 {
     /**
      * @param ServerRequestInterface $request
@@ -27,7 +27,7 @@ class HomeView extends BaseView
     {
         $params = $request->getQueryParams();
 
-        $body = $this->templates->render('app/home', []);
+        $body = $this->templates->render('app/bills', []);
 
         ResponseUtils::addContentTypeHtmlHeader($response);
         $response->getBody()->write($body);

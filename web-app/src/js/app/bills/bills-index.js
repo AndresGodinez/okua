@@ -1,6 +1,6 @@
 import Vue from "vue";
-import Content from "../../components/home/home-content.vue";
-import store from "./home-store";
+import Content from "../../../components/app/bills/bills-content.vue";
+import store from "./bills-store";
 
 new Vue({
   store,

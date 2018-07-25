@@ -8,13 +8,11 @@
 
 namespace App\Site;
 
-use App\Api\LoginApiView;
-use App\Api\ReportsApiView;
 use App\Api\TestApiView;
+use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
-use App\Views\ModulesView;
-use App\Views\ReportsView;
+use App\Views\MovementsLogView;
 use League\Container\Container;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -26,12 +24,21 @@ class SiteRouter
     {
         $route = new RouteCollection($container);
 
+        $route->map('GET', '/', function ($request, $response) {
+            return new RedirectResponse('/app');
+        });
+
         # SECTION: front-end views
-        $route->group('/', function (RouteGroup $group) {
-            $group->map('GET', '/', function ($request, $response) {
-                return new RedirectResponse('/home');
-            });
-            $group->map('GET', '/home', HomeView::class . '::index');
+        $route->group('/app', function (RouteGroup $group) {
+            $group->get('/login', LoginView::class . '::index');
+
+            $group->get('/', HomeView::class . '::index');
+            $group->get('/home', HomeView::class . '::index');
+            $group->get('/dashboard', HomeView::class . '::index');
+
+            $group->get('/bills', BillsView::class . '::index');
+
+            $group->get('/movements-log', MovementsLogView::class . '::index');
         })
             ->setScheme('http');
 

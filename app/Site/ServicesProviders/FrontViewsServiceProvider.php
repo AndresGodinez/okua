@@ -10,7 +10,10 @@ namespace App\Site\ServicesProviders;
 
 
 use App\Views\BaseView;
+use App\Views\BillsView;
 use App\Views\HomeView;
+use App\Views\LoginView;
+use App\Views\MovementsLogView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -24,7 +27,10 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
      * @var array
      */
     protected $provides = [
+        LoginView::class,
         HomeView::class,
+        BillsView::class,
+        MovementsLogView::class,
     ];
 
     /**
@@ -38,7 +44,10 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
     {
         $container = $this->getContainer();
 
+        $container->add(LoginView::class);
         $container->add(HomeView::class);
+        $container->add(BillsView::class);
+        $container->add(MovementsLogView::class);
     }
 
     /**

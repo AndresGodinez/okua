@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import section from "../store-modules/home-store-module";
+import section from "../../store-modules/home-store-module";
 
 Vue.use(Vuex);
 

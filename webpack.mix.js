@@ -19,9 +19,15 @@ mix.options({
 // disable notification when building/compiling
 //mix.disableNotifications();
 
-mix.less(`${ASSETS_DIR}/styles/home/home-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/login/login-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/home/home-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/bills/bills-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/movements-log/movements-log-index.less`, 'css');
 
 mix
-  .js(`${ASSETS_DIR}/js/home/home-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/login/login-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/home/home-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/bills/bills-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/movements-log/movements-log-index`, 'js')
   .extract(["vue"], 'js/vendor')
 ;
