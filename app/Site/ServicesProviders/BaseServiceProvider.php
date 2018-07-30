@@ -12,6 +12,9 @@ namespace App\Site\ServicesProviders;
 use App\Factories\ConnectionFactory;
 use App\Site\SiteRouter;
 use App\Utils\RequestUtils;
+use Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -35,7 +38,7 @@ class BaseServiceProvider extends AbstractServiceProvider
         'router',
         'templates',
         'config',
-        'connection-factory',
+        'entity-manager',
         'emitter',
     ];
 
@@ -77,9 +80,45 @@ class BaseServiceProvider extends AbstractServiceProvider
             return $config;
         });
 
-        $container->share('connection-factory', function ($config) {
-            return new ConnectionFactory($config);
-        })->withArgument('config');
+        $container->add('entity-manager', function ($config) {
+            $dbEntitiesPath = $config['DOCTRINE_ENTITIES_PATH'] ?? false;
+            $driver = $config['DOCTRINE_DRIVER'] ?? 'pdo_mysql';
+            $host = $config['DOCTRINE_HOST'] ?? 'localhost';
+            $user = $config['DOCTRINE_USERNAME'] ?? false;
+            $password = $config['DOCTRINE_PSWD'] ?? false;
+            $charset = $config['DOCTRINE_CHARSET'] ?? 'utf8';
+
+            if (\defined('TESTING') && !!TESTING) {
+                $dbname = $config['DOCTRINE_TEST_DB'] ?? false;
+            } else {
+                $dbname = $config['DOCTRINE_DB'] ?? false;
+            }
+
+            if (!$dbEntitiesPath || !$driver || !$host || !$user || !$password || !$dbname) {
+                throw new \Exception("Invalid configuration");
+            }
+
+            $paths = [$dbEntitiesPath];
+            $isDevMode = true;
+
+            // the connection configuration
+            $dbParams = array(
+                'driver'   => $driver,
+                'user'     => $user,
+                'password' => $password,
+                'dbname'   => $dbname,
+                'charset'   => $charset,
+            );
+
+            $driver = new StaticPHPDriver($paths);
+
+            $config = Setup::createConfiguration($isDevMode);
+            $config->setMetadataDriverImpl($driver);
+            $em = EntityManager::create($dbParams, $config);
+
+            return $em;
+        })
+            ->withArgument('config');
 
         $container->share('emitter', SapiEmitter::class);
     }
