@@ -9,6 +9,7 @@
 namespace App\Site;
 
 use App\Api\TestApiView;
+use App\Api\UserAuthApiView;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
@@ -46,6 +47,8 @@ class SiteRouter
         # SECTION: back-end views (API)
         $route->group('/api', function (RouteGroup $group) {
             $group->map('GET', '/test', TestApiView::class . '::test');
+
+            $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
         })
             ->setScheme('http');
 

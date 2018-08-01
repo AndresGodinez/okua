@@ -1,19 +1,12 @@
 import WebApi from "./web-api";
-import TokenUtils from "../utils/token-utils";
-import ValidateSessionResponse from "../models/auth/validate-session-response";
 import TestResponse from "../models/test-response";
 
-export default class UserService {
+export default class TestService {
   constructor(host = "") {
     this.host = host;
   }
 
-  async test(username, password) {
-    const data = {
-      username,
-      password,
-    };
-
+  async test() {
     let api = new WebApi(`${this.host}/api/test`, data);
     api.converter = TestResponse.converter;
 

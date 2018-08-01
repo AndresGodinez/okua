@@ -17,6 +17,9 @@ export default class TokenUtils {
    * @param {string} token
    */
   static async setToken(token) {
+    if (!token)
+      throw 'Bad token received';
+
     localStorage.token = AES.encrypt(token, KY);
     return localStorage.token;
   }
@@ -37,12 +40,12 @@ export default class TokenUtils {
     }
 
     // obteniendo jwt del storage
-    let jwt = "";
+    let jwt = "";`  `
     try {
       jwt = AES.decrypt(localStorage.token, KY).toString(Utf8);
       jwt = TokenUtils.tokenToBase64Str(jwt);
     } catch (e) {
-      console.log('Error getting token. ' + e);
+      console.log('Error =getting token. ' + e);
       jwt = null;
     }
 

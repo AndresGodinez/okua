@@ -13,6 +13,7 @@ use App\Api\BaseApiView;
 use App\Api\LoginApiView;
 use App\Api\ReportsApiView;
 use App\Api\TestApiView;
+use App\Api\UserAuthApiView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -27,6 +28,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
      */
     protected $provides = [
         TestApiView::class,
+        UserAuthApiView::class,
     ];
 
     /**
@@ -41,6 +43,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         $container = $this->getContainer();
 
         $container->add(TestApiView::class);
+        $container->add(UserAuthApiView::class);
     }
 
     /**

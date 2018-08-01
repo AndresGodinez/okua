@@ -1,69 +1,97 @@
 <template>
-    <div class="ct-flex ct-flex-col">
+    <div class="flex flex-col">
         <app-navbar></app-navbar>
-        <div class="ct-inline-flex ct-w-1/5 ct-mt-4 ct-ml-48">
-            <div class="ct-flex-1 ct-font-sans ct-mb-4 ct-mr-16">Fecha de Inicio: </div>
-            <div class="ct-flex-1 ct-font-sans ct-mb-4">Fecha fin: </div>
+        <app-menu></app-menu>
+        <div class="inline-flex w-1/5 mt-4 ml-48">
+            <div class="flex-1 font-sans mb-4 mr-16">Fecha de Inicio:</div>
+            <div class="flex-1 font-sans mb-4">Fecha fin:</div>
         </div>
-        <div class="ct-inline-flex ct-w-1/5 ct-ml-48">
-            <div class="ct-flex-1 ct-font-sans ct-mb-4 ct-mr-16">
-                <datetime input-class="ct-bg-white ct-shadow ct-border-2 ct-border-grey ct-py-2 ct-rounded-sm ct-font-sans" v-model="startDate"></datetime>
+        <div class="inline-flex w-1/5 ml-48">
+            <div class="flex-1 font-sans mb-4 mr-16">
+                <datetime input-class="bg-white shadow border-2 border-grey py-2 rounded-sm font-sans"
+                          v-model="startDate" type="datetime"></datetime>
             </div>
-            <div class="ct-flex-1 ct-font-sans ct-mb-4">
-                <datetime input-class="ct-bg-white ct-shadow ct-border-2 ct-border-grey ct-py-2 ct-rounded-sm ct--ml-4 ct-font-sans" v-model="endDate" use12-hour></datetime>
-            </div>
-        </div>
-        <div class="ct-flex ct-flex-col ct-m-auto ct-border-2 ct-p-4 ct-w-4/5 ct-border-black ct-mt-12">
-            <div class="ct-flex-1 ct-text-2xl ct-uppercase ct-ml-4">Filtros</div>
-            <div class="ct-inline-flex ct-mt-4 ct-ml-4">
-                <div class="ct-flex-1 ct-font-sans ct-text-lg">Cliente:</div>
-                <div class="ct-flex-1 ct-font-sans ct-text-lg">Estatus:</div>
-                <div class="ct-flex-1 ct-font-sans ct-text-lg">Monto inicial:</div>
-                <div class="ct-flex-1 ct-font-sans ct-text-lg">Monto final:</div>
-            </div>
-            <div class="ct-inline-flex ct-ml-4 ct-mt-4">
-                <div class="ct-flex-1">
-                    <input type="text" class="ct-shadow ct-appearance-none ct-border ct-rounded ct-w-32 ct-text-grey-darker ct-leading-tight" name="client" v-model="client">
-                </div>
-                <div class="ct-flex-1">
-                    <input type="text" class="ct-shadow ct-appearance-none ct-border ct-rounded ct-w-32 ct-text-grey-darker ct-leading-tight" name="status" v-model="status">
-                </div>
-                <div class="ct-flex-1">
-                    <input type="text" class="ct-shadow ct-appearance-none ct-border ct-rounded ct-w-32 ct-text-grey-darker ct-leading-tight" name="initial-amount" v-model="initialAmount">
-                </div>
-                <div class="ct-flex-1">
-                    <input type="text" class="ct-shadow ct-appearance-none ct-border ct-rounded ct-w-32 ct-text-grey-darker ct-leading-tight" name="final-amount" v-model="finalAmount">
-                </div>
+            <div class="flex-1 font-sans mb-4">
+                <datetime input-class="bg-white shadow border-2 border-grey py-2 rounded-sm -ml-4 font-sans"
+                          v-model="endDate" type="datetime"></datetime>
             </div>
         </div>
-        <div class="ct-flex ct-border-2 ct-border-black ct-p-24 ct-w-2/3 ct-mt-24 ct-m-auto">tabla</div>
+        <div class="flex flex-col m-auto border-2 p-4 w-4/5 border-black mt-12">
+            <div class="flex1">
+                <font-awesome-icon :icon="iconToggleFilters" class="mb-2 pointer-events-auto"/>
+            </div>
+            <div class="flex-1 text-2xl uppercase ml-4">Filtros</div>
+            <div class="inline-flex mt-4 ml-4">
+                <div class="flex-1 font-sans text-lg">Cliente:</div>
+                <div class="flex-1 font-sans text-lg">Estatus:</div>
+                <div class="flex-1 font-sans text-lg">Monto inicial:</div>
+                <div class="flex-1 font-sans text-lg">Monto final:</div>
+            </div>
+            <div class="inline-flex ml-4 mt-4">
+                <div class="flex-1">
+                    <input type="text" class="shadow appearance-none border rounded w-32 text-grey-darker leading-tight"
+                           name="client" v-model="client">
+                </div>
+                <div class="flex-1">
+                    <input type="text" class="shadow appearance-none border rounded w-32 text-grey-darker leading-tight"
+                           name="status" v-model="status">
+                </div>
+                <div class="flex-1">
+                    <input type="text" class="shadow appearance-none border rounded w-32 text-grey-darker leading-tight"
+                           name="initial-amount" v-model="initialAmount">
+                </div>
+                <div class="flex-1">
+                    <input type="text" class="shadow appearance-none border rounded w-32 text-grey-darker leading-tight"
+                           name="final-amount" v-model="finalAmount">
+                </div>
+            </div>
+        </div>
+        <div class="flex border-2 border-black p-24 w-2/3 mt-24 m-auto">tabla</div>
     </div>
 </template>
 
 <script>
   import AppNavbar from "../../shared/app-navbar";
-  import { Datetime } from 'vue-datetime';
+  import AppMenu from "../../shared/app-menu";
+  import {Datetime} from 'vue-datetime';
   import 'vue-datetime/dist/vue-datetime.css';
+  import {faTimes} from '@fortawesome/free-solid-svg-icons';
+  import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+
+  const data = function () {
+    return {
+      startDate: '',
+      endDate: '',
+      client: '',
+      status: '',
+      initialAmount: '',
+      finalAmount: '',
+    };
+  };
+
+  const methods = {};
+
+  const computed = {
+    iconToggleFilters() {
+      return faTimes;
+    },
+  };
 
   export default {
-    data() {
-      return {
-        startDate: '',
-        endDate: '',
-        client: '',
-        status: '',
-        initialAmount: '',
-        finalAmount: '',
-      }
-    },
+    data,
+    methods,
+    computed,
+
     name: "bills-content",
     components: {
       AppNavbar,
-      datetime: Datetime
+      AppMenu,
+      FontAwesomeIcon,
+      datetime: Datetime,
     },
   }
 </script>
 
 <style scoped>
-    
+
 </style>

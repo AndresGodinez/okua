@@ -135,7 +135,58 @@ let colors = {
   'submit-blue': '#3399cc',
 
   'navbar-blue': '#2c3e50',
-}
+
+  'theme-color-0-darkest': '#888',
+  'theme-color-0-darker': '#aaa',
+  'theme-color-0-dark': '#ccc',
+  'theme-color-0': '#eee',
+  'theme-color-0-light': '#fafafa',
+  'theme-color-0-lighter': '#f6f6f6',
+  'theme-color-0-lightest': '#fff',
+
+  'theme-color-1-darkest': '#9c9c84',
+  'theme-color-1-darker': '#bba',
+  'theme-color-1-dark': '#d9d9cf',
+  'theme-color-1': '#f7f7f5',
+  'theme-color-1-light': '#f7f7f8',
+  'theme-color-1-lighter': '#fffffe',
+  'theme-color-1-lightest': '#fff',
+
+  'theme-color-2-darkest': '#5a5252',
+  'theme-color-2-darker': '#6b6362',
+  'theme-color-2-dark': '#7d7372',
+  'theme-color-2': '#8e8483',
+  'theme-color-2-light': '#aea7a7',
+  'theme-color-2-lighter': '#cfcbca',
+  'theme-color-2-lightest': '#efeeee',
+
+
+  'theme-color-3-darkest': '#8f690d',
+  'theme-color-3-darker': '#ae7f10',
+  'theme-color-3-dark': '#cd9613',
+  'theme-color-3': '#eaac18',
+  'theme-color-3-light': '#f0c256',
+  'theme-color-3-lighter': '#f5d995',
+  'theme-color-3-lightest': '#fbefd3',
+
+
+  'theme-color-4-darkest': '#5d2626',
+  'theme-color-4-darker': '#753030',
+  'theme-color-4-dark': '#8d3a3a',
+  'theme-color-4': '#a54444',
+  'theme-color-4-light': '#c26b6b',
+  'theme-color-4-lighter': '#d69b9b',
+  'theme-color-4-lightest': '#eacbcb',
+  
+
+  'theme-color-5-darkest': '#08080b',
+  'theme-color-5-darker': '#0f1014',
+  'theme-color-5-dark': '#16181e',
+  'theme-color-5': '#242832',
+  'theme-color-5-light': '#404859',
+  'theme-color-5-lighter': '#5d6781',
+  'theme-color-5-lightest': '#7f89a3',
+};
 
 module.exports = {
 
@@ -966,7 +1017,6 @@ module.exports = {
   */
 
   options: {
-    prefix: 'ct-',
     important: true,
     separator: ':',
   },

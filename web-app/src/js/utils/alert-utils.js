@@ -12,7 +12,7 @@ export const TYPES = {
 
 export default class AlertUtils {
   static showTestAlert() {
-    return swal("Test alert!");
+    swal("Test alert!");
   }
 
   /**
@@ -27,12 +27,36 @@ export default class AlertUtils {
   }
 
   /**
+   * Shows error alert with message and
+   *
+   * @param {Object} error
+   * @param {?string} error.msg
+   * @param {?string} error.Message
+   * @param {Function} cb
+   * @param {Object|null} options
+   */
+  static showErrorWithAlert(error, cb = null, options = null) {
+    let msg = '';
+    if (typeof error === 'object' && !!error.msg) {
+      msg = error.msg;
+    } else if (typeof error === 'object' && !!error.message) {
+      msg = error.message;
+    } else if (typeof error === 'object' && !!error.Message) {
+      msg = error.Message;
+    } else if (!!error) {
+      msg = error;
+    }
+
+    return AlertUtils.showAlert(msg, 'Error', TYPES.ERROR,  options);
+  }
+
+  /**
    * Shows warning alert with message
    *
    * @param {string} message
    */
   static showWarningAlert(message) {
-    return AlertUtils.showAlert(message, "Atenci&oacute;n", TYPES.WARNING);
+    return AlertUtils.showAlert(message, "Atención", TYPES.WARNING);
   }
 
   /**
@@ -45,45 +69,17 @@ export default class AlertUtils {
     return AlertUtils.showAlert(message, 'Completado', TYPES.SUCCESS,  options);
   }
 
-  /**
-   * Shows error alert with message and
-   *
-   * @param {Object} error
-   * @param {?string} error.msg
-   * @param {?string} error.Message
-   * @param {Function} cb
-   * @param {Object|null} options
-   */
-  static showErrorWithAlert(error, cb = null, options = null) {
-    let msg = '';
-    if (typeof error === 'object' && !!error.message) {
-      msg = error.message;
-    } else if (typeof error === 'object' && !!error.Message) {
-      msg = error.Message;
-    } else if (!!error) {
-      msg = error;
-    }
+  static showWarningWithCallbackAlert(message, options = null) {
+    return AlertUtils.showAlert(message, 'Atención', TYPES.WARNING, options);
+  }
 
-    return AlertUtils.showAlert(msg, 'Error', TYPES.ERROR,  options);
+  static showYesNoWarningAlert(message) {
+    const buttons = ["No", "Si"];
+    return AlertUtils.showWarningAlert(message, {buttons});
   }
 
   /**
-   * Shows confirmation alert with message and 
-   * @param {string} message
-   * @param {Function} cb
-   * @param {Object|null} options
-   */
-  static showConfirmationAlert(message, cb = null, options = null) {
-    if (!options) {
-      options = {
-        buttons: ['No', 'Si'],
-      };
-    }
-    return AlertUtils.showAlert(message, "Atenci&oacute;n", TYPES.WARNING, options);
-  }
-
-  /**
-   * Shows alert with message 
+   * Shows alert with message
    * @param {string} text
    * @param {string} title
    * @param {string} icon

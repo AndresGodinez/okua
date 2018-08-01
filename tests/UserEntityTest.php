@@ -35,8 +35,13 @@ class UserEntityTest extends TestCase
      */
     public static function setUpBeforeClass()/* The :void return type declaration that should be here would cause a BC issue */
     {
-        define("BASE_DIR", \realpath(__DIR__ . "/../"));
-        define("TESTING", true);
+        if (!defined("BASE_DIR")) {
+            define("BASE_DIR", \realpath(__DIR__ . "/../"));
+        }
+
+        if (!defined("TESTING")) {
+            define("TESTING", true);
+        }
 
         self::$fm = new FactoryMuffin();
 
