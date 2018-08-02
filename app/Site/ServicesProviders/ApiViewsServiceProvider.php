@@ -10,8 +10,7 @@ namespace App\Site\ServicesProviders;
 
 
 use App\Api\BaseApiView;
-use App\Api\LoginApiView;
-use App\Api\ReportsApiView;
+use App\Api\BillInfoApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -29,6 +28,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
     protected $provides = [
         TestApiView::class,
         UserAuthApiView::class,
+        BillInfoApiView::class,
     ];
 
     /**
@@ -44,6 +44,10 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
 
         $container->add(TestApiView::class);
         $container->add(UserAuthApiView::class);
+
+        $container
+            ->add(BillInfoApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
     }
 
     /**

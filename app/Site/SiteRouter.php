@@ -8,6 +8,7 @@
 
 namespace App\Site;
 
+use App\Api\BillInfoApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
 use App\Views\BillsView;
@@ -33,7 +34,6 @@ class SiteRouter
         $route->group('/app', function (RouteGroup $group) {
             $group->get('/login', LoginView::class . '::index');
 
-            $group->get('/', HomeView::class . '::index');
             $group->get('/home', HomeView::class . '::index');
             $group->get('/dashboard', HomeView::class . '::index');
 
@@ -49,6 +49,8 @@ class SiteRouter
             $group->map('GET', '/test', TestApiView::class . '::test');
 
             $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
+
+            $group->map('GET', '/bill-info/total', BillInfoApiView::class . '::getBillsTotal');
         })
             ->setScheme('http');
 

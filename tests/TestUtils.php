@@ -13,6 +13,9 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class TestUtils
 {
+    const HEADER_CONTENT_TYPE = 'Content-Type';
+    const CONTENT_TYPE_APPLICATION_JSON_UTF8 = 'application/json; charset=utf-8';
+
     /**
      * @param $method
      * @param $uri
@@ -29,5 +32,4 @@ class TestUtils
 
         return ServerRequestFactory::fromGlobals($server, $query, $body);
     }
-
 }
