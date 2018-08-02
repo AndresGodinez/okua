@@ -165,4 +165,46 @@ class GetBillsTotalApiViewTest extends TestCase
         $this->assertTrue(\is_numeric($total));
         $this->assertEquals(1000, $total);
     }
+
+    public function testFilterByYear()
+    {
+        $now = new \DateTime();
+
+        self::$em->beginTransaction();
+        try {
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 100, 'emailDatetime' => $now]);
+            self::$em->persist($register);
+
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 100, 'emailDatetime' => $now]);
+            self::$em->persist($register);
+
+            $pastDatetime = clone $now;
+            $pastDatetime->modify('first day of january');
+            $pastDatetime->modify('yesterday');
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 500, 'emailDatetime' => $pastDatetime]);
+            self::$em->persist($register);
+
+            self::$em->flush();
+            self::$em->commit();
+        } catch (ORMException $e) {
+            self::$em->rollback();
+        }
+
+        $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/total', ['filter' => 'year']);
+        $response = self::$router->dispatch($request, self::$container->get('response'));
+
+        $this->assertNotNull($response);
+        $this->assertTrue($response->hasHeader(TestUtils::HEADER_CONTENT_TYPE));
+
+        $contentType = $response->getHeaderLine(TestUtils::HEADER_CONTENT_TYPE);
+        $this->assertEquals($contentType, TestUtils::CONTENT_TYPE_APPLICATION_JSON_UTF8);
+
+        $responseArray = \json_decode($response->getBody(), true);
+        $this->assertArrayHasKey('total', $responseArray);
+
+        $total = $responseArray['total'];
+
+        $this->assertTrue(\is_numeric($total));
+        $this->assertEquals(200, $total);
+    }
 }
