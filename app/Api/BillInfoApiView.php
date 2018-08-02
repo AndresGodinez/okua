@@ -46,4 +46,76 @@ class BillInfoApiView extends BaseApiView
 
         return $response;
     }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getBillsInfoGroupByClient(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class);
+
+        $registers = $repo->getRegistersGroupedByClientAndFilter($requestData->getFilter());
+
+        \error_log(\print_r($registers, true));
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getBillsInfoGroupByCfdiUse(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class);
+
+        $registers = $repo->getRegistersGroupedByCfdiUseAndFilter($requestData->getFilter());
+
+        \error_log(\print_r($registers, true));
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getBillsInfoGroupByEmail(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class);
+
+        $registers = $repo->getRegistersGroupedByEmailAndFilter($requestData->getFilter());
+
+        \error_log(\print_r($registers, true));
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+
+        return $response;
+    }
 }
