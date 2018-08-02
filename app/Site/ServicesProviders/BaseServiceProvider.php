@@ -54,7 +54,7 @@ class BaseServiceProvider extends AbstractServiceProvider
     {
         $container = $this->getContainer();
 
-        $container->share('response', Response::class);
+        $container->add('response', Response::class);
         $container->share('request', function () {
             $parsedBody = RequestUtils::getParsedBodyFromServer($_SERVER, $_POST);
 
@@ -63,7 +63,7 @@ class BaseServiceProvider extends AbstractServiceProvider
             );
         });
 
-        $container->share('router', function () use ($container) {
+        $container->add('router', function () use ($container) {
             $invokable = new SiteRouter;
             if (!($container instanceof Container)) throw new \Exception("Invalid container interface");
             return $invokable($container);

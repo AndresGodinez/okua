@@ -12,6 +12,7 @@ namespace Tests;
 use App\Entities\BillInfo;
 use App\Exceptions\ValidationException;
 use App\Site\SiteContainer;
+use App\Site\SiteRouter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use League\Container\Container;
@@ -41,8 +42,6 @@ class GetBillsTotalApiViewTest extends TestCase
     {
         self::$container = SiteContainer::make();
 
-        self::$router = self::$container->get('router');
-
         self::$fm = new FactoryMuffin();
 
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
@@ -57,21 +56,18 @@ class GetBillsTotalApiViewTest extends TestCase
         }
 
         self::$em = self::$container->get('entity-manager');
+
         $billInfoMetadata = self::$em->getClassMetadata(BillInfo::class);
         self::$em->getConnection()->exec('TRUNCATE ' . $billInfoMetadata->getTableName());
     }
 
-    /**
-     * @throws \Doctrine\DBAL\DBALException
-     */
     protected function setUp()
     {
+        self::$router = self::$container->get('router');
+
         if (!self::$em || !self::$em->isOpen()) {
             self::$em = self::$container->get('entity-manager');
         }
-
-        $billInfoMetadata = self::$em->getClassMetadata(BillInfo::class);
-        self::$em->getConnection()->exec('ALTER TABLE ' . $billInfoMetadata->getTableName() . ' AUTO_INCREMENT = 1');
     }
 
     /**
@@ -79,6 +75,8 @@ class GetBillsTotalApiViewTest extends TestCase
      */
     protected function tearDown()
     {
+        self::$router = null;
+
         $billInfoMetadata = self::$em->getClassMetadata(BillInfo::class);
         self::$em->getConnection()->exec('TRUNCATE ' . $billInfoMetadata->getTableName());
     }
@@ -124,6 +122,47 @@ class GetBillsTotalApiViewTest extends TestCase
         $total = $responseArray['total'];
 
         $this->assertTrue(\is_numeric($total));
-        $this->assertEquals($total, 1000);
+        $this->assertEquals(1000, $total);
+    }
+
+    public function testFilterByMonth()
+    {
+        $now = new \DateTime();
+
+        self::$em->beginTransaction();
+        try {
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 500, 'emailDatetime' => $now]);
+            self::$em->persist($register);
+
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 500, 'emailDatetime' => $now]);
+            self::$em->persist($register);
+
+            $pastMonth = clone $now;
+            $pastMonth->modify('first day of last month');
+            $register = self::$fm->instance(BillInfo::class, ['type' => 'I', 'total' => 500, 'emailDatetime' => $pastMonth]);
+            self::$em->persist($register);
+
+            self::$em->flush();
+            self::$em->commit();
+        } catch (ORMException $e) {
+            self::$em->rollback();
+        }
+
+        $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/total', ['filter' => 'month']);
+        $response = self::$router->dispatch($request, self::$container->get('response'));
+
+        $this->assertNotNull($response);
+        $this->assertTrue($response->hasHeader(TestUtils::HEADER_CONTENT_TYPE));
+
+        $contentType = $response->getHeaderLine(TestUtils::HEADER_CONTENT_TYPE);
+        $this->assertEquals($contentType, TestUtils::CONTENT_TYPE_APPLICATION_JSON_UTF8);
+
+        $responseArray = \json_decode($response->getBody(), true);
+        $this->assertArrayHasKey('total', $responseArray);
+
+        $total = $responseArray['total'];
+
+        $this->assertTrue(\is_numeric($total));
+        $this->assertEquals(1000, $total);
     }
 }
