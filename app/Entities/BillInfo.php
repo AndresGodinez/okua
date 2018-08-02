@@ -27,10 +27,13 @@ class BillInfo
     private $id;
 
     /** @var null|string */
-    private $rfcEmitter;
+    private $email;
 
     /** @var null|string */
-    private $email;
+    private $emitterName;
+
+    /** @var null|string */
+    private $emitterRfc;
 
     /** @var null|string */
     private $uuid;
@@ -57,10 +60,16 @@ class BillInfo
     private $paymentType;
 
     /** @var null|\DateTime */
-    private $emailDatetime;
+    private $documentDatetime;
 
     /** @var null|\DateTime */
     private $stampDatetime;
+
+    /** @var null|\DateTime */
+    private $emailDatetime;
+
+    /** @var null|\DateTime */
+    private $regDatetime;
 
     /**
      * @return int|null
@@ -81,22 +90,6 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getRfcEmitter(): ?string
-    {
-        return $this->rfcEmitter;
-    }
-
-    /**
-     * @param null|string $rfcEmitter
-     */
-    public function setRfcEmitter(?string $rfcEmitter): void
-    {
-        $this->rfcEmitter = $rfcEmitter;
-    }
-
-    /**
-     * @return null|string
-     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -108,6 +101,38 @@ class BillInfo
     public function setEmail(?string $email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEmitterName(): ?string
+    {
+        return $this->emitterName;
+    }
+
+    /**
+     * @param null|string $emitterName
+     */
+    public function setEmitterName(?string $emitterName): void
+    {
+        $this->emitterName = $emitterName;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEmitterRfc(): ?string
+    {
+        return $this->emitterRfc;
+    }
+
+    /**
+     * @param null|string $emitterRfc
+     */
+    public function setEmitterRfc(?string $emitterRfc): void
+    {
+        $this->emitterRfc = $emitterRfc;
     }
 
     /**
@@ -241,17 +266,17 @@ class BillInfo
     /**
      * @return \DateTime|null
      */
-    public function getEmailDatetime(): ?\DateTime
+    public function getDocumentDatetime(): ?\DateTime
     {
-        return $this->emailDatetime;
+        return $this->documentDatetime;
     }
 
     /**
-     * @param \DateTime|null $emailDatetime
+     * @param \DateTime|null $documentDatetime
      */
-    public function setEmailDatetime(?\DateTime $emailDatetime): void
+    public function setDocumentDatetime(?\DateTime $documentDatetime): void
     {
-        $this->emailDatetime = $emailDatetime;
+        $this->documentDatetime = $documentDatetime;
     }
 
     /**
@@ -271,17 +296,52 @@ class BillInfo
     }
 
     /**
+     * @return \DateTime|null
+     */
+    public function getEmailDatetime(): ?\DateTime
+    {
+        return $this->emailDatetime;
+    }
+
+    /**
+     * @param \DateTime|null $emailDatetime
+     */
+    public function setEmailDatetime(?\DateTime $emailDatetime): void
+    {
+        $this->emailDatetime = $emailDatetime;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getRegDatetime(): ?\DateTime
+    {
+        return $this->regDatetime;
+    }
+
+    /**
+     * @param \DateTime|null $regDatetime
+     */
+    public function setRegDatetime(?\DateTime $regDatetime): void
+    {
+        $this->regDatetime = $regDatetime;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        $emailDatetimeStr = !!$this->getEmailDatetime() ? $this->getEmailDatetime()->format('Y-m-d H:i:s') : '';
+        $documentDatetimeStr = !!$this->getDocumentDatetime() ? $this->getDocumentDatetime()->format('Y-m-d H:i:s') : '';
         $stampDatetimeStr = !!$this->getStampDatetime() ? $this->getStampDatetime()->format('Y-m-d H:i:s') : '';
+        $emailDatetimeStr = !!$this->getEmailDatetime() ? $this->getEmailDatetime()->format('Y-m-d H:i:s') : '';
+        $regDatetimeStr = !!$this->getRegDatetime() ? $this->getRegDatetime()->format('Y-m-d H:i:s') : '';
 
         return \sprintf(
-            '<BillInfo [id: %d, rfcEmitter: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, currency: %s, type: %s, paymentType: %s, emailDatetime: %s, stampDatetime: %s]>',
+            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s]>',
             !!$this->getId() ? $this->getId() : 0,
-            $this->getRfcEmitter(),
+            $this->getEmitterName(),
+            $this->getEmitterRfc(),
             $this->getEmail(),
             $this->getUuid(),
             $this->getCfdiUseSatCode(),
@@ -291,8 +351,10 @@ class BillInfo
             $this->getCurrency(),
             $this->getType(),
             $this->getPaymentType(),
+            $documentDatetimeStr,
+            $stampDatetimeStr,
             $emailDatetimeStr,
-            $stampDatetimeStr
+            $regDatetimeStr
         );
     }
 }

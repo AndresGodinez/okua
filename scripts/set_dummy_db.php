@@ -76,7 +76,9 @@ $em->getConnection()->beginTransaction();
 
 $seedCount = 500;
 for ($i = 0; $i < $seedCount; ++$i) {
-    $billInfo = $fm->instance(\App\Entities\BillInfo::class);
+    $billInfo = $fm->instance(\App\Entities\BillInfo::class, [
+        'type' => 'I',
+    ]);
     $em->persist($billInfo);
 }
 

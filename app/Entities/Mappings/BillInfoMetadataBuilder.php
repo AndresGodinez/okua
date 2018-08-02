@@ -31,22 +31,27 @@ class BillInfoMetadataBuilder
 
         $builder->createField('id', 'bigint')->makePrimaryKey()->generatedValue()->build();
 
-        $builder->createField('rfcEmitter', 'string')->columnName('rfc_emisor')->length(255)->build();
-        $builder->createField('email', 'string')->columnName('email')->length(100)->build();
+        $builder->createField('email', 'string')->length(100)->build();
+        $builder->createField('emitterName', 'string')->columnName('emitter_name')->length(255)->build();
+        $builder->createField('emitterRfc', 'string')->columnName('emitter_rfc')->length(255)->build();
         $builder->createField('uuid', 'string')->length(255)->unique()->build();
-        $builder->createField('cfdiUseSatCode', 'string')->columnName('uso_cfdi')->length(255)->build();
+        $builder->createField('cfdiUseSatCode', 'string')->columnName('cfdi_use_sat_code')->length(255)->build();
         $builder->createField('subtotal', 'decimal')->columnName('subtotal')->precision(12)->scale(5)->build();
-        $builder->createField('discount', 'decimal')->columnName('descuento')->precision(12)->scale(5)->build();
+        $builder->createField('discount', 'decimal')->columnName('discount')->precision(12)->scale(5)->build();
         $builder->createField('total', 'decimal')->columnName('total')->precision(12)->scale(5)->build();
-        $builder->createField('currency', 'string')->columnName('moneda')->length(45)->build();
-        $builder->createField('type','string')->columnName('tipo_comprobante')->length(255)->build();
-        $builder->createField('paymentType', 'string')->columnName('metodo_pago')->length(255)->build();
-        $builder->createField('emailDatetime', 'datetime')->columnName('fecha_documento')->length(255)->build();
-        $builder->createField('stampDatetime', 'datetime')->columnName('fecha_timbrado')->length(255)->build();
+        $builder->createField('currency', 'string')->columnName('currency')->length(45)->build();
+        $builder->createField('type','string')->columnName('type')->length(5)->build();
+        $builder->createField('paymentType', 'string')->columnName('payment_type')->length(5)->build();
+        $builder->createField('documentDatetime', 'datetime')->columnName('document_datetime')->build();
+        $builder->createField('stampDatetime', 'datetime')->columnName('stamp_datetime')->build();
+        $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();
+        $builder->createField('regDatetime', 'datetime')->columnName('reg_datetime')->build();
 
+        $builder->addIndex(['cfdi_use_sat_code'], 's02_bill_info_cfdi_use_sat_code_index');
+        $builder->addIndex(['document_datetime'], 's02_bill_info_document_datetime_index');
+        $builder->addIndex(['email_datetime'], 's02_bill_info_email_datetime_index');
         $builder->addIndex(['email'], 's02_bill_info_email_index');
-        $builder->addIndex(['fecha_documento'], 's02_bill_info_fecha_documento_index');
-        $builder->addIndex(['fecha_timbrado'], 's02_bill_info_fecha_timbrado_index');
-        $builder->addIndex(['uuid'], 's02_bill_info_uuid_index');
+        $builder->addIndex(['emitter_rfc'], 's02_bill_info_emitter_rfc_index');
+        $builder->addIndex(['type'], 's02_bill_info_type_index');
     }
 }
