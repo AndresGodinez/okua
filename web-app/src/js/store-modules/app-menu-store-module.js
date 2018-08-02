@@ -4,7 +4,7 @@ const types = {
 
 // initial states
 const state = {
-  sidebarOpen: open,
+  sidebarOpen: false,
 };
 
 // getters

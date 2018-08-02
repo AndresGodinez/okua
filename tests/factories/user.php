@@ -15,6 +15,7 @@
 $fm->define(\App\Entities\User::class)->setDefinitions([
     'name' => Faker::name(),
     'username' => Faker::userName(),
-    'email'    => Faker::freeEmail(),
-    'pswd'    => Faker::password(),
+    'email' => Faker::freeEmail(),
+    'pswd' => Faker::password(),
+    'regCreationDate' => Faker::dateTimeBetween('-7 days', 'now'),
 ]);

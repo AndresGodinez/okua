@@ -9,18 +9,26 @@
                     <span class="border-b-2 border-grey-dark mx-6 mt-2"></span>
                 </div>
 
-                <div class="text-center w-full uppercase text-center font-bold text-xl">
-                    <button class="w-full hover:bg-grey-light h-16" @click="goHome()">Inicio</button>
+                <div class="w-full uppercase text-center font-bold text-xl px-6">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'home' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goHome()">
+                        <font-awesome-icon :icon="iconMenuHome" />
+                        <span class="ml-2 uppercase">Inicio</span>
+                    </button>
                 </div>
-                <hr class="w-full border-t-2 border-grey-darker m-0"/>
-                <div class="text-center w-full uppercase text-center font-bold text-xl">
-                    <button class="w-full hover:bg-grey-light h-16" @click="goBills()">Facturas</button>
+
+                <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'bills' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goBills()">
+                        <font-awesome-icon :icon="iconMenuBills" />
+                        <span class="ml-2 uppercase">Facturas</span>
+                    </button>
                 </div>
-                <hr class="w-full border-t-2 border-grey-darker m-0"/>
-                <div class="text-center w-full uppercase text-center font-bold text-xl">
-                    <button class="w-full hover:bg-grey-light h-16" @click="goMovements()">Movimientos</button>
-                </div>
-                <hr class="w-full border-t-2 border-grey-darker m-0"/>
+
+                <!--<div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">-->
+                    <!--<button class="text-left w-full hover:bg-grey-light h-16 px-4" :class="[selected === 'movements' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goMovements()">-->
+                        <!--<font-awesome-icon :icon="iconMenuMovements" />-->
+                        <!--<span class="ml-2 uppercase">Movimientos</span>-->
+                    <!--</button>-->
+                <!--</div>-->
             </div>
 
             <!--grey overlay-->
@@ -31,6 +39,15 @@
 
 <script>
   import RouteUtils from "../../js/utils/route-utils";
+  import {faHome, faMoneyBill, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+  import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+
+  const props = {
+    selected: {
+      type: String,
+      required: true,
+    },
+  };
 
   const data = function () {
     return {};
@@ -54,14 +71,30 @@
     open() {
       return this.$store.state.menu.sidebarOpen;
     },
+
+    iconMenuHome() {
+      return faHome;
+    },
+
+    iconMenuBills() {
+      return faMoneyBill;
+    },
+
+    iconMenuMovements() {
+      return faExchangeAlt;
+    },
   };
 
   export default {
+    props,
     data,
     methods,
     computed,
 
     name: 'app-menu',
+    components: {
+      FontAwesomeIcon,
+    }
   }
 </script>
 

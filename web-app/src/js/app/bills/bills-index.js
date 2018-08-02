@@ -1,6 +1,17 @@
 import Vue from "vue";
 import Content from "../../../components/app/bills/bills-content.vue";
 import store from "./bills-store";
+import Ripple from "vue-ripple-directive";
+import "v2-table/dist/index.css";
+import V2Table from 'v2-table';
+import "../../shared/currency-filter";
+import { Settings } from 'luxon'
+
+Settings.defaultLocale = 'es';
+
+Vue.use(V2Table);
+
+Vue.directive('ripple', Ripple);
 
 new Vue({
   store,

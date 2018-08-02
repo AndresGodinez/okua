@@ -1,137 +1,156 @@
 <template>
     <div class="flex flex-col">
-        <app-menu></app-menu>
+        <app-menu selected="home"></app-menu>
 
         <app-navbar></app-navbar>
 
-        <div class="inline-flex w-48 mt-4 ml-32">
-            <ul class="list-reset flex">
-                <li class="mr-3">
-                    <div class="inline-block border rounded py-1 px-3" style="cursor: pointer;"
-                         v-bind:class="{'border-blue': rangeFilter === 1, 'bg-blue': rangeFilter === 1, 'text-white': rangeFilter === 1, 'text-blue': rangeFilter != 1}"
-                         v-on:click="timeFilter('week')">Sem
-                    </div>
-                </li>
-                <li class="mr-3">
-                    <div class="inline-block border rounded py-1 px-3"
-                         v-bind:class="{'border-blue': rangeFilter === 2, 'bg-blue': rangeFilter === 2, 'text-white': rangeFilter === 2, 'text-blue': rangeFilter != 2}"
-                         style="cursor: pointer;" v-on:click="timeFilter('month')">Mes
-                    </div>
-                </li>
-                <li class="mr-3">
-                    <div class="inline-block border rounded py-1 px-3"
-                         v-bind:class="{'border-blue': rangeFilter === 3, 'bg-blue': rangeFilter === 3, 'text-white': rangeFilter === 3, 'text-blue': rangeFilter != 3}"
-                         style="cursor: pointer;" v-on:click="timeFilter('year')">Año
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="flex flex-col m-auto border-2 p-4">
-            <div class="flex-1 text-center mb-6 font-sans font-medium tracking-wide text-2xl">$0000</div>
-            <div class="flex-1 text-center uppercase font-sans tracking-wide text-xl">Monto general en facturas</div>
-        </div>
-        <div class="flex flex-col mt-12">
-            <div class="flex-1 w-48 ml-32 tracking-wide text-sm font-sans">Agrupar:</div>
-            <div class="inline-flex w-1/6 mt-2 ml-32">
+        <div class="container w-full mx-auto">
+            <div class="inline-flex mt-4 mb-2">
                 <ul class="list-reset flex">
-                    <li class="mr-3">
-                        <div class="inline-block border rounded py-1 px-3"
-                             v-bind:class="{'border-blue': groupFilter === 1, 'bg-blue': groupFilter === 1, 'text-white': groupFilter === 1, 'text-blue': groupFilter != 1}"
-                             style="cursor: pointer;" v-on:click="groupBy('client')">Cliente
+                    <li>
+                        <div class="inline-block border border-theme-color-4 rounded-l px-4 py-2 cursor-pointer"
+                             :class="[rangeFilter === 1 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
+                             @click="rangeFilter = 1">Semana
                         </div>
                     </li>
-                    <li class="mr-3">
-                        <div class="inline-block border rounded py-1 px-3"
-                             v-bind:class="{'border-blue': groupFilter === 2, 'bg-blue': groupFilter === 2, 'text-white': groupFilter === 2, 'text-blue': groupFilter != 2}"
-                             style="cursor: pointer;" v-on:click="groupBy('cfdi')">Uso CFDI
+                    <li>
+                        <div class="inline-block border border-theme-color-4 px-4 py-2 cursor-pointer"
+                             :class="[rangeFilter === 2 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
+                             @click="rangeFilter = 2">Mes
                         </div>
                     </li>
-                    <li class="mr-3">
-                        <div class="inline-block border rounded py-1 px-3"
-                             v-bind:class="{'border-blue': groupFilter === 3, 'bg-blue': groupFilter === 3, 'text-white': groupFilter === 3, 'text-blue': groupFilter != 3}"
-                             style="cursor: pointer;" v-on:click="groupBy('state')">Estados
+                    <li>
+                        <div class="inline-block border border-theme-color-4 rounded-r px-4 py-2 cursor-pointer"
+                             :class="[rangeFilter === 3 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
+                             @click="rangeFilter = 3">Año
                         </div>
                     </li>
                 </ul>
             </div>
-        </div>
-        <div class="flex flex-col m-auto border-2 mt-4 border-black w-5/6">
-            <div class="flex inline-flex">
-                <div class="flex-1 text-center border-r-2 p-8 border-b-2">Fecha de Registro</div>
-                <div class="flex-1 text-center border-r-2 p-8 border-b-2">Cliente</div>
-                <div class="flex-1 text-center border-r-2 p-8 border-b-2">RFC</div>
-                <div class="flex-1 text-center border-r-2 p-8 border-b-2">Uso</div>
-                <div class="flex-1 text-center border-r-2 p-8 border-b-2">Estatus</div>
-                <div class="flex-1 text-center p-8 border-b-2 border-b-black">Monto</div>
+
+            <div class="flex flex-row w-full justify-center mt-4">
+                <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3">
+                    <div class="absolute pin-t">
+                        <a class="no-underline p-4 text-3xl bg-theme-color-4 text-white shadow-md">
+                            <font-awesome-icon :icon="iconBillstTotal" />
+                        </a>
+                    </div>
+                    <div class="text-right text-grey-ligh text-sm tracking-wide uppercase select-none">Monto total en facturas</div>
+                    <div class="w-full flex justify-end">
+                        <animated-number
+                                :value="totalBills"
+                                :duration="700"
+                                :formatValue="formatTotalBills"
+                                easing="easeInOutCubic"
+                                class="text-right mb-6 text-theme-color-4 tracking-wide text-3xl pt-2 select-none" />
+                    </div>
+                    <hr class="w-full border-b-2">
+                    <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}</div>
+                </div>
             </div>
-            <div class="flex inline-flex">
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center p-4 border-b-2 border-b-black"></div>
+
+            <div class="flex flex-col w-full mt-16 shadow-md">
+                <div class="text-left bg-theme-color-4 rounded-sm shadow-md py-4 px-4">
+                    <span class="w-full text-left text-white text-3xl font-semibold">Informaci&oacute;n por categorías</span>
+                    <div class="w-full inline-flex mt-4">
+                        <ul class="list-reset flex">
+                            <li class="mr-3">
+                                <div class="inline-block border hover:bg-theme-color-4-dark rounded-sm px-6 py-2 cursor-pointer text-white"
+                                     :class="[groupFilter === 1 ? 'bg-theme-color-4-darker border-theme-color-4-darker' : 'border-white']"
+                                     @click="groupFilter = 1">
+                                    <font-awesome-icon :icon="iconGroupByClient"/>
+                                    <span class="ml-2 uppercase text-sm">Cliente</span>
+                                </div>
+                            </li>
+                            <li class="mr-3">
+                                <div class="inline-block border hover:bg-theme-color-4-dark rounded-sm px-6 py-2 cursor-pointer text-white"
+                                     :class="[groupFilter === 2 ? 'bg-theme-color-4-darker border-theme-color-4-darker' : 'border-white']"
+                                     @click="groupFilter = 2">
+                                    <font-awesome-icon :icon="iconGroupByCfdiUse"/>
+                                    <span class="ml-2 uppercase text-sm">Uso CFDI</span>
+                                </div>
+                            </li>
+                            <li class="mr-3">
+                                <div class="inline-block border hover:bg-theme-color-4-dark rounded-sm px-6 py-2 cursor-pointer text-white"
+                                     :class="[groupFilter === 3 ? 'bg-theme-color-4-darker border-theme-color-4-darker' : 'border-white']"
+                                     @click="groupFilter = 3">
+                                    <font-awesome-icon :icon="iconGroupByEmail"/>
+                                    <span class="ml-2 uppercase text-sm">E-MAIL</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="flex inline-flex">
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center p-4 border-b-2 border-b-black"></div>
-            </div>
-            <div class="flex inline-flex">
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center border-r-2 p-4 border-b-2"></div>
-                <div class="flex-1 text-center p-4 border-b-2 border-b-black"></div>
-            </div>
+
+            <table-group-by-client v-if="groupFilter === 1" />
+            <table-group-by-cfdi-use v-else-if="groupFilter === 2" />
+            <table-group-by-email v-else-if="groupFilter === 3" />
         </div>
     </div>
 </template>
 <script>
   import AppNavbar from "../../shared/app-navbar";
   import AppMenu from "../../shared/app-menu";
+  import {faMoneyBill, faUsers, faBoxes, faThLarge} from '@fortawesome/free-solid-svg-icons';
+  import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+  import moment from 'moment-es6';
+  import AnimatedNumber from "animated-number-vue";
+  import {formatMoney} from "accounting-js";
+  import TableGroupByClient from "./table-group-by-client";
+  import TableGroupByCfdiUse from "./table-group-by-cfdi-use";
+  import TableGroupByEmail from "./table-group-by-email";
 
   const data = function () {
+    let updatedDate = moment().format('lll');
     return {
+      updatedDate,
+      totalBills: 0,
+
       rangeFilter: 1,
       groupFilter: 1,
     };
   };
 
   const methods = {
-    timeFilter(range) {
-      if (range === 'week') {
-        this.rangeFilter = 1
-      } else if (range === 'month') {
-        this.rangeFilter = 2
-      } else if (range === 'year') {
-        this.rangeFilter = 3
-      }
+    formatTotalBills(value) {
+      return formatMoney(value, { precision: 2, thousand: ',', decimal: '.', symbol: '$' });
+    },
+  };
+
+  const computed = {
+    iconBillstTotal() {
+      return faMoneyBill;
     },
 
-    groupBy(property) {
-      if (property === 'client') {
-        this.groupFilter = 1
-      } else if (property === 'cfdi') {
-        this.groupFilter = 2
-      } else if (property === 'state') {
-        this.groupFilter = 3
-      }
+    iconGroupByClient() {
+      return faUsers;
+    },
+    iconGroupByCfdiUse() {
+      return faBoxes;
+    },
+    iconGroupByEmail() {
+      return faThLarge;
     },
   };
 
   export default {
     data,
     methods,
+    computed,
 
     name: "home-content",
     components: {
+      TableGroupByEmail,
+      TableGroupByCfdiUse,
+      TableGroupByClient,
       AppNavbar,
       AppMenu,
+      FontAwesomeIcon,
+      AnimatedNumber,
+    },
+    mounted() {
+      setTimeout(() => this.totalBills = 1000, 1000);
     },
   }
 </script>
