@@ -95,7 +95,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param int $limit
      */
-    public function setLimit(int $limit): void
+    public function setLimit(int $limit)
     {
         $this->limit = $limit;
     }
@@ -111,7 +111,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param int $offset
      */
-    public function setOffset(int $offset): void
+    public function setOffset(int $offset)
     {
         $this->offset = $offset;
     }
@@ -127,7 +127,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param string $startDatetime
      */
-    public function setStartDatetime(string $startDatetime): void
+    public function setStartDatetime(string $startDatetime)
     {
         $this->startDatetime = $startDatetime;
     }
@@ -143,7 +143,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param string $endDatetime
      */
-    public function setEndDatetime(string $endDatetime): void
+    public function setEndDatetime(string $endDatetime)
     {
         $this->endDatetime = $endDatetime;
     }
@@ -159,7 +159,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param string $clientRfc
      */
-    public function setClientRfc(string $clientRfc): void
+    public function setClientRfc(string $clientRfc)
     {
         $this->clientRfc = $clientRfc;
     }
@@ -175,7 +175,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param float $initialAmount
      */
-    public function setInitialAmount(float $initialAmount): void
+    public function setInitialAmount(float $initialAmount)
     {
         $this->initialAmount = $initialAmount;
     }
@@ -191,7 +191,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param float $finalAmount
      */
-    public function setFinalAmount(float $finalAmount): void
+    public function setFinalAmount(float $finalAmount)
     {
         $this->finalAmount = $finalAmount;
     }

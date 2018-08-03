@@ -51,7 +51,7 @@ class GetBillsTotalRequestData implements IValidableRequest
     /**
      * @param string $filter
      */
-    public function setFilter(string $filter): void
+    public function setFilter(string $filter)
     {
         $this->filter = $filter;
     }

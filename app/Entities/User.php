@@ -53,7 +53,7 @@ class User
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -61,7 +61,7 @@ class User
     /**
      * @param int|null $id
      */
-    public function setId(?int $id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -69,7 +69,7 @@ class User
     /**
      * @return null|string
      */
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
@@ -77,7 +77,7 @@ class User
     /**
      * @param null|string $name
      */
-    public function setName(?string $name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -85,7 +85,7 @@ class User
     /**
      * @return null|string
      */
-    public function getUsername(): ?string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -93,7 +93,7 @@ class User
     /**
      * @param null|string $username
      */
-    public function setUsername(?string $username): void
+    public function setUsername($username)
     {
         $this->username = $username;
     }
@@ -101,7 +101,7 @@ class User
     /**
      * @return null|string
      */
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -109,7 +109,7 @@ class User
     /**
      * @param null|string $email
      */
-    public function setEmail(?string $email): void
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -117,7 +117,7 @@ class User
     /**
      * @return null|string
      */
-    public function getPswd(): ?string
+    public function getPswd()
     {
         return $this->pswd;
     }
@@ -125,7 +125,7 @@ class User
     /**
      * @param null|string $pswd
      */
-    public function setPswd(?string $pswd): void
+    public function setPswd($pswd)
     {
         $this->pswd = $pswd;
     }
@@ -133,7 +133,7 @@ class User
     /**
      * @return DateTime|null
      */
-    public function getRegCreationDate(): ?DateTime
+    public function getRegCreationDate()
     {
         return $this->regCreationDate;
     }
@@ -141,7 +141,7 @@ class User
     /**
      * @param DateTime|null $regCreationDate
      */
-    public function setRegCreationDate(?DateTime $regCreationDate): void
+    public function setRegCreationDate($regCreationDate)
     {
         $this->regCreationDate = $regCreationDate;
     }
@@ -149,7 +149,7 @@ class User
     /**
      * @return int
      */
-    public function getRegStatus(): int
+    public function getRegStatus()
     {
         return $this->regStatus;
     }
@@ -157,7 +157,7 @@ class User
     /**
      * @param int $regStatus
      */
-    public function setRegStatus(int $regStatus): void
+    public function setRegStatus($regStatus)
     {
         $this->regStatus = $regStatus;
     }

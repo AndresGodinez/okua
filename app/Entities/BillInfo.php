@@ -74,7 +74,7 @@ class BillInfo
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -82,7 +82,7 @@ class BillInfo
     /**
      * @param int|null $id
      */
-    public function setId(?int $id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -90,7 +90,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -98,7 +98,7 @@ class BillInfo
     /**
      * @param null|string $email
      */
-    public function setEmail(?string $email): void
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -106,7 +106,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getEmitterName(): ?string
+    public function getEmitterName()
     {
         return $this->emitterName;
     }
@@ -114,7 +114,7 @@ class BillInfo
     /**
      * @param null|string $emitterName
      */
-    public function setEmitterName(?string $emitterName): void
+    public function setEmitterName($emitterName)
     {
         $this->emitterName = $emitterName;
     }
@@ -122,7 +122,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getEmitterRfc(): ?string
+    public function getEmitterRfc()
     {
         return $this->emitterRfc;
     }
@@ -130,7 +130,7 @@ class BillInfo
     /**
      * @param null|string $emitterRfc
      */
-    public function setEmitterRfc(?string $emitterRfc): void
+    public function setEmitterRfc($emitterRfc)
     {
         $this->emitterRfc = $emitterRfc;
     }
@@ -138,7 +138,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getUuid(): ?string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -146,7 +146,7 @@ class BillInfo
     /**
      * @param null|string $uuid
      */
-    public function setUuid(?string $uuid): void
+    public function setUuid($uuid)
     {
         $this->uuid = $uuid;
     }
@@ -154,7 +154,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getCfdiUseSatCode(): ?string
+    public function getCfdiUseSatCode()
     {
         return $this->cfdiUseSatCode;
     }
@@ -162,7 +162,7 @@ class BillInfo
     /**
      * @param null|string $cfdiUseSatCode
      */
-    public function setCfdiUseSatCode(?string $cfdiUseSatCode): void
+    public function setCfdiUseSatCode($cfdiUseSatCode)
     {
         $this->cfdiUseSatCode = $cfdiUseSatCode;
     }
@@ -170,7 +170,7 @@ class BillInfo
     /**
      * @return float|null
      */
-    public function getSubtotal(): ?float
+    public function getSubtotal()
     {
         return $this->subtotal;
     }
@@ -178,7 +178,7 @@ class BillInfo
     /**
      * @param float|null $subtotal
      */
-    public function setSubtotal(?float $subtotal): void
+    public function setSubtotal($subtotal)
     {
         $this->subtotal = $subtotal;
     }
@@ -186,7 +186,7 @@ class BillInfo
     /**
      * @return float|null
      */
-    public function getDiscount(): ?float
+    public function getDiscount()
     {
         return $this->discount;
     }
@@ -194,7 +194,7 @@ class BillInfo
     /**
      * @param float|null $discount
      */
-    public function setDiscount(?float $discount): void
+    public function setDiscount($discount)
     {
         $this->discount = $discount;
     }
@@ -202,7 +202,7 @@ class BillInfo
     /**
      * @return float|null
      */
-    public function getTotal(): ?float
+    public function getTotal()
     {
         return $this->total;
     }
@@ -210,7 +210,7 @@ class BillInfo
     /**
      * @param float|null $total
      */
-    public function setTotal(?float $total): void
+    public function setTotal($total)
     {
         $this->total = $total;
     }
@@ -218,7 +218,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getCurrency(): ?string
+    public function getCurrency()
     {
         return $this->currency;
     }
@@ -226,7 +226,7 @@ class BillInfo
     /**
      * @param null|string $currency
      */
-    public function setCurrency(?string $currency): void
+    public function setCurrency($currency)
     {
         $this->currency = $currency;
     }
@@ -234,7 +234,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getType(): ?string
+    public function getType()
     {
         return $this->type;
     }
@@ -242,7 +242,7 @@ class BillInfo
     /**
      * @param null|string $type
      */
-    public function setType(?string $type): void
+    public function setType($type)
     {
         $this->type = $type;
     }
@@ -250,7 +250,7 @@ class BillInfo
     /**
      * @return null|string
      */
-    public function getPaymentType(): ?string
+    public function getPaymentType()
     {
         return $this->paymentType;
     }
@@ -258,7 +258,7 @@ class BillInfo
     /**
      * @param null|string $paymentType
      */
-    public function setPaymentType(?string $paymentType): void
+    public function setPaymentType($paymentType)
     {
         $this->paymentType = $paymentType;
     }
@@ -266,7 +266,7 @@ class BillInfo
     /**
      * @return \DateTime|null
      */
-    public function getDocumentDatetime(): ?\DateTime
+    public function getDocumentDatetime()
     {
         return $this->documentDatetime;
     }
@@ -274,7 +274,7 @@ class BillInfo
     /**
      * @param \DateTime|null $documentDatetime
      */
-    public function setDocumentDatetime(?\DateTime $documentDatetime): void
+    public function setDocumentDatetime($documentDatetime)
     {
         $this->documentDatetime = $documentDatetime;
     }
@@ -282,7 +282,7 @@ class BillInfo
     /**
      * @return \DateTime|null
      */
-    public function getStampDatetime(): ?\DateTime
+    public function getStampDatetime()
     {
         return $this->stampDatetime;
     }
@@ -290,7 +290,7 @@ class BillInfo
     /**
      * @param \DateTime|null $stampDatetime
      */
-    public function setStampDatetime(?\DateTime $stampDatetime): void
+    public function setStampDatetime($stampDatetime)
     {
         $this->stampDatetime = $stampDatetime;
     }
@@ -298,7 +298,7 @@ class BillInfo
     /**
      * @return \DateTime|null
      */
-    public function getEmailDatetime(): ?\DateTime
+    public function getEmailDatetime()
     {
         return $this->emailDatetime;
     }
@@ -306,7 +306,7 @@ class BillInfo
     /**
      * @param \DateTime|null $emailDatetime
      */
-    public function setEmailDatetime(?\DateTime $emailDatetime): void
+    public function setEmailDatetime($emailDatetime)
     {
         $this->emailDatetime = $emailDatetime;
     }
@@ -314,7 +314,7 @@ class BillInfo
     /**
      * @return \DateTime|null
      */
-    public function getRegDatetime(): ?\DateTime
+    public function getRegDatetime()
     {
         return $this->regDatetime;
     }
@@ -322,7 +322,7 @@ class BillInfo
     /**
      * @param \DateTime|null $regDatetime
      */
-    public function setRegDatetime(?\DateTime $regDatetime): void
+    public function setRegDatetime($regDatetime)
     {
         $this->regDatetime = $regDatetime;
     }

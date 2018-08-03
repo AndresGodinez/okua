@@ -48,7 +48,7 @@ class GetLastBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param int $limit
      */
-    public function setLimit(int $limit): void
+    public function setLimit(int $limit)
     {
         $this->limit = $limit;
     }

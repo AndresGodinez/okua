@@ -80,7 +80,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     /**
      * @param string $startDatetime
      */
-    public function setStartDatetime(string $startDatetime): void
+    public function setStartDatetime(string $startDatetime)
     {
         $this->startDatetime = $startDatetime;
     }
@@ -96,7 +96,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     /**
      * @param string $endDatetime
      */
-    public function setEndDatetime(string $endDatetime): void
+    public function setEndDatetime(string $endDatetime)
     {
         $this->endDatetime = $endDatetime;
     }
@@ -112,7 +112,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     /**
      * @param string $clientRfc
      */
-    public function setClientRfc(string $clientRfc): void
+    public function setClientRfc(string $clientRfc)
     {
         $this->clientRfc = $clientRfc;
     }
@@ -128,7 +128,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     /**
      * @param float $initialAmount
      */
-    public function setInitialAmount(float $initialAmount): void
+    public function setInitialAmount(float $initialAmount)
     {
         $this->initialAmount = $initialAmount;
     }
@@ -144,7 +144,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     /**
      * @param float $finalAmount
      */
-    public function setFinalAmount(float $finalAmount): void
+    public function setFinalAmount(float $finalAmount)
     {
         $this->finalAmount = $finalAmount;
     }

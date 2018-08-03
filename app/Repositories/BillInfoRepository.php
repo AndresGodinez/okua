@@ -98,8 +98,8 @@ class BillInfoRepository extends EntityRepository
     public function getFilteredRegisters(
         int $limit,
         int $offset,
-        ?\DateTime $startDatetime,
-        ?\DateTime $endDatetime,
+        $startDatetime,
+        $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
         float $finalAmount = 0.00
@@ -127,8 +127,8 @@ class BillInfoRepository extends EntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getFilteredRegistersCount(
-        ?\DateTime $startDatetime,
-        ?\DateTime $endDatetime,
+        $startDatetime,
+        $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
         float $finalAmount = 0.00
@@ -143,8 +143,8 @@ class BillInfoRepository extends EntityRepository
 
     private function prepareFilteredRegistersQuery(
         QueryBuilder &$qb,
-        ?\DateTime $startDatetime,
-        ?\DateTime $endDatetime,
+        $startDatetime,
+        $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
         float $finalAmount = 0.00
