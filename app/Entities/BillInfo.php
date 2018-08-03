@@ -71,6 +71,9 @@ class BillInfo
     /** @var null|\DateTime */
     private $regDatetime;
 
+    /** @var string */
+    private $filesPath;
+
     /**
      * @return int|null
      */
@@ -325,6 +328,22 @@ class BillInfo
     public function setRegDatetime($regDatetime)
     {
         $this->regDatetime = $regDatetime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilesPath()
+    {
+        return $this->filesPath;
+    }
+
+    /**
+     * @param string $filesPath
+     */
+    public function setFilesPath($filesPath)
+    {
+        $this->filesPath = $filesPath;
     }
 
     /**

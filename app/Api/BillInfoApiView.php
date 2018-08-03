@@ -214,4 +214,56 @@ class BillInfoApiView extends BaseApiView
 
         return $response;
     }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface|\Zend\Diactoros\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getBillInfoXml(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
+
+        $billInfoId = $args['billInfoId'] ?? 0;
+
+        /** @var BillInfo $register */
+        $register = $this->em->find(BillInfo::class, $billInfoId);
+
+        $filePath = $register->getFilesPath();
+        $uuid = $register->getUuid();
+        $baseDir = "{$filesDoneDir}{$filePath}/{$uuid}.xml";
+
+
+        $response = ResponseUtils::setXmlFileResponse($baseDir, "{$uuid}.xml");
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
+    public function getBillInfoPdf(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
+
+        $billInfoId = $args['billInfoId'] ?? 0;
+
+        $register = $this->em->find(BillInfo::class, $billInfoId);
+
+        $filePath = $register->getFilesPath();
+        $uuid = $register->getUuid();
+        $baseDir = "{$filesDoneDir}{$filePath}/{$uuid}.pdf";
+
+        $response = ResponseUtils::setPdfFileResponse($baseDir, "{$uuid}.pdf");
+        return $response;
+    }
 }

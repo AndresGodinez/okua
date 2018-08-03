@@ -26,6 +26,8 @@ class SiteRouter
     {
         $route = new RouteCollection($container);
 
+        $route->addPatternMatcher('regId', '[1-9][0-9]*');
+
         $route->map('GET', '/', function ($request, $response) {
             return new RedirectResponse('/app');
         });
@@ -52,6 +54,8 @@ class SiteRouter
             $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
 
             $group->map('GET', '/bill-info', BillInfoApiView::class . '::getFilteredBillInfoRegisters');
+            $group->map('GET', '/bill-info/{billInfoId:regId}/xml', BillInfoApiView::class . '::getBillInfoXml');
+            $group->map('GET', '/bill-info/{billInfoId:regId}/pdf', BillInfoApiView::class . '::getBillInfoPdf');
             $group->map('GET', '/bill-info/count', BillInfoApiView::class . '::getFilteredBillInfoRegistersCount');
 
             $group->map('GET', '/bill-info/total', BillInfoApiView::class . '::getBillsTotal');

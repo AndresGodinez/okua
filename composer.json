@@ -18,7 +18,7 @@
     }
   },
   "require": {
-    "php" : ">=7.0",
+    "php" : ">=7.0.25",
     "league/container": "^2.4",
     "league/fractal": "^0.17.0",
     "league/route": "^3.0",

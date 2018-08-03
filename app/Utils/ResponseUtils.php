@@ -83,6 +83,27 @@ class ResponseUtils
 
         $response = new Response($stream, 200, [
             'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'Content-Length' => $fileSize,
+            'Content-Transfer-Encoding' => 'binary',
+            'Pragma' => 'public',
+        ]);
+
+        return $response;
+    }
+
+    /**
+     * @param string $pdfFile
+     * @param string $filename
+     * @return Response
+     */
+    public static function setXmlFileResponse(string $pdfFile, string $filename)
+    {
+        $stream = new Stream($pdfFile, 'r');
+        $fileSize = $stream->getSize();
+
+        $response = new Response($stream, 200, [
+            'Content-Type' => 'application/xml',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
             'Content-Length' => $fileSize,
             'Content-Transfer-Encoding' => 'binary',

@@ -46,6 +46,7 @@ class BillInfoMetadataBuilder
         $builder->createField('stampDatetime', 'datetime')->columnName('stamp_datetime')->build();
         $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();
         $builder->createField('regDatetime', 'datetime')->columnName('reg_datetime')->build();
+        $builder->createField('filesPath', 'string')->columnName('files_path')->build();
 
         $builder->addIndex(['cfdi_use_sat_code'], 's02_bill_info_cfdi_use_sat_code_index');
         $builder->addIndex(['document_datetime'], 's02_bill_info_document_datetime_index');
