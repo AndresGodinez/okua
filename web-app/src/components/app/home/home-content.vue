@@ -6,28 +6,7 @@
 
         <div class="flex flex-row w-full px-8">
             <div class="flex flex-col flex-grow px-4">
-                <div class="inline-flex mt-4 mb-2">
-                    <ul class="list-reset flex">
-                        <li>
-                            <div class="inline-block border border-theme-color-4 rounded-l px-4 py-2 cursor-pointer"
-                                 :class="[rangeFilter === 1 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
-                                 @click="rangeFilter = 1">Semana
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inline-block border border-theme-color-4 px-4 py-2 cursor-pointer"
-                                 :class="[rangeFilter === 2 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
-                                 @click="rangeFilter = 2">Mes
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inline-block border border-theme-color-4 rounded-r px-4 py-2 cursor-pointer"
-                                 :class="[rangeFilter === 3 ? 'bg-theme-color-4 text-white' : 'text-theme-color-4-darker']"
-                                 @click="rangeFilter = 3">Año
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <datetime-range-filters />
 
                 <div class="flex flex-row w-full justify-center mt-4">
                     <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3">
@@ -152,16 +131,7 @@
 <script>
   import AppNavbar from "../../shared/app-navbar";
   import AppMenu from "../../shared/app-menu";
-  import {
-    faAt,
-    faBoxes,
-    faClock,
-    faEnvelope,
-    faMoneyBill,
-    faUsers,
-    faCaretDown,
-    faCaretUp
-  } from '@fortawesome/free-solid-svg-icons';
+  import {faAt, faBoxes, faClock, faEnvelope, faMoneyBill, faUsers} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
   import moment from 'moment-es6';
   import AnimatedNumber from "animated-number-vue";
@@ -170,6 +140,7 @@
   import TableGroupByCfdiUse from "./table-group-by-cfdi-use";
   import TableGroupByEmail from "./table-group-by-email";
   import RouteUtils from "../../../js/utils/route-utils";
+  import DatetimeRangeFilters from "./datetime-range-filters";
 
   const data = function () {
     let updatedDate = moment().format('lll');
@@ -228,6 +199,7 @@
 
     name: "home-content",
     components: {
+      DatetimeRangeFilters,
       TableGroupByEmail,
       TableGroupByCfdiUse,
       TableGroupByClient,
@@ -241,5 +213,3 @@
     },
   }
 </script>
-<style scoped>
-</style>
