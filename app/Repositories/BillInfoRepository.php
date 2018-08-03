@@ -141,6 +141,48 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function getRegistersGroupedByClientAndFilter($filter)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a.emitterName', 'a.emitterRfc', 'SUM(a.total) AS amount');
+        $qb->where('a.type = :type');
+        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+        $qb->orderBy('a.emitterRfc', 'ASC');
+        $qb->groupBy('a.emitterRfc');
+
+        $now = new \DateTime();
+        $startDatetime = clone $now;
+        $endDatetime = clone $now;
+
+        if ($filter == RangeTimeFilter::FILTER_WEEK) {
+            $startDatetime->modify('monday this week');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('sunday this week');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_MONTH) {
+            $startDatetime->modify('first day of this month');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of this month');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_YEAR) {
+            $startDatetime->modify('first day of january');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of december');
+            $endDatetime->setTime(23, 59, 59);
+        }
+
+        $qb->setParameters([
+            'type' => 'I',
+            'startDatetime' => $startDatetime,
+            'endDatetime' => $endDatetime,
+        ]);
+
+        return $qb->getQuery()->execute();
+    }
+
     private function prepareFilteredRegistersQuery(
         QueryBuilder &$qb,
         $startDatetime,

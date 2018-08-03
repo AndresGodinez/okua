@@ -18,6 +18,7 @@ use App\Repositories\BillInfoRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\BillInfoEmailItemTransformer;
 use App\Transformers\BillInfoEntityTransformer;
+use App\Transformers\BillInfoGroupByClientItemTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -70,10 +71,12 @@ class BillInfoApiView extends BaseApiView
 
         $registers = $repo->getRegistersGroupedByClientAndFilter($requestData->getFilter());
 
-        \error_log(\print_r($registers, true));
+        $manager = new Manager();
+        $resource = new Collection($registers, new BillInfoGroupByClientItemTransformer());
+        $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
-        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+        $response->getBody()->write($data);
 
         return $response;
     }
