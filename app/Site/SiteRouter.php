@@ -34,6 +34,7 @@ class SiteRouter
         $route->group('/app', function (RouteGroup $group) {
             $group->get('/login', LoginView::class . '::index');
 
+            $group->get('/', HomeView::class . '::index');
             $group->get('/home', HomeView::class . '::index');
             $group->get('/dashboard', HomeView::class . '::index');
 
