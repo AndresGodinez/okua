@@ -6,16 +6,21 @@ export default class BillsInfoTableRow {
    *
    * @param {Object} obj
    * @param {number} obj.id
-   * @param {string} obj.clientName
-   * @param {string} obj.clientRfc
+   * @param {string} obj.email
+   * @param {string} obj.emitterName
+   * @param {string} obj.emitterRfc
    * @param {string} obj.uuid
-   * @param {string} obj.cfdiUseName
    * @param {string} obj.cfdiUseSatCode
-   * @param {string} obj.documentDatetime
-   * @param {string} obj.emailDatetime
-   * @param {string} obj.stampDatetime
+   * @param {number} obj.subtotal
+   * @param {number} obj.discount
    * @param {number} obj.total
    * @param {string} obj.currency
+   * @param {string} obj.type
+   * @param {string} obj.paymentType
+   * @param {string} obj.documentDatetime
+   * @param {string} obj.stampDatetime
+   * @param {string} obj.emailDatetime
+   * @param {string} obj.regDatetime
    *
    * @return BillsInfoTableRow
    */
@@ -23,10 +28,10 @@ export default class BillsInfoTableRow {
     let register = new BillsInfoTableRow();
 
     register.id = obj.id;
-    register.clientName = obj.clientName;
-    register.clientRfc = obj.clientRfc;
+    register.clientName = obj.emitterName;
+    register.clientRfc = obj.emitterRfc;
     register.uuid = obj.uuid;
-    register.cfdiUseName = obj.cfdiUseName;
+    register.cfdiUseName = '';
     register.cfdiUseSatCode = obj.cfdiUseSatCode;
     register.documentDatetime = obj.documentDatetime;
     register.emailDatetime = obj.emailDatetime;

@@ -109,6 +109,8 @@ class BillInfoRepository extends EntityRepository
         $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
 
         $qb->orderBy('a.emailDatetime', 'DESC');
+        $qb->setMaxResults($limit);
+        $qb->setFirstResult($offset);
 
         return $qb->getQuery()->execute();
     }

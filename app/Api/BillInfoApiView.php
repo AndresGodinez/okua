@@ -11,6 +11,7 @@ namespace App\Api;
 
 use App\Entities\BillInfo;
 use App\Models\GetBillsTotalRequestData;
+use App\Models\GetFilteredBillInfoRegistersCountRequestData;
 use App\Models\GetFilteredBillInfoRegistersRequestData;
 use App\Models\GetLastBillInfoRegistersRequestData;
 use App\Repositories\BillInfoRepository;
@@ -194,7 +195,7 @@ class BillInfoApiView extends BaseApiView
      */
     public function getFilteredBillInfoRegistersCount(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetFilteredBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetFilteredBillInfoRegistersCountRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var BillInfoRepository $repo */
@@ -209,7 +210,7 @@ class BillInfoApiView extends BaseApiView
         );
 
         ResponseUtils::addContentTypeJsonHeader($response);
-        $response->getBody()->write(\json_encode(['count' => $result]));
+        $response->getBody()->write(\json_encode(['count' => (int)$result]));
 
         return $response;
     }

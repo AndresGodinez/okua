@@ -6,8 +6,10 @@ import "v2-table/dist/index.css";
 import V2Table from 'v2-table';
 import "../../shared/currency-filter";
 import { Settings } from 'luxon'
+import moment from "moment-es6";
 
 Settings.defaultLocale = 'es';
+moment.locale('es-LA');
 
 Vue.use(V2Table);
 
