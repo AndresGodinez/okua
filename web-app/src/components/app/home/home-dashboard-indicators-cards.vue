@@ -77,6 +77,10 @@
   };
 
   const computed = {
+    forceUpdateByNewRegisters() {
+      return this.$store.state.section.forceUpdateByNewRegisters;
+    },
+
     datetimeRangeFilter() {
       return this.$store.state.section.datetimeRangeFilter;
     },
@@ -88,6 +92,10 @@
 
   const watch = {
     datetimeRangeFilter() {
+      this.dispatchGetBillsTotal();
+    },
+
+    forceUpdateByNewRegisters() {
       this.dispatchGetBillsTotal();
     },
   };
