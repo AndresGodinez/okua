@@ -58,6 +58,8 @@
             if (oldItem.email !== newItem.email || oldItem.emailDatetime !== newItem.emailDatetime) {
               this.$store.dispatch('toggleForceUpdateByNewRegisters');
             }
+          } else if (!!newData && (!this.lastEmailsData || !this.lastEmailsData.length)) {
+            this.$store.dispatch('toggleForceUpdateByNewRegisters');
           }
 
           this.lastEmailsData = response.data;
