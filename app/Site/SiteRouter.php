@@ -50,10 +50,16 @@ class SiteRouter
 
             $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
 
+            $group->map('GET', '/bill-info', BillInfoApiView::class . '::getFilteredBillInfoRegisters');
+            $group->map('GET', '/bill-info/count', BillInfoApiView::class . '::getFilteredBillInfoRegistersCount');
+
             $group->map('GET', '/bill-info/total', BillInfoApiView::class . '::getBillsTotal');
+
             $group->map('GET', '/bill-info/group-by/client', BillInfoApiView::class . '::getBillsInfoGroupByClient');
             $group->map('GET', '/bill-info/group-by/cfdi-use', BillInfoApiView::class . '::getBillsInfoGroupByCfdiUse');
             $group->map('GET', '/bill-info/group-by/email', BillInfoApiView::class . '::getBillsInfoGroupByEmail');
+
+            $group->map('GET', '/bill-info/last-registers', BillInfoApiView::class . '::getLastBillInfoRegisters');
         })
             ->setScheme('http');
 

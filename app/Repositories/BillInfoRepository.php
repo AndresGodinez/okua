@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Models\RangeTimeFilter;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class BillInfoRepository
@@ -66,5 +67,120 @@ class BillInfoRepository extends EntityRepository
 
 
         return $total;
+    }
+
+    /**
+     * @param $limit
+     * @return mixed
+     */
+    public function getLastRegistersGroupedByEmail($limit)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a.email', 'a.emailDatetime');
+        $qb->orderBy('a.emailDatetime', 'DESC');
+        $qb->groupBy('a.email');
+        $qb->groupBy('a.emailDatetime');
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @param \DateTime|null $startDatetime
+     * @param \DateTime|null $endDatetime
+     * @param string $emitterRfc
+     * @param float $initialAmount
+     * @param float $finalAmount
+     * @return mixed
+     */
+    public function getFilteredRegisters(
+        int $limit,
+        int $offset,
+        ?\DateTime $startDatetime,
+        ?\DateTime $endDatetime,
+        string $emitterRfc = '',
+        float $initialAmount = 0.00,
+        float $finalAmount = 0.00
+    ) {
+        $qb = $this->createQueryBuilder('a');
+
+        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
+
+        $qb->orderBy('a.emailDatetime', 'DESC');
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @param \DateTime|null $startDatetime
+     * @param \DateTime|null $endDatetime
+     * @param string $emitterRfc
+     * @param float $initialAmount
+     * @param float $finalAmount
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getFilteredRegistersCount(
+        ?\DateTime $startDatetime,
+        ?\DateTime $endDatetime,
+        string $emitterRfc = '',
+        float $initialAmount = 0.00,
+        float $finalAmount = 0.00
+    ) {
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('COUNT(a.id) AS total');
+
+        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function prepareFilteredRegistersQuery(
+        QueryBuilder &$qb,
+        ?\DateTime $startDatetime,
+        ?\DateTime $endDatetime,
+        string $emitterRfc = '',
+        float $initialAmount = 0.00,
+        float $finalAmount = 0.00
+    )
+    {
+        $qb->where('a.type = :type');
+        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+
+        if (!!$emitterRfc) {
+            $qb->andWhere('a.emitterRfc = :emitterRfc');
+        }
+
+        if ($initialAmount > 0) {
+            $qb->andWhere('a.total >= :initialAmount');
+        }
+
+        if ($finalAmount > 0) {
+            $qb->andWhere('a.total <= :finalAmount');
+        }
+
+        $parameters = [
+            'type' => 'I',
+            'startDatetime' => $startDatetime,
+            'endDatetime' => $endDatetime,
+        ];
+
+        if (!!$emitterRfc) {
+            $parameters['emitterRfc'] = $emitterRfc;
+        }
+
+        if ($initialAmount > 0) {
+            $parameters['initialAmount'] = $initialAmount;
+        }
+
+        if ($finalAmount > 0) {
+            $parameters['finalAmount'] = $finalAmount;
+        }
+
+        $qb->setParameters($parameters);
     }
 }
