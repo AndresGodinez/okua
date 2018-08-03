@@ -11,7 +11,7 @@
             </div>
             <div class="w-full flex justify-end">
                 <animated-number
-                        :value="totalBills"
+                        :value="billsTotal"
                         :duration="700"
                         :formatValue="formatTotalBills"
                         easing="easeInOutCubic"
@@ -30,6 +30,7 @@
   import {faMoneyBill} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
   import {formatMoney} from "accounting-js";
+  import BillInfoService from "../../../js/services/bill-info-service";
 
   const data = function () {
     let updatedDate = moment().format('lll');
@@ -37,7 +38,7 @@
     return {
       updatedDate,
 
-      totalBills: 0,
+      billsTotal: 0,
     };
   };
 
@@ -45,11 +46,49 @@
     formatTotalBills(value) {
       return formatMoney(value, {precision: 2, thousand: ',', decimal: '.', symbol: '$'});
     },
+
+    dispatchGetBillsTotal() {
+      let filter = '';
+
+      if (this.datetimeRangeFilter === 1) {
+        filter = 'week';
+      } else if (this.datetimeRangeFilter === 2) {
+        filter = 'month';
+      } else if (this.datetimeRangeFilter === 3) {
+        filter = 'year';
+      }
+
+      this.getBillsTotal(filter)
+        .then((response) => {
+          this.billsTotal = response.total;
+          this.updateUpdatedDate();
+        });
+    },
+
+    async getBillsTotal(filter) {
+      let service = new BillInfoService();
+      let response = await service.getBillsTotal(filter);
+      return response;
+    },
+
+    updateUpdatedDate() {
+      this.updatedDate = moment().format('lll');
+    },
   };
 
   const computed = {
+    datetimeRangeFilter() {
+      return this.$store.state.section.datetimeRangeFilter;
+    },
+
     iconBillstTotal() {
       return faMoneyBill;
+    },
+  };
+
+  const watch = {
+    datetimeRangeFilter() {
+      this.dispatchGetBillsTotal();
     },
   };
 
@@ -57,6 +96,7 @@
     data,
     methods,
     computed,
+    watch,
 
     name: 'home-dashboard-indicators-cards',
     components: {
@@ -64,7 +104,7 @@
       FontAwesomeIcon,
     },
     mounted() {
-      setTimeout(() => this.totalBills = 1000, 1000);
+      setTimeout(() => this.dispatchGetBillsTotal(), 50);
     },
   }
 </script>
