@@ -71,6 +71,13 @@
         <phingcall target="rm-dist-vendor" />
         <mkdir dir="${distVendorPath}" />
 
+        <copy todir="${distVendorPath}/bin">
+            <fileset dir="vendor/bin">
+                <include name="doctrine" />
+                <include name="doctrine-dbal" />
+            </fileset>
+        </copy>
+
         <copy todir="${distVendorPath}/composer">
             <fileset dir="vendor/composer">
                 <include name="**" />
@@ -83,6 +90,58 @@
                 <include name="container-interop/LICENSE" />
                 <include name="container-interop/README*" />
                 <include name="container-interop/src/**/" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/doctrine">
+            <fileset dir="vendor/doctrine">
+                <include name="annotations/lib/**" />
+                <include name="annotations/LICENSE*" />
+                <include name="annotations/README*" />
+
+                <include name="cache/lib/**" />
+                <include name="cache/LICENSE*" />
+                <include name="cache/README*" />
+
+                <include name="collections/lib/**" />
+                <include name="collections/LICENSE*" />
+                <include name="collections/README*" />
+
+                <include name="common/lib/**" />
+                <include name="common/LICENSE*" />
+                <include name="common/README*" />
+
+                <include name="dbal/lib/**" />
+                <include name="dbal/LICENSE*" />
+                <include name="dbal/README*" />
+
+                <include name="event-manager/lib/**" />
+                <include name="event-manager/LICENSE*" />
+                <include name="event-manager/README*" />
+
+                <include name="inflector/lib/**" />
+                <include name="inflector/LICENSE*" />
+                <include name="inflector/README*" />
+
+                <include name="instantiator/src/**" />
+                <include name="instantiator/LICENSE*" />
+                <include name="instantiator/README*" />
+
+                <include name="lexer/lib/**" />
+                <include name="lexer/LICENSE*" />
+                <include name="lexer/README*" />
+
+                <include name="orm/lib/**" />
+                <include name="orm/LICENSE*" />
+                <include name="orm/README*" />
+
+                <include name="persistence/lib/**" />
+                <include name="persistence/LICENSE*" />
+                <include name="persistence/README*" />
+
+                <include name="reflection/lib/**" />
+                <include name="reflection/LICENSE*" />
+                <include name="reflection/README*" />
             </fileset>
         </copy>
 
@@ -109,6 +168,9 @@
                 <include name="container/LICENSE*" />
                 <include name="container/README*" />
 
+                <include name="flysystem/src/**" />
+                <include name="flysystem/LICENSE*" />
+
                 <include name="fractal/src/**" />
                 <include name="fractal/LICENSE*" />
 
@@ -129,6 +191,14 @@
                 <include name="src/**" />
                 <include name="LICENSE" />
                 <include name="README.md" />
+            </fileset>
+        </copy>
+
+        <copy todir="${distVendorPath}/myclabs">
+            <fileset dir="vendor/myclabs">
+                <include name="deep-copy/src/**" />
+                <include name="deep-copy/LICENSE*" />
+                <include name="deep-copy/README*" />
             </fileset>
         </copy>
 
@@ -154,10 +224,34 @@
 
         <copy todir="${distVendorPath}/symfony">
             <fileset dir="vendor/symfony">
+                <include name="console/Command/**" />
+                <include name="console/DependencyInjection/**" />
+                <include name="console/Descriptor/**" />
+                <include name="console/Event/**" />
+                <include name="console/EventListener/**" />
+                <include name="console/Exception/**" />
+                <include name="console/Formatter/**" />
+                <include name="console/Helper/**" />
+                <include name="console/Input/**" />
+                <include name="console/Logger/**" />
+                <include name="console/Output/**" />
+                <include name="console/Question/**" />
+                <include name="console/Resources/**" />
+                <include name="console/Style/**" />
+                <include name="console/Tester/**" />
+                <include name="console/*.php" />
+                <include name="console/LICENSE" />
+                <include name="console/README*" />
+
                 <include name="polyfill-ctype/bootstrap.php" />
                 <include name="polyfill-ctype/Ctype.php" />
                 <include name="polyfill-ctype/LICENSE*" />
                 <include name="polyfill-ctype/README*" />
+
+                <include name="polyfill-mbstring/Resources/**" />
+                <include name="polyfill-mbstring/*.php" />
+                <include name="polyfill-mbstring/LICENSE" />
+                <include name="polyfill-mbstring/README*" />
 
                 <include name="yaml/Command/**" />
                 <include name="yaml/Exception/**" />
