@@ -9,6 +9,7 @@
 namespace App\Site;
 
 use App\Api\BillInfoApiView;
+use App\Api\BillInfoClientApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
 use App\Views\BillsView;
@@ -65,6 +66,8 @@ class SiteRouter
             $group->map('GET', '/bill-info/group-by/email', BillInfoApiView::class . '::getBillsInfoGroupByEmail');
 
             $group->map('GET', '/bill-info/last-registers', BillInfoApiView::class . '::getLastBillInfoRegisters');
+
+            $group->map('GET', 'bill-info-client', BillInfoClientApiView::class. '::getRegistersOrderedByName');
         })
             ->setScheme('http');
 

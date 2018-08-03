@@ -11,6 +11,7 @@ namespace App\Site\ServicesProviders;
 
 use App\Api\BaseApiView;
 use App\Api\BillInfoApiView;
+use App\Api\BillInfoClientApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -29,6 +30,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         TestApiView::class,
         UserAuthApiView::class,
         BillInfoApiView::class,
+        BillInfoClientApiView::class,
     ];
 
     /**
@@ -47,6 +49,10 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
 
         $container
             ->add(BillInfoApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
+
+        $container
+            ->add(BillInfoClientApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
     }
 
