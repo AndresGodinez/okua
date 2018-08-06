@@ -3,14 +3,25 @@ import moment from "moment-es6";
 let startDatetime = moment().hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
 let endDatetime = moment().hour(23).minute(59).second(59).format('YYYY-MM-DD HH:mm:ss');
 
+let clientRfc = '';
+let initialAmount = 0;
+let finalAmount = 0;
+
 const types = {
   SET_START_DATETIME_FILTER: 'SET_START_DATETIME_FILTER',
   SET_END_DATETIME_FILTER: 'SET_END_DATETIME_FILTER',
+  SET_CLIENT_RFC_FILTER: 'SET_CLIENT_RFC_FILTER',
+  SET_INITIAL_AMOUNT_FILTER: 'SET_INITIAL_AMOUNT_FILTER',
+  SET_FINAL_AMOUNT_FILTER: 'SET_FINAL_AMOUNT_FILTER',
 };
 
 const state = {
   startDatetime,
   endDatetime,
+
+  clientRfc,
+  initialAmount,
+  finalAmount,
 };
 
 const getters = {
@@ -24,6 +35,18 @@ const actions = {
   changeEndDatetimeFilter({commit}, value) {
     commit(types.SET_END_DATETIME_FILTER, value);
   },
+
+  changeClientRfcFilter({commit}, value) {
+    commit(types.SET_CLIENT_RFC_FILTER, value);
+  },
+
+  changeInitialAmountFilter({commit}, value) {
+    commit(types.SET_INITIAL_AMOUNT_FILTER, value);
+  },
+
+  changeFinalAmountFilter({commit}, value) {
+    commit(types.SET_FINAL_AMOUNT_FILTER, value);
+  },
 };
 
 const mutations = {
@@ -33,6 +56,18 @@ const mutations = {
 
   [types.SET_END_DATETIME_FILTER](state, value) {
     state.endDatetime = value;
+  },
+
+  [types.SET_CLIENT_RFC_FILTER](state, value) {
+    state.clientRfc = value;
+  },
+
+  [types.SET_INITIAL_AMOUNT_FILTER](state, value) {
+    state.initialAmount = value;
+  },
+
+  [types.SET_FINAL_AMOUNT_FILTER](state, value) {
+    state.finalAmount = value;
   },
 };
 

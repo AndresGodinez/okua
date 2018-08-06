@@ -15,10 +15,10 @@
                     <div class="inline-flex mt-4 ml-4">
                         <div class="flex-1 flex justify-center relative mx-2 shadow">
                             <select class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight uppercase"
-                                    id="cit-filters-client" v-model="client">
+                                    id="cit-filters-client" v-model="clientRfc"
+                                    @change="updateClientRfcFilter">
                                 <option value="" class="uppercase">Seleccionar</option>
-                                <option v-for="item in clientsData" v-bind:value="item.rfc" class="uppercase">{{
-                                    item.name }}
+                                <option v-for="item in clientsData" v-bind:value="item.emitterRfc" class="uppercase">{{ item.emitterName }}
                                 </option>
                             </select>
                             <select-caret/>
@@ -26,12 +26,16 @@
                         <div class="flex-1 flex justify-center mx-2">
                             <input type="number"
                                    class="shadow appearance-none border rounded w-full text-grey-darker leading-tight text-right px-4"
-                                   name="initial-amount" v-model="initialAmount">
+                                   name="initial-amount"
+                                   v-model="initialAmount"
+                                   @input="updateInitialAmountFilter">
                         </div>
                         <div class="flex-1 flex justify-center mx-2">
                             <input type="number"
                                    class="shadow appearance-none border rounded w-full text-grey-darker leading-tight text-right px-4"
-                                   name="final-amount" v-model="finalAmount">
+                                   name="final-amount"
+                                   v-model="finalAmount"
+                                   @input="updateFinalAmountFilter">
                         </div>
                     </div>
                     <div class="flex justify-end px-4 mt-4">
@@ -51,18 +55,14 @@
   import SelectCaret from "../../shared/select-caret"
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
   import {faFilter} from '@fortawesome/free-solid-svg-icons';
+  import BillInfoClientService from "../../../js/services/bill-info-client-service";
 
 
   const data = function () {
-    let clientsData = [
-      {rfc: 'TOSI830410YYY', name: 'Israel Torres'},
-      {rfc: 'MOYA000000YYY', name: 'Adán Morales'},
-    ];
-
     return {
-      clientsData,
+      clientsData: [],
 
-      client: '',
+      clientRfc: '',
       initialAmount: 0,
       finalAmount: 0,
     }
@@ -71,6 +71,28 @@
   const methods = {
     dispatchGetFilteredTableData() {
 
+    },
+
+    dispatchGetClientsData() {
+      this.getClientsData()
+        .then(response => this.clientsData = response.data);
+    },
+
+    async getClientsData(limit = 5) {
+      let service = new BillInfoClientService();
+      return await service.getRegistersOrderedByName();
+    },
+    
+    updateClientRfcFilter(value) {
+      this.$store.dispatch('changeClientRfcFilter', value)
+    },
+    
+    updateInitialAmountFilter(value) {
+      this.$store.dispatch('changeInitialAmountFilter', value)
+    },
+    
+    updateFinalAmountFilter(value) {
+      this.$store.dispatch('changeFinalAmountFilter', value);
     },
   };
 
@@ -89,6 +111,9 @@
     components: {
       SelectCaret,
       FontAwesomeIcon,
+    },
+    mounted() {
+      setTimeout(() => this.dispatchGetClientsData(), 500);
     },
   }
 </script>
