@@ -16,15 +16,6 @@
                     {{item.emailDatetime}}
                 </span>
             </div>
-
-            <div class="w-full mt-4">
-                <button v-ripple
-                        class="w-full text-center h-10 px-4 bg-theme-color-4 hover:bg-theme-color-4-lighter text-white rounded"
-                        @click="goBills">
-                    <font-awesome-icon :icon="iconGoBills"/>
-                    <span class="ml-2 uppercase">Ir a facturas</span>
-                </button>
-            </div>
         </div>
     </div>
 </template>
@@ -42,10 +33,6 @@
   };
 
   const methods = {
-    goBills() {
-      RouteUtils.goBills();
-    },
-
     dispatchGetLastEmails() {
       this.getLastEmails()
         .then(response => {
