@@ -1,22 +1,22 @@
 /**
- * @class BillInfoGroupByClientResponse
+ * @class BillInfoGroupByCfdiUseResponse
  */
 import BillInfoLastRegisterItem from "./bill-info-last-register-item";
-import GroupByClientTableRow from "./group-by-client-table-row";
+import GroupByCfdiUseTableRow from "./group-by-cfdi-use-table-row";
 
-export default class BillInfoGroupByClientResponse {
+export default class BillInfoGroupByCfdiUseResponse {
   /**
    *
    * @param {Object} obj
    * @param {Array} obj.data
    *
-   * @return BillInfoGroupByClientResponse
+   * @return BillInfoGroupByCfdiUseResponse
    */
   static makeFromObject(obj) {
-    let inst = new BillInfoGroupByClientResponse();
+    let inst = new BillInfoGroupByCfdiUseResponse();
 
     for (let item of obj.data) {
-      let register = GroupByClientTableRow.makeFromObject(item);
+      let register = GroupByCfdiUseTableRow.makeFromObject(item);
       inst.data.push(register);
     }
 
@@ -25,7 +25,7 @@ export default class BillInfoGroupByClientResponse {
 
   constructor() {
     /**
-     * @memberOf BillInfoGroupByClientResponse
+     * @memberOf BillInfoGroupByCfdiUseResponse
      * @type {GroupByClientTableRow[]}
      */
     this.data = [];

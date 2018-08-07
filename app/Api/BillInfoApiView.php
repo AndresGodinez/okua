@@ -18,7 +18,9 @@ use App\Repositories\BillInfoRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\BillInfoEmailItemTransformer;
 use App\Transformers\BillInfoEntityTransformer;
+use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
 use App\Transformers\BillInfoGroupByClientItemTransformer;
+use App\Transformers\BillInfoGroupByEmailItemTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -97,10 +99,12 @@ class BillInfoApiView extends BaseApiView
 
         $registers = $repo->getRegistersGroupedByCfdiUseAndFilter($requestData->getFilter());
 
-        \error_log(\print_r($registers, true));
+        $manager = new Manager();
+        $resource = new Collection($registers, new BillInfoGroupByCfdiUseItemTransformer());
+        $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
-        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+        $response->getBody()->write($data);
 
         return $response;
     }
@@ -121,10 +125,12 @@ class BillInfoApiView extends BaseApiView
 
         $registers = $repo->getRegistersGroupedByEmailAndFilter($requestData->getFilter());
 
-        \error_log(\print_r($registers, true));
+        $manager = new Manager();
+        $resource = new Collection($registers, new BillInfoGroupByEmailItemTransformer());
+        $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
-        $response->getBody()->write(\json_encode(['total' => \count($registers)]));
+        $response->getBody()->write($data);
 
         return $response;
     }

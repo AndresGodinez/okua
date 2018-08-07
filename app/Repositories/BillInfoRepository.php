@@ -183,6 +183,88 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function getRegistersGroupedByCfdiUseAndFilter($filter){
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a.cfdiUseSatCode', 'SUM(a.total) AS amount');
+        $qb->where('a.type = :type');
+        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+        $qb->orderBy('a.cfdiUseSatCode', 'ASC');
+        $qb->groupBy('a.cfdiUseSatCode');
+
+        $now = new \DateTime();
+        $startDatetime = clone $now;
+        $endDatetime = clone $now;
+
+        if ($filter == RangeTimeFilter::FILTER_WEEK) {
+            $startDatetime->modify('monday this week');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('sunday this week');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_MONTH) {
+            $startDatetime->modify('first day of this month');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of this month');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_YEAR) {
+            $startDatetime->modify('first day of january');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of december');
+            $endDatetime->setTime(23, 59, 59);
+        }
+
+        $qb->setParameters([
+            'type' => 'I',
+            'startDatetime' => $startDatetime,
+            'endDatetime' => $endDatetime,
+        ]);
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function getRegistersGroupedByEmailAndFilter($filter){
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a.email', 'SUM(a.total) AS amount');
+        $qb->where('a.type = :type');
+        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+        $qb->orderBy('a.email', 'ASC');
+        $qb->groupBy('a.email');
+
+        $now = new \DateTime();
+        $startDatetime = clone $now;
+        $endDatetime = clone $now;
+
+        if ($filter == RangeTimeFilter::FILTER_WEEK) {
+            $startDatetime->modify('monday this week');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('sunday this week');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_MONTH) {
+            $startDatetime->modify('first day of this month');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of this month');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_YEAR) {
+            $startDatetime->modify('first day of january');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of december');
+            $endDatetime->setTime(23, 59, 59);
+        }
+
+        $qb->setParameters([
+            'type' => 'I',
+            'startDatetime' => $startDatetime,
+            'endDatetime' => $endDatetime,
+        ]);
+
+        return $qb->getQuery()->execute();
+    }
+
     private function prepareFilteredRegistersQuery(
         QueryBuilder &$qb,
         $startDatetime,

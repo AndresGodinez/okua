@@ -17,15 +17,12 @@
 </template>
 
 <script>
-  import GroupByEmailTableRow from "../../../js/models/group-by-email-table-row";
+  import BillInfoService from "../../../js/services/bill-info-service";
 
   const data = function () {
     let tableData = [
-      GroupByEmailTableRow.makeFromObject({email: 'israel.torres@connectit.com.mx', amount: 1000}),
-      GroupByEmailTableRow.makeFromObject({email: 'adan.morales@connectit.com.mx', amount: 1000}),
-      GroupByEmailTableRow.makeFromObject({email: 'carlos.hernandez@connectit.com.mx', amount: 1000}),
     ];
-    let tableTotal = tableData.length;
+    let tableTotal = 0;
     let tableLoading = false;
 
     return {
@@ -37,15 +34,66 @@
 
   const methods = {
     onPageChange(newPage) {
+    },
 
+    dispatchGetTableData() {
+      let filter = '';
+
+      if (this.datetimeRangeFilter === 1) {
+        filter = 'week';
+      } else if (this.datetimeRangeFilter === 2) {
+        filter = 'month';
+      } else if (this.datetimeRangeFilter === 3) {
+        filter = 'year';
+      }
+
+      this.tableLoading = true;
+
+      this.getTableData(filter)
+        .catch(error => console.error(error))
+        .then(() => this.tableLoading = false);
+    },
+
+    async getTableData(filter) {
+      let service = new BillInfoService();
+      let response = await service.getDataGroupedByEmailAndFilter(filter);
+
+      this.tableData = response.data;
+      this.tableTotal = this.tableData.length;
+
+      return response;
+    },
+  };
+
+  const computed = {
+    forceUpdateByNewRegisters() {
+      return this.$store.state.section.forceUpdateByNewRegisters;
+    },
+
+    datetimeRangeFilter() {
+      return this.$store.state.section.datetimeRangeFilter;
+    },
+  };
+
+  const watch = {
+    datetimeRangeFilter() {
+      this.dispatchGetTableData();
+    },
+
+    forceUpdateByNewRegisters() {
+      this.dispatchGetTableData();
     },
   };
 
   export default {
     data,
     methods,
-
-    name: "table-group-by-email"
+    computed,
+    watch,
+    name: "table-group-by-email",
+    mounted() {
+      setTimeout(() => this.dispatchGetTableData(), 500);
+    }
   }
 </script>
 
