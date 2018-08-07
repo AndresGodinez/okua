@@ -41,6 +41,8 @@ public/css/**
 public/images/**
 public/fonts/**
 
+tests/.phpunit.result.cache
+
 .git-branches/HEAD.bdesc
 .git-branches/dev.bdesc
 .git-branches/master.bdesc

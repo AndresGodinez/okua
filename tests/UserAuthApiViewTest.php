@@ -9,6 +9,7 @@
 namespace Tests;
 
 
+use App\Exceptions\ValidationException;
 use App\Site\SiteContainer;
 use League\Container\Container;
 use League\Route\RouteCollection;
@@ -31,8 +32,6 @@ class UserAuthApiViewTest extends TestCase
     {
         self::$container = SiteContainer::make();
 
-        self::$router = self::$container->get('router');
-
         if (!defined("BASE_DIR")) {
             define("BASE_DIR", \realpath(__DIR__ . "/../"));
         }
@@ -42,11 +41,31 @@ class UserAuthApiViewTest extends TestCase
         }
     }
 
+
+
+    protected function setUp()
+    {
+        self::$router = self::$container->get('router');
+    }
+
+    protected function tearDown()
+    {
+        self::$router = null;
+    }
+
     public function testUserAuthUpAndRunning()
     {
+        $this->expectException(ValidationException::class);
+
+        $request = TestUtils::makeServerRequestMock('POST', '/api/user/authenticate');
+        $response = self::$router->dispatch($request, self::$container->get('response'));
+    }
+
+    public function testAuthUserValidJwtResponse()
+    {
         $body = [
-            "username" => "admin",
-            "password" => "1",
+            "username" => "test",
+            "password" => "test",
         ];
 
         $request = TestUtils::makeServerRequestMock('POST', '/api/user/authenticate', [], $body);
@@ -57,5 +76,10 @@ class UserAuthApiViewTest extends TestCase
         $responseArray = \json_decode($response->getBody(), true);
         $this->assertArrayHasKey('token', $responseArray);
 
+
+        $re = '/^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)$/m';
+        $token = $responseArray['token'];
+
+        $this->assertRegExp($re, $token);
     }
 }
