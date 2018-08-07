@@ -2,7 +2,7 @@
     <div class="flex flex-col text-center pt-8">
         <loading :active.sync="isLoading" :can-cancel="false"></loading>
 
-        <div class="bg-blue-light w-1/3 m-auto mt-8 mb-8 p-6 rounded-lg">
+        <div class="bg-theme-color-4 w-1/3 m-auto mt-8 mb-8 p-6 rounded-lg">
             <h1 class="text-white font-sans font-normal">OKUA</h1>
         </div>
         <form @submit.prevent="" class="login-form w-1/3 m-auto mt-8 border-2 p-6 rounded-sm">
@@ -32,7 +32,7 @@
             </div>
             <div class="m-auto">
                 <button @click="dispatchAuthUser"
-                        class="pr-8 pl-8 shadow bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 rounded"
+                        class="pr-8 pl-8 shadow bg-theme-color-3 hover:bg-theme-color-3-dark text-white font-bold py-2 px-4 rounded"
                         type="button">
                     Login
                 </button>
