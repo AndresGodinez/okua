@@ -1,11 +1,11 @@
 <template>
-    <div class="flex flex-col w-1/5 flex-no-shrink mt-4 relative h-full">
+    <div class="flex flex-col w-1/5 flex-no-shrink mt-4 relative max-h-full">
         <div class="text-center bg-theme-color-4 rounded-sm shadow-md py-4 px-4">
             <span class="font-bold uppercase text-white w-full">&Uacute;ltimos correos</span>
         </div>
-        <div class="w-full flex flex-col overflow-y-auto">
+        <div class="w-full flex flex-col overflow-y-auto pb-4">
             <div v-for="item in lastEmailsData"
-                 class="flex flex-col w-full shadow p-4 mt-2 bg-theme-color-1 hover:bg-theme-color-1-dark">
+                 class="flex flex-col flex-no-shrink w-full shadow p-4 mt-2 bg-theme-color-1 hover:bg-theme-color-1-dark">
                 <span class="break-words text-sm py-2">
                     <font-awesome-icon :icon="iconReceivedEmail" class="mr-2"/>
                     {{item.email}}
@@ -34,7 +34,7 @@
 
   const methods = {
     dispatchGetLastEmails() {
-      this.getLastEmails()
+      this.getLastEmails(10)
         .then(response => {
           let newData = response.data;
 
