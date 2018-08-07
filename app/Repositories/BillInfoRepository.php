@@ -10,6 +10,7 @@ namespace App\Repositories;
 
 
 use App\Models\RangeTimeFilter;
+use App\Entities\CfdiUse;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -185,7 +186,11 @@ class BillInfoRepository extends EntityRepository
 
     public function getRegistersGroupedByCfdiUseAndFilter($filter){
         $qb = $this->createQueryBuilder('a');
-        $qb->select('a.cfdiUseSatCode', 'SUM(a.total) AS amount');
+        $qb->select('a.cfdiUseSatCode', 'b.name AS cfdiUseName', 'SUM(a.total) AS amount');
+        $qb->leftJoin(CfdiUse::class,
+                      'b',
+                       \Doctrine\ORM\Query\Expr\Join::WITH,
+                       'a.cfdiUseSatCode = b.satCode');
         $qb->where('a.type = :type');
         $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
         $qb->orderBy('a.cfdiUseSatCode', 'ASC');

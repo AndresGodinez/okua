@@ -26,7 +26,7 @@ class BillInfoGroupByCfdiUseItemTransformer extends TransformerAbstract
         return [
             'id' => 0,
             'cfdiUseSatCode' => $item['cfdiUseSatCode'],
-            'cfdiUseName' => $item['cfdiUseSatCode'],
+            'cfdiUseName' => $item['cfdiUseName'],
             'amount' => (float)$item['amount'],
         ];
     }
