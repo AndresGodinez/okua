@@ -28,14 +28,14 @@
                                    class="shadow appearance-none border rounded w-full text-grey-darker leading-tight text-right px-4"
                                    name="initial-amount"
                                    v-model="initialAmount"
-                                   @input="updateInitialAmountFilter">
+                                   @change="updateInitialAmountFilter">
                         </div>
                         <div class="flex-1 flex justify-center mx-2">
                             <input type="number"
                                    class="shadow appearance-none border rounded w-full text-grey-darker leading-tight text-right px-4"
                                    name="final-amount"
                                    v-model="finalAmount"
-                                   @input="updateFinalAmountFilter">
+                                   @change="updateFinalAmountFilter">
                         </div>
                     </div>
                     <div class="flex justify-end px-4 mt-4">
@@ -70,7 +70,7 @@
 
   const methods = {
     dispatchGetFilteredTableData() {
-
+      this.$store.dispatch('toggleDispatchBillsTableRefresh');
     },
 
     dispatchGetClientsData() {
@@ -82,17 +82,17 @@
       let service = new BillInfoClientService();
       return await service.getRegistersOrderedByName();
     },
-    
-    updateClientRfcFilter(value) {
-      this.$store.dispatch('changeClientRfcFilter', value)
+
+    updateClientRfcFilter() {
+      this.$store.dispatch('changeClientRfcFilter', this.clientRfc);
     },
     
-    updateInitialAmountFilter(value) {
-      this.$store.dispatch('changeInitialAmountFilter', value)
+    updateInitialAmountFilter() {
+      this.$store.dispatch('changeInitialAmountFilter', this.initialAmount);
     },
     
-    updateFinalAmountFilter(value) {
-      this.$store.dispatch('changeFinalAmountFilter', value);
+    updateFinalAmountFilter() {
+      this.$store.dispatch('changeFinalAmountFilter', this.finalAmount);
     },
   };
 

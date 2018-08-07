@@ -66,9 +66,21 @@
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
 
+      let clientRfc = this.clientRfc;
+      let initialAmount = this.initialAmount;
+      let finalAmount = this.finalAmount;
+
+      if (isNaN(Number(initialAmount)) || initialAmount === '') {
+        initialAmount = 0.00;
+      }
+
+      if (isNaN(Number(finalAmount)) || finalAmount === '') {
+        initialAmount = 0.00;
+      }
+
       this.tableLoading = true;
 
-      this.getTableData(page, limit, startDatetime, endDatetime)
+      this.getTableData(page, limit, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount)
         .then(() => {
           if (this.tableTotal === 0) {
             this.tablePaginationInfo.text = 'Mostrando 0 de 0 resultados.';
@@ -115,6 +127,22 @@
     endDatetime() {
       return this.$store.state.section.endDatetime;
     },
+
+    clientRfc() {
+      return this.$store.state.section.clientRfc;
+    },
+
+    initialAmount() {
+      return this.$store.state.section.initialAmount;
+    },
+
+    finalAmount() {
+      return this.$store.state.section.finalAmount;
+    },
+
+    dispatchBillsTableRefresh() {
+      return this.$store.state.section.dispatchBillsTableRefresh;
+    },
   };
 
   const watch = {
@@ -124,6 +152,11 @@
     },
 
     endDatetime() {
+      this.tablePage = 1;
+      this.dispatchGetTableData();
+    },
+
+    dispatchBillsTableRefresh() {
       this.tablePage = 1;
       this.dispatchGetTableData();
     },

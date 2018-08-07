@@ -13,6 +13,7 @@ const types = {
   SET_CLIENT_RFC_FILTER: 'SET_CLIENT_RFC_FILTER',
   SET_INITIAL_AMOUNT_FILTER: 'SET_INITIAL_AMOUNT_FILTER',
   SET_FINAL_AMOUNT_FILTER: 'SET_FINAL_AMOUNT_FILTER',
+  SET_DISPATCH_BILLS_TABLE_REFRESH: 'SET_DISPATCH_BILLS_TABLE_REFRESH',
 };
 
 const state = {
@@ -22,6 +23,8 @@ const state = {
   clientRfc,
   initialAmount,
   finalAmount,
+
+  dispatchBillsTableRefresh: false,
 };
 
 const getters = {
@@ -47,6 +50,10 @@ const actions = {
   changeFinalAmountFilter({commit}, value) {
     commit(types.SET_FINAL_AMOUNT_FILTER, value);
   },
+
+  toggleDispatchBillsTableRefresh({commit, state}) {
+    commit(types.SET_DISPATCH_BILLS_TABLE_REFRESH, !state.dispatchBillsTableRefresh);
+  },
 };
 
 const mutations = {
@@ -68,6 +75,10 @@ const mutations = {
 
   [types.SET_FINAL_AMOUNT_FILTER](state, value) {
     state.finalAmount = value;
+  },
+
+  [types.SET_DISPATCH_BILLS_TABLE_REFRESH](state, value) {
+    state.dispatchBillsTableRefresh = value;
   },
 };
 
