@@ -40,7 +40,7 @@ export default class TokenUtils {
     }
 
     // obteniendo jwt del storage
-    let jwt = "";`  `
+    let jwt = "";
     try {
       jwt = AES.decrypt(localStorage.token, KY).toString(Utf8);
       jwt = TokenUtils.tokenToBase64Str(jwt);

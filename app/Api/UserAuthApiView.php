@@ -49,8 +49,9 @@ class UserAuthApiView extends BaseApiView
             ];
             $res = $client->post($citzouServiceUri . '/authenticate', ['form_params' => $reqFormParams]);
         } catch (ClientException $cex) {
-            $content = ResponseUtils::getJsonContentFromResponse($cex->getResponse());
-            throw new RemoteApiException($content['msg'], $response->getStatusCode());
+            $badRemoteResponse = $cex->getResponse();
+            $content = ResponseUtils::getJsonContentFromResponse($badRemoteResponse);
+            throw new RemoteApiException($content['msg'], $badRemoteResponse->getStatusCode());
         }
 
         $resBody = $res->getBody()->getContents();
