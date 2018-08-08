@@ -110,7 +110,7 @@ class CfdiUse
     public function __toString()
     {
         return \sprintf(
-            '<User [id: %d, name: %s, satCode: %s, regStatus: %d]>',
+            '<CfdiUse [id: %d, name: %s, satCode: %s, regStatus: %d]>',
             !!$this->getId() ? $this->getId() : 0,
             $this->getName(),
             $this->getSatCode(),

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Entities\BillInfo;
+use App\Entities\CfdiUse;
 use App\Site\SiteContainer;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManager;
@@ -12,10 +12,10 @@ use PHPUnit\Framework\TestCase;
 
 
 /**
- * Class BillInfoEntityTest
+ * Class CfdiUseEntityTest
  * @package Tests
  */
-class BillInfoEntityTest extends TestCase
+class CfdiUseEntityTest extends TestCase
 {
     /** @var Container */
     protected static $container = null;
@@ -50,7 +50,7 @@ class BillInfoEntityTest extends TestCase
 
         self::$em = self::$container->get('entity-manager');
 
-        $classMetadata = self::$em->getClassMetadata(BillInfo::class);
+        $classMetadata = self::$em->getClassMetadata(CfdiUse::class);
         self::$em->getConnection()->exec('TRUNCATE ' . $classMetadata->getTableName());
     }
 
@@ -69,7 +69,7 @@ class BillInfoEntityTest extends TestCase
             self::$em = self::$container->get('entity-manager');
         }
 
-        $classMetadata = self::$em->getClassMetadata(BillInfo::class);
+        $classMetadata = self::$em->getClassMetadata(CfdiUse::class);
         self::$em->getConnection()->exec('ALTER TABLE ' . $classMetadata->getTableName() . ' AUTO_INCREMENT = 1');
 
         self::$em->getConnection()->beginTransaction();
@@ -89,12 +89,12 @@ class BillInfoEntityTest extends TestCase
      */
     public function testCreateRegister()
     {
-        /** @var BillInfo $register */
-        $register = self::$fm->instance(BillInfo::class);
+        /** @var CfdiUse $testRegister */
+        $testRegister = self::$fm->instance(CfdiUse::class);
 
-        self::$em->persist($register);
+        self::$em->persist($testRegister);
         self::$em->flush();
 
-        $this->assertEquals(1, $register->getId());
+        $this->assertEquals(1, $testRegister->getId());
     }
 }

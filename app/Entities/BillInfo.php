@@ -72,7 +72,7 @@ class BillInfo
     private $regDatetime;
 
     /** @var string */
-    private $filesPath;
+    private $filesPath = '';
 
     /**
      * @return int|null

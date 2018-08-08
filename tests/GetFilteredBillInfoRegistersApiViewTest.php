@@ -10,9 +10,11 @@ namespace Tests;
 
 
 use App\Entities\BillInfo;
+use App\Entities\CfdiUse;
 use App\Exceptions\ValidationException;
 use App\Site\SiteContainer;
 use App\Site\SiteRouter;
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use League\Container\Container;
@@ -65,8 +67,17 @@ class GetBillsTotalApiViewTest extends TestCase
     {
         self::$em = self::$container->get('entity-manager');
 
-        $billInfoMetadata = self::$em->getClassMetadata(BillInfo::class);
-        self::$em->getConnection()->exec('TRUNCATE ' . $billInfoMetadata->getTableName());
+        $classMetadata = self::$em->getClassMetadata(BillInfo::class);
+        self::$em->getConnection()->exec('TRUNCATE ' . $classMetadata->getTableName());
+
+        $classMetadata = self::$em->getClassMetadata(CfdiUse::class);
+        self::$em->getConnection()->exec('TRUNCATE ' . $classMetadata->getTableName());
+
+        try {
+            TestUtils::insertInitialCfdiUses(self::$em);
+        } catch (MappingException $e) {
+        } catch (ORMException $e) {
+        }
     }
 
     /**
@@ -279,7 +290,7 @@ class GetBillsTotalApiViewTest extends TestCase
 
             self::$em->flush();
             self::$em->commit();
-        } catch (ORMException $e) {
+        } catch (\Exception $e) {
             self::$em->rollback();
         }
 
@@ -332,6 +343,7 @@ class GetBillsTotalApiViewTest extends TestCase
         $this->assertArrayHasKey('emitterRfc', $item);
         $this->assertArrayHasKey('uuid', $item);
         $this->assertArrayHasKey('cfdiUseSatCode', $item);
+        $this->assertArrayHasKey('cfdiUseName', $item);
         $this->assertArrayHasKey('subtotal', $item);
         $this->assertArrayHasKey('discount', $item);
         $this->assertArrayHasKey('total', $item);

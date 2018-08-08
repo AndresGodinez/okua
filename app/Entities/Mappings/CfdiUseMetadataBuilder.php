@@ -38,5 +38,7 @@ class CfdiUseMetadataBuilder
             ->columnName('reg_status')
             ->option('default', 1)
             ->build();
+
+        $builder->addIndex(['sat_code'], 's03_cfdi_uses_sat_code_index');
     }
 }

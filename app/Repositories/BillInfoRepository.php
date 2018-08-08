@@ -96,7 +96,7 @@ class BillInfoRepository extends EntityRepository
      * @param float $finalAmount
      * @return mixed
      */
-    public function getFilteredRegisters(
+    public function getFilteredRegistersWithCfdiUseName(
         int $limit,
         int $offset,
         $startDatetime,
@@ -106,6 +106,11 @@ class BillInfoRepository extends EntityRepository
         float $finalAmount = 0.00
     ) {
         $qb = $this->createQueryBuilder('a');
+        $qb->select('a', 'b.name AS cfdiUseName');
+        $qb->leftJoin(CfdiUse::class,
+            'b',
+            \Doctrine\ORM\Query\Expr\Join::WITH,
+            'a.cfdiUseSatCode = b.satCode');
 
         $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
 

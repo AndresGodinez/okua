@@ -17,7 +17,7 @@ use App\Models\GetLastBillInfoRegistersRequestData;
 use App\Repositories\BillInfoRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\BillInfoEmailItemTransformer;
-use App\Transformers\BillInfoEntityTransformer;
+use App\Transformers\BillInfoEntityWithCfdiUseNameTransformer;
 use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
 use App\Transformers\BillInfoGroupByClientItemTransformer;
 use App\Transformers\BillInfoGroupByEmailItemTransformer;
@@ -175,7 +175,7 @@ class BillInfoApiView extends BaseApiView
         /** @var BillInfoRepository $repo */
         $repo = $this->getEm()->getRepository(BillInfo::class);
 
-        $registers = $repo->getFilteredRegisters(
+        $registers = $repo->getFilteredRegistersWithCfdiUseName(
             $requestData->getLimit(),
             $requestData->getOffset(),
             $requestData->getStartDatetimeObj(),
@@ -186,7 +186,7 @@ class BillInfoApiView extends BaseApiView
         );
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoEntityTransformer());
+        $resource = new Collection($registers, new BillInfoEntityWithCfdiUseNameTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
