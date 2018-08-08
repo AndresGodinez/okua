@@ -66,6 +66,7 @@ class SiteRouter
             $group->map('GET', '/bill-info/group-by/email', BillInfoApiView::class . '::getBillsInfoGroupByEmail');
 
             $group->map('GET', '/bill-info/last-registers', BillInfoApiView::class . '::getLastBillInfoRegisters');
+            $group->map('GET', '/bill-info/email/last-registers', BillInfoApiView::class . '::getLastBillInfoEmailRegisters');
 
             $group->map('GET', 'bill-info-client', BillInfoClientApiView::class. '::getRegistersOrderedByName');
         })

@@ -55,7 +55,7 @@
 
     async getLastEmails(limit = 5) {
       let service = new BillInfoService();
-      return await service.getLastRegisters(limit);
+      return await service.getLastEmailRegisters(limit);
     },
   };
 

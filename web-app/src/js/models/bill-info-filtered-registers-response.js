@@ -1,9 +1,8 @@
+import BillsInfoTableRow from "./bills-info-table-row";
+
 /**
  * @class BillInfoFilteredRegistersResponse
  */
-import BillInfoLastRegisterItem from "./bill-info-last-register-item";
-import BillsInfoTableRow from "./bills-info-table-row";
-
 export default class BillInfoFilteredRegistersResponse {
   /**
    *

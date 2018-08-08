@@ -11,6 +11,10 @@
                 <home-dashboard-indicators-cards/>
 
                 <home-dashboard-grouped-data-panel/>
+
+                <div class="flex flex-col">
+                  <home-dashboard-last-cfdis-panel/>
+                </div>
             </div>
 
             <home-dashboard-last-emails-panel/>
@@ -24,12 +28,14 @@
   import HomeDashboardIndicatorsCards from "./home-dashboard-indicators-cards";
   import HomeDashboardGroupedDataPanel from "./home-dashboard-grouped-data-panel";
   import HomeDashboardLastEmailsPanel from "./home-dashboard-last-emails-panel";
+  import HomeDashboardLastCfdisPanel from "./home-dashboard-last-cfdis-panel";
 
 
   export default {
     name: "home-content",
     components: {
       HomeDashboardLastEmailsPanel,
+      HomeDashboardLastCfdisPanel,
       HomeDashboardGroupedDataPanel,
       HomeDashboardIndicatorsCards,
       DatetimeRangeFilters,

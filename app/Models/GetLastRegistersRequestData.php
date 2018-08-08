@@ -12,17 +12,21 @@ namespace App\Models;
 use App\Exceptions\ValidationException;
 use App\Interfaces\IValidableRequest;
 
-class GetLastBillInfoRegistersRequestData implements IValidableRequest
+/**
+ * Class GetLastRegistersRequestData
+ * @package App\Models
+ */
+class GetLastRegistersRequestData implements IValidableRequest
 {
     /**
      * @param $data
-     * @return GetLastBillInfoRegistersRequestData
+     * @return GetLastRegistersRequestData
      */
     public static function makeFromArray($data)
     {
         $filter = $data['limit'] ?? 0;
 
-        return new GetLastBillInfoRegistersRequestData($filter);
+        return new GetLastRegistersRequestData($filter);
     }
 
     /** @var int */

@@ -13,10 +13,11 @@ use App\Entities\BillInfo;
 use App\Models\GetBillsTotalRequestData;
 use App\Models\GetFilteredBillInfoRegistersCountRequestData;
 use App\Models\GetFilteredBillInfoRegistersRequestData;
-use App\Models\GetLastBillInfoRegistersRequestData;
+use App\Models\GetLastRegistersRequestData;
 use App\Repositories\BillInfoRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\BillInfoEmailItemTransformer;
+use App\Transformers\BillInfoEntityTransformer;
 use App\Transformers\BillInfoEntityWithCfdiUseNameTransformer;
 use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
 use App\Transformers\BillInfoGroupByClientItemTransformer;
@@ -141,9 +142,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getLastBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
+    public function getLastBillInfoEmailRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetLastBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var BillInfoRepository $repo */
@@ -153,6 +154,32 @@ class BillInfoApiView extends BaseApiView
 
         $manager = new Manager();
         $resource = new Collection($registers, new BillInfoEmailItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getLastBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class);
+
+        $registers = $repo->getLastRegisters($requestData->getLimit());
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new BillInfoEntityTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);

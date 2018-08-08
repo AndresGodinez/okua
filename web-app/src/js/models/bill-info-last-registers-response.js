@@ -1,8 +1,8 @@
+import BillInfoLastRegisterItem from "./bill-info-last-register-item";
+
 /**
  * @class BillInfoLastRegistersResponse
  */
-import BillInfoLastRegisterItem from "./bill-info-last-register-item";
-
 export default class BillInfoLastRegistersResponse {
   /**
    *
@@ -14,7 +14,6 @@ export default class BillInfoLastRegistersResponse {
   static makeFromObject(obj) {
     let inst = new BillInfoLastRegistersResponse();
 
-    let data = [];
     for (let item of obj.data) {
       let register = BillInfoLastRegisterItem.makeFromObject(item);
       inst.data.push(register);

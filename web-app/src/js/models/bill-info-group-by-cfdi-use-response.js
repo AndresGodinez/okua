@@ -1,9 +1,8 @@
+import GroupByCfdiUseTableRow from "./group-by-cfdi-use-table-row";
+
 /**
  * @class BillInfoGroupByCfdiUseResponse
  */
-import BillInfoLastRegisterItem from "./bill-info-last-register-item";
-import GroupByCfdiUseTableRow from "./group-by-cfdi-use-table-row";
-
 export default class BillInfoGroupByCfdiUseResponse {
   /**
    *

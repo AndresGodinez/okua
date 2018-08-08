@@ -86,6 +86,15 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function getLastRegisters($limit)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->orderBy('a.emailDatetime', 'DESC');
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * @param int $limit
      * @param int $offset

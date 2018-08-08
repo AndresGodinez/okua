@@ -1,9 +1,8 @@
+import GroupByClientTableRow from "./group-by-client-table-row";
+
 /**
  * @class BillInfoGroupByClientResponse
  */
-import BillInfoLastRegisterItem from "./bill-info-last-register-item";
-import GroupByClientTableRow from "./group-by-client-table-row";
-
 export default class BillInfoGroupByClientResponse {
   /**
    *
