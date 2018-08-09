@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col flex-no-shrink">
         <grouped-data-filters />
 
         <table-group-by-client v-if="groupFilter === 1"/>

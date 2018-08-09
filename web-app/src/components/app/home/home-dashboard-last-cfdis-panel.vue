@@ -1,22 +1,32 @@
 <template>
-    <div class="flex flex-col w-1/2 mt-16 shadow-md mb-16">
+    <div class="flex flex-col w-3/4 mt-16 shadow-md mb-16 flex-no-shrink">
         <last-cfdis-panel-topbar />
-        <v2-table :data="tableData" :total="tableTotal" :loading="tableLoading" :shown-pagination="true" :pagination-info="tablePaginationInfo" class="bg-theme-color-1">
+        <v2-table :data="tableData"
+                  :total="tableTotal"
+                  :loading="tableLoading"
+                  :shown-pagination="true"
+                  :pagination-info="tablePaginationInfo"
+                  class="bg-theme-color-1">
             <v2-table-column label="OPCIONES" prop="id" align="center">
                 <template slot-scope="scope">
                     <bills-info-table-cell-options :row="scope.row" />
                 </template>
             </v2-table-column>
-            <v2-table-column label="#" prop="id" align="center" />
-            <v2-table-column label="CLIENTE" prop="emitterName" align="left" />
-            <v2-table-column label="R.F.C." prop="emitterRfc" align="left" />
-            <v2-table-column label="USO CFDI" prop="cfdiUseSatCode" align="left" />
-            <v2-table-column label="CANTIDAD" prop="total" align="left">
+            <v2-table-column label="CLIENTE" prop="clientName" align="left" >
+                <template slot-scope="scope">
+                    <span>{{scope.row.clientName}}</span>
+                </template>
+            </v2-table-column>
+            <v2-table-column label="CANTIDAD" prop="total" align="center" width="150">
                 <template slot-scope="scope">
                     <span>{{scope.row.total | currency}}</span>
                 </template>
             </v2-table-column>
-            <v2-table-column label="FECHA/HORA (CORREO)" prop="emailDatetime" align="left" />
+            <v2-table-column label="FECHA/HORA (CORREO)" prop="emailDatetime" align="center" >
+                <template slot-scope="scope">
+                    <span>{{scope.row.emailDatetime}}</span>
+                </template>
+            </v2-table-column>
         </v2-table>
     </div>
 </template>

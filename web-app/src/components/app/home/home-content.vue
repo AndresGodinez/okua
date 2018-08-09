@@ -5,14 +5,14 @@
         <app-navbar></app-navbar>
 
         <div class="flex flex-row w-full px-8">
-            <div class="flex flex-col flex-grow px-4">
+            <div class="flex flex-col flex-grow px-4 max-h-full overflow-y-auto overflow-hidden">
                 <datetime-range-filters/>
 
                 <home-dashboard-indicators-cards/>
 
                 <home-dashboard-grouped-data-panel/>
 
-                <div class="flex flex-col">
+                <div class="flex flex-col flex-no-shrink">
                   <home-dashboard-last-cfdis-panel/>
                 </div>
             </div>
@@ -46,3 +46,24 @@
     },
   }
 </script>
+<style scoped>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.0);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(180, 180, 180, 0.8);
+    }
+</style>

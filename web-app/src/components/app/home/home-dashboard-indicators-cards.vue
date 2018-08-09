@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row w-full justify-center mt-4">
+    <div class="flex flex-row w-full justify-center mt-4 flex-no-shrink">
         <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3">
             <div class="absolute pin-t">
                 <a class="no-underline p-4 text-3xl bg-theme-color-4 text-white shadow-md">

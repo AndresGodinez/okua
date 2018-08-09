@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-flex mt-4 mb-2">
+    <div class="inline-flex mt-4 mb-2 flex-no-shrink">
         <ul class="list-reset flex">
             <li>
                 <div class="inline-block border border-theme-color-4 rounded-l px-4 py-2 cursor-pointer"
