@@ -12,6 +12,7 @@ namespace App\Entities\Mappings;
 use App\Repositories\BillInfoRepository;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use App\Entities\BillInfoTax;
 
 /**
  * Class BillInfoMetadataBuilder
@@ -47,6 +48,12 @@ class BillInfoMetadataBuilder
         $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();
         $builder->createField('regDatetime', 'datetime')->columnName('reg_datetime')->build();
         $builder->createField('filesPath', 'string')->columnName('files_path')->build();
+
+        $builder->createField('transferTaxes', 'decimal')->columnName('transfer_taxes')->precision(12)->scale(5)->build();
+
+        $builder->createField('withheldTaxes', 'decimal')->columnName('withheld_taxes')->precision(12)->scale(5)->build();
+
+        $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->build();
 
         $builder->addIndex(['cfdi_use_sat_code'], 's02_bill_info_cfdi_use_sat_code_index');
         $builder->addIndex(['document_datetime'], 's02_bill_info_document_datetime_index');

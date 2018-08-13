@@ -49,6 +49,8 @@ tests/.phpunit.result.cache
 
 /dist
 
+.phpunit.*
+
 ########################################################################################################################
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm

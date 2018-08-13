@@ -69,9 +69,15 @@ class SiteRouter
             $group->map('GET', '/bill-info/email/last-registers', BillInfoApiView::class . '::getLastBillInfoEmailRegisters');
 
             $group->map('GET', 'bill-info-client', BillInfoClientApiView::class. '::getRegistersOrderedByName');
+
+            $group->map('GET', '/bill-info/{billInfoId:regId}/taxes', BillInfoApiView::class . '::getBillInfoTaxes');
+
+            $group->map('GET', '/bill-info/taxes/transfer/total', BillInfoApiView::class . '::getBillInfoTransferTotal');
+            $group->map('GET', '/bill-info/taxes/withheld/total', BillInfoApiView::class . '::getBillInfoWithheldTotal');
         })
             ->setScheme('http');
 
         return $route;
     }
 }
+

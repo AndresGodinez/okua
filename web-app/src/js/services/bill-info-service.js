@@ -24,6 +24,28 @@ export default class BillInfoService {
     return await api.get();
   }
 
+  async getBillsTransferTotal(filter) {
+    const data = {
+      filter,
+    };
+
+    let api = new WebApi(`${this.host}/api/bill-info/taxes/transfer/total`, data);
+    api.converter = BillsTotalResponse.makeFromObject;
+
+    return await api.get();
+  }
+
+  async getBillsWithheldTotal(filter) {
+    const data = {
+      filter,
+    };
+
+    let api = new WebApi(`${this.host}/api/bill-info/taxes/withheld/total`, data);
+    api.converter = BillsTotalResponse.makeFromObject;
+
+    return await api.get();
+  }
+
   async getLastEmailRegisters(limit) {
     const data = {
       limit,

@@ -30,8 +30,10 @@ export default class BillInfoLastRegisterItem {
     register.id = obj.id;
     register.clientName = obj.emitterName;
     register.clientRfc = obj.emitterRfc;
+    register.email = obj.email;
     register.uuid = obj.uuid;
     register.cfdiUseName = '';
+    register.total = obj.total;
     register.cfdiUseSatCode = obj.cfdiUseSatCode;
     register.documentDatetime = obj.documentDatetime;
     register.emailDatetime = obj.emailDatetime;

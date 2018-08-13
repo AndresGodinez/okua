@@ -11,6 +11,7 @@ namespace App\Entities;
 
 use App\Entities\Mappings\BillInfoMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class BillInfo
 {
@@ -73,6 +74,19 @@ class BillInfo
 
     /** @var string */
     private $filesPath = '';
+
+    /** @var ArrayCollection */
+    private $taxes;
+
+    /** @var float */
+    private $transferTaxes;
+
+    /** @var float */
+    private $withheldTaxes;
+
+    public function __construct() {
+        $this->taxes = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -344,6 +358,46 @@ class BillInfo
     public function setFilesPath($filesPath)
     {
         $this->filesPath = $filesPath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaxes()
+    {
+        return $this->taxes;
+    }
+
+    /**
+     * @param mixed $taxes
+     *
+     * @return self
+     */
+    public function setTaxes($taxes)
+    {
+        $this->taxes = $taxes;
+
+        return $this;
+    }
+
+    public function getTransferTaxes(){
+        return $this->transferTaxes;
+    }
+
+    public function setTransferTaxes($transferTaxes){
+        $this->transferTaxes = $transferTaxes;
+
+        return $this;
+    }
+
+    public function getWithheldTaxes(){
+        return $this->withheldTaxes;
+    }
+
+    public function setWithheldTaxes($withheldTaxes){
+        $this->withheldTaxes = $withheldTaxes;
+
+        return $this;
     }
 
     /**

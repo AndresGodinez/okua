@@ -3,27 +3,51 @@
         <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3">
             <div class="absolute pin-t">
                 <a class="no-underline p-4 text-3xl bg-theme-color-4 text-white shadow-md">
-                    <font-awesome-icon :icon="iconBillstTotal"/>
+                    <font-awesome-icon :icon="iconBillstTotal" />
                 </a>
             </div>
-            <div class="text-right text-grey-ligh text-sm tracking-wide uppercase select-none">Monto total
-                en facturas
+            <div class="text-right text-sm tracking-wide uppercase select-none">Monto total en facturas
             </div>
             <div class="w-full flex justify-end">
-                <animated-number
-                        :value="billsTotal"
-                        :duration="700"
-                        :formatValue="formatTotalBills"
-                        easing="easeInOutCubic"
-                        class="text-right mb-6 text-theme-color-4 tracking-wide text-3xl pt-2 select-none"/>
+                <animated-number :value="billsTotal" :duration="700" :formatValue="formatTotalBills" easing="easeInOutCubic" class="text-right mb-6 text-theme-color-4 tracking-wide text-3xl pt-2 select-none" />
             </div>
             <hr class="w-full border-b-2">
-            <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n:
-                {{updatedDate}}
+            <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}
+            </div>
+        </div>
+        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/4">
+            <div class="absolute pin-t">
+                <a class="no-underline p-4 text-3xl bg-theme-color-2 text-white shadow-md">
+                    <font-awesome-icon :icon="iconBillstTotal" />
+                </a>
+            </div>
+            <div class="text-right text-sm tracking-wide uppercase select-none">Impuestos para traslado
+            </div>
+            <div class="w-full flex justify-end">
+                <animated-number :value="billsTransferTotal" :duration="700" :formatValue="formatTotalBills" easing="easeInOutCubic" class="text-right mb-6 text-theme-color-2 tracking-wide text-3xl pt-2 select-none" />
+            </div>
+            <hr class="w-full border-b-2">
+            <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}
+            </div>
+        </div>
+        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/4">
+            <div class="absolute pin-t">
+                <a class="no-underline p-4 text-3xl bg-theme-color-3 text-white shadow-md">
+                    <font-awesome-icon :icon="iconBillstTotal" />
+                </a>
+            </div>
+            <div class="text-right text-sm tracking-wide uppercase select-none">Impuestos para retención
+            </div>
+            <div class="w-full flex justify-end">
+                <animated-number :value="billsWithheldTotal" :duration="700" :formatValue="formatTotalBills" easing="easeInOutCubic" class="text-right mb-6 text-theme-color-3 tracking-wide text-3xl pt-2 select-none" />
+            </div>
+            <hr class="w-full border-b-2">
+            <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}
             </div>
         </div>
     </div>
 </template>
+
 <script>
   import AnimatedNumber from "animated-number-vue"
   import moment from 'moment-es6';
@@ -39,6 +63,9 @@
       updatedDate,
 
       billsTotal: 0,
+      billsTransferTotal: 0,
+      billsWithheldTotal: 0,
+
     };
   };
 
@@ -65,9 +92,57 @@
         });
     },
 
+    dispatchGetBillsTransferTotal(){
+      let filter = '';
+
+      if (this.datetimeRangeFilter === 1) {
+        filter = 'week';
+      } else if (this.datetimeRangeFilter === 2) {
+        filter = 'month';
+      } else if (this.datetimeRangeFilter === 3) {
+        filter = 'year';
+      }
+
+      this.getBillsTransferTotal(filter)
+        .then((response) => {
+          this.billsTransferTotal = response.total;
+          this.updateUpdatedDate();
+        });
+    },
+
+    dispatchGetBillsWithheldTotal(){
+      let filter = '';
+
+      if (this.datetimeRangeFilter === 1) {
+        filter = 'week';
+      } else if (this.datetimeRangeFilter === 2) {
+        filter = 'month';
+      } else if (this.datetimeRangeFilter === 3) {
+        filter = 'year';
+      }
+
+      this.getBillsWithheldTotal(filter)
+        .then((response) => {
+          this.billsWithheldTotal = response.total;
+          this.updateUpdatedDate();
+        });
+    },
+
     async getBillsTotal(filter) {
       let service = new BillInfoService();
       let response = await service.getBillsTotal(filter);
+      return response;
+    },
+
+    async getBillsTransferTotal(filter) {
+      let service = new BillInfoService();
+      let response = await service.getBillsTransferTotal(filter);
+      return response;
+    },
+
+    async getBillsWithheldTotal(filter) {
+      let service = new BillInfoService();
+      let response = await service.getBillsWithheldTotal(filter);
       return response;
     },
 
@@ -93,10 +168,14 @@
   const watch = {
     datetimeRangeFilter() {
       this.dispatchGetBillsTotal();
+      this.dispatchGetBillsTransferTotal();
+      this.dispatchGetBillsWithheldTotal();
     },
 
     forceUpdateByNewRegisters() {
       this.dispatchGetBillsTotal();
+      this.dispatchGetBillsTransferTotal();
+      this.dispatchGetBillsWithheldTotal();
     },
   };
 
@@ -112,7 +191,11 @@
       FontAwesomeIcon,
     },
     mounted() {
-      setTimeout(() => this.dispatchGetBillsTotal(), 50);
+      setTimeout(() => {
+        this.dispatchGetBillsTotal();
+        this.dispatchGetBillsTransferTotal();
+        this.dispatchGetBillsWithheldTotal();
+      } , 50);
     },
   }
 </script>

@@ -22,6 +22,7 @@ use App\Transformers\BillInfoEntityWithCfdiUseNameTransformer;
 use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
 use App\Transformers\BillInfoGroupByClientItemTransformer;
 use App\Transformers\BillInfoGroupByEmailItemTransformer;
+use App\Transformers\BillInfoTaxTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -170,14 +171,15 @@ class BillInfoApiView extends BaseApiView
      */
     public function getLastBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetLastBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var BillInfoRepository $repo */
         $repo = $this->getEm()->getRepository(BillInfo::class);
 
-        $registers = $repo->getLastRegisters($requestData->getLimit());
+        $registers = $repo->getLastRegistersGroupedByBill($requestData->getLimit());
 
+        // todo: cambiar transformer
         $manager = new Manager();
         $resource = new Collection($registers, new BillInfoEntityTransformer());
         $data = $manager->createData($resource)->toJson();
@@ -301,5 +303,57 @@ class BillInfoApiView extends BaseApiView
 
         $response = ResponseUtils::setPdfFileResponse($baseDir, "{$uuid}.pdf");
         return $response;
+    }
+
+    public function getBillInfoTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
+        $billInfoId = $args['billInfoId'] ?? 0;
+
+        $register = $this->em->find(BillInfo::class, $billInfoId);
+
+        ResponseUtils::addContentTypeJsonHeader($response);        
+
+        $uuid = $register->getUuid();
+        $taxes = $register->getTaxes()->toArray();
+
+        $resource = new Collection($taxes, new BillInfoTaxTransformer());
+        
+        $manager = new Manager();
+        
+        $data = $manager->createData($resource)->toJson();
+
+        $response->getBody()->write($data);
+
+
+        return $response;
+    }
+
+    public function getBillInfoTransferTotal(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class); 
+
+        $total = $repo->getTransferTaxesTotalByFilter($requestData->getFilter());
+        //print_r($total);
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['total' => (float)$total]));
+
+        return $response;     
+    }
+
+    public function getBillInfoWithheldTotal(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class); 
+
+        $total = $repo->getWithheldTaxesTotalByFilter($requestData->getFilter());
+        //print_r($total);
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['total' => (float)$total]));
+
+        return $response;     
     }
 }

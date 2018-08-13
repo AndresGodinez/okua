@@ -14,7 +14,6 @@ export default class BillInfoFilteredRegistersResponse {
   static makeFromObject(obj) {
     let inst = new BillInfoFilteredRegistersResponse();
 
-    let data = [];
     for (let item of obj.data) {
       let register = BillsInfoTableRow.makeFromObject(item);
       inst.data.push(register);

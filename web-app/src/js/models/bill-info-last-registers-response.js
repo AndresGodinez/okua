@@ -9,7 +9,7 @@ export default class BillInfoLastRegistersResponse {
    * @param {Object} obj
    * @param {Array} obj.data
    *
-   * @return BillInfoLastRegistersResponse
+   * @return BillInfoEmailLastRegistersResponse
    */
   static makeFromObject(obj) {
     let inst = new BillInfoLastRegistersResponse();
