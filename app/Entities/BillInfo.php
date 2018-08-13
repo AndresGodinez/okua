@@ -93,6 +93,18 @@ class BillInfo
     }
 
     /**
+     * @param BillInfoTax $tax
+     * @return bool
+     */
+    public function addTax(BillInfoTax $tax)
+    {
+        if (!$this->taxes) {
+            $this->taxes = new ArrayCollection();
+        }
+        return $this->taxes->add($tax);
+    }
+
+    /**
      * @return int|null
      */
     public function getId()

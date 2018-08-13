@@ -10,8 +10,6 @@ namespace App\Entities;
 
 
 use App\Entities\Mappings\BillInfoTaxMetadataBuilder;
-use App\Utils\EntityUtils;
-use DateTime;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
@@ -171,7 +169,7 @@ class BillInfoTax
     }
 
     /**
-     * @return mixed
+     * @return BillInfo
      */
     public function getBillInfo()
     {
@@ -179,7 +177,7 @@ class BillInfoTax
     }
 
     /**
-     * @param mixed $billInfo
+     * @param BillInfo $billInfo
      *
      * @return self
      */
@@ -188,5 +186,22 @@ class BillInfoTax
         $this->billInfo = $billInfo;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return \sprintf(
+            "<BillInfoTax [id: %d, taxSatCode: %s, type: %s, taxFactor: %s, taxRateFee: %f, amount: %f, billInfoId: %d]>",
+            !!$this->getId() ? $this->getId() : 0,
+            $this->getTaxSatCode(),
+            $this->getType(),
+            $this->getTaxFactor(),
+            $this->getTaxRateFee(),
+            $this->getAmount(),
+            !!$this->getBillInfo() ? $this->getBillInfo()->getId() : 0
+        );
     }
 }
