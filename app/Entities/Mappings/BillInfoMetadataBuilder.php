@@ -10,6 +10,7 @@ namespace App\Entities\Mappings;
 
 
 use App\Repositories\BillInfoRepository;
+use App\Utils\EntityUtils;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use App\Entities\BillInfoTax;
@@ -48,10 +49,9 @@ class BillInfoMetadataBuilder
         $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();
         $builder->createField('regDatetime', 'datetime')->columnName('reg_datetime')->build();
         $builder->createField('filesPath', 'string')->columnName('files_path')->build();
-
         $builder->createField('transferTaxes', 'decimal')->columnName('transfer_taxes')->precision(12)->scale(5)->build();
-
         $builder->createField('withheldTaxes', 'decimal')->columnName('withheld_taxes')->precision(12)->scale(5)->build();
+        $builder->createField('stampStatus', 'smallint')->columnName('stamp_status')->option('default', EntityUtils::STAMP_STATUS_NOT_DEFINED)->build();
 
         $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->build();
 

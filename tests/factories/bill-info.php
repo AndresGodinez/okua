@@ -20,6 +20,8 @@ $fm->define(\App\Entities\BillInfo::class)->setDefinitions([
     'cfdiUseSatCode' => Faker::randomElement(['D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','G01','G02','G03','I01','I02','I03','I04','I05','I06','I07','I08','P01']),
     'subtotal' => Faker::randomFloat(2, 0, 1000),
     'discount' => Faker::randomFloat(2, 0, 1000),
+    'transferTaxes' => Faker::randomFloat(2, 0, 1000),
+    'withheldTaxes' => Faker::randomFloat(2, 0, 1000),
     'total' => Faker::randomFloat(2, 0, 1000),
     'currency' => 'MXN',
     'type' => Faker::randomElement(['I','E']),
@@ -28,4 +30,19 @@ $fm->define(\App\Entities\BillInfo::class)->setDefinitions([
     'stampDatetime' => Faker::dateTimeThisMonth(),
     'emailDatetime' => Faker::dateTimeThisMonth(),
     'regDatetime' => Faker::dateTimeThisMonth(),
+    'filesPath' => function ($object, $saved) {
+        /** @var \App\Entities\BillInfo $object */
+
+        $regDatetime = $object->getRegDatetime();
+        $regDatetimeStr = $regDatetime->format('Y-m-d');
+        $uuid = $object->getUuid();
+
+        return \sprintf('/%s/%s', $regDatetimeStr, $uuid);
+    },
+    'stampStatus' => Faker::randomElement([
+        \App\Utils\EntityUtils::STAMP_STATUS_NOT_DEFINED,
+        \App\Utils\EntityUtils::STAMP_STATUS_ACTIVE,
+        \App\Utils\EntityUtils::STAMP_STATUS_NOT_FOUND,
+        \App\Utils\EntityUtils::STAMP_STATUS_CANCELED,
+    ]),
 ]);

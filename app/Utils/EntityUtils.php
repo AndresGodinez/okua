@@ -13,4 +13,9 @@ class EntityUtils
 {
     const REG_STATUS_ACTIVE = 1;
     const REG_STATUS_INACTIVE = 0;
+
+    const STAMP_STATUS_NOT_DEFINED = -1;
+    const STAMP_STATUS_ACTIVE = 1;
+    const STAMP_STATUS_NOT_FOUND = 2;
+    const STAMP_STATUS_CANCELED = 3;
 }

@@ -10,8 +10,9 @@ namespace App\Entities;
 
 
 use App\Entities\Mappings\BillInfoMetadataBuilder;
-use Doctrine\ORM\Mapping\ClassMetadata;
+use App\Utils\EntityUtils;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class BillInfo
 {
@@ -83,6 +84,9 @@ class BillInfo
 
     /** @var float */
     private $withheldTaxes;
+
+    /** @var int */
+    private $stampStatus = EntityUtils::STAMP_STATUS_NOT_DEFINED;
 
     public function __construct() {
         $this->taxes = new ArrayCollection();
@@ -401,6 +405,22 @@ class BillInfo
     }
 
     /**
+     * @return int
+     */
+    public function getStampStatus()
+    {
+        return $this->stampStatus;
+    }
+
+    /**
+     * @param int $stampStatus
+     */
+    public function setStampStatus($stampStatus)
+    {
+        $this->stampStatus = $stampStatus;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -411,7 +431,7 @@ class BillInfo
         $regDatetimeStr = !!$this->getRegDatetime() ? $this->getRegDatetime()->format('Y-m-d H:i:s') : '';
 
         return \sprintf(
-            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s]>',
+            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, transferTaxes: %d, withheldTaxes: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s, stampStatus: %d]>',
             !!$this->getId() ? $this->getId() : 0,
             $this->getEmitterName(),
             $this->getEmitterRfc(),
@@ -421,13 +441,16 @@ class BillInfo
             $this->getSubtotal(),
             $this->getDiscount(),
             $this->getTotal(),
+            $this->getTransferTaxes(),
+            $this->getWithheldTaxes(),
             $this->getCurrency(),
             $this->getType(),
             $this->getPaymentType(),
             $documentDatetimeStr,
             $stampDatetimeStr,
             $emailDatetimeStr,
-            $regDatetimeStr
+            $regDatetimeStr,
+            $this->getStampStatus()
         );
     }
 }
