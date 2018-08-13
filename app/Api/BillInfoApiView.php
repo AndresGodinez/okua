@@ -348,6 +348,12 @@ class BillInfoApiView extends BaseApiView
         return $response;     
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
     public function getBillInfoWithheldTotal(ServerRequestInterface $request, ResponseInterface $response){
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
@@ -356,7 +362,7 @@ class BillInfoApiView extends BaseApiView
         $repo = $this->getEm()->getRepository(BillInfo::class); 
 
         $total = $repo->getWithheldTaxesTotalByFilter($requestData->getFilter());
-        //print_r($total);
+
         ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write(\json_encode(['total' => (float)$total]));
 
