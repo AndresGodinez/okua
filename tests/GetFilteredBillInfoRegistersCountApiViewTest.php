@@ -20,7 +20,7 @@ use League\FactoryMuffin\FactoryMuffin;
 use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 
-class GetBillsTotalApiViewTest extends TestCase
+class GetFilteredBillInfoRegistersCountApiViewTest extends TestCase
 {
     /** @var Container */
     protected static $container = null;
@@ -260,6 +260,7 @@ class GetBillsTotalApiViewTest extends TestCase
             self::$em->flush();
             self::$em->commit();
         } catch (ORMException $e) {
+            echo "\n" . $e->getMessage();
             self::$em->rollback();
         }
 
@@ -280,8 +281,8 @@ class GetBillsTotalApiViewTest extends TestCase
             'offset' => $offset,
             'startDatetime' => $startDatetimeStr,
             'endDatetime' => $endDatetimeStr,
-            'initialAmount' => ($testAmount - 100),
-            'finalAmount' => ($testAmount + 100),
+            'initialAmount' => $testAmount,
+            'finalAmount' => $testAmount,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/count', $params);

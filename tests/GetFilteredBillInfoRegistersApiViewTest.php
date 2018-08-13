@@ -22,7 +22,7 @@ use League\FactoryMuffin\FactoryMuffin;
 use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 
-class GetBillsTotalApiViewTest extends TestCase
+class GetFilteredBillInfoRegistersApiViewTest extends TestCase
 {
     /** @var Container */
     protected static $container = null;
