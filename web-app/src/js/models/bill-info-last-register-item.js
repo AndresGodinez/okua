@@ -1,3 +1,5 @@
+import {BILL_INFO_STAMP_STATUSES} from "../utils/models-utils";
+
 /**
  * @class BillInfoLastRegisterItem
  */
@@ -21,6 +23,7 @@ export default class BillInfoLastRegisterItem {
    * @param {string} obj.stampDatetime
    * @param {string} obj.emailDatetime
    * @param {string} obj.regDatetime
+   * @param {number} obj.stampStatus
    *
    * @return BillInfoLastRegisterItem
    */
@@ -40,6 +43,7 @@ export default class BillInfoLastRegisterItem {
     register.stampDatetime = obj.stampDatetime;
     register.total = obj.total;
     register.currency = obj.currency;
+    register.stampStatus = obj.stampStatus;
 
     return register;
   }
@@ -110,5 +114,11 @@ export default class BillInfoLastRegisterItem {
      * @type {string}
      */
     this.currency = 'MXN';
+
+    /**
+     * @memberOf BillInfoLastRegisterItem
+     * @type {number}
+     */
+    this.stampStatus = BILL_INFO_STAMP_STATUSES.NOT_DEFINED;
   }
 }

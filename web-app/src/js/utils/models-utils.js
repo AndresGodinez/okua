@@ -1,0 +1,6 @@
+export const BILL_INFO_STAMP_STATUSES = {
+  NOT_DEFINED: -1,
+  ACTIVE: 1,
+  NOT_FOUND: 2,
+  CANCELED: 3,
+};

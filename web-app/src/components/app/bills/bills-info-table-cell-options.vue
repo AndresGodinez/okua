@@ -1,8 +1,8 @@
 <template>
     <div class="w-full flex-inline">
-        <button v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm" title="Validar CFDI">
-            <font-awesome-icon :icon="iconCfdiValidate" class="w-8 h-8 p-2 text-white text-lg"/>
-        </button>
+        <div class="inline bg-transparent border-0" :title="iconCfdiValidateTitle">
+            <font-awesome-icon :icon="iconCfdiValidate" class="w-8 h-8 p-2 text-lg border-0" :class="iconCfdiValidateClass"/>
+        </div>
         <button v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2" title="DESCARGAR PDF">
             <font-awesome-icon :icon="iconCfdiDownloadPdf" class="w-8 h-8 p-2 text-white text-lg" @click="downloadPdf"/>
         </button>
@@ -14,7 +14,8 @@
 <script>
 
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-  import {faCheckDouble, faFileExcel, faFilePdf} from '@fortawesome/free-solid-svg-icons';
+  import {faCircle, faFileExcel, faFilePdf} from '@fortawesome/free-solid-svg-icons';
+  import {BILL_INFO_STAMP_STATUSES} from "../../../js/utils/models-utils";
 
   const methods = {
     downloadXml() {
@@ -30,7 +31,7 @@
 
   const computed = {
     iconCfdiValidate() {
-      return faCheckDouble;
+      return faCircle;
     },
 
     iconCfdiDownloadPdf() {
@@ -39,6 +40,34 @@
 
     iconCfdiDownloadXml() {
       return faFileExcel;
+    },
+
+    iconCfdiValidateClass() {
+      if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.NOT_DEFINED) {
+        return 'text-grey';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.ACTIVE) {
+        return 'text-green';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.NOT_FOUND) {
+        return 'text-yellow';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.CANCELED) {
+        return 'text-red';
+      }
+
+      return 'text-white';
+    },
+
+    iconCfdiValidateTitle() {
+      if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.NOT_DEFINED) {
+        return 'NO DEFINIDO';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.ACTIVE) {
+        return 'ACTIVO';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.NOT_FOUND) {
+        return 'NO ENCONTRADO';
+      } else if (this.row.stampStatus === BILL_INFO_STAMP_STATUSES.CANCELED) {
+        return 'CANCELADO';
+      }
+
+      return 'ERROR';
     },
   };
 
