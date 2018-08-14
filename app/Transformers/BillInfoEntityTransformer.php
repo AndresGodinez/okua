@@ -41,6 +41,7 @@ class BillInfoEntityTransformer extends TransformerAbstract
             'stampDatetime' => $item->getStampDatetime()->format('Y-m-d H:i:s'),
             'emailDatetime' => $item->getEmailDatetime()->format('Y-m-d H:i:s'),
             'regDatetime' => $item->getRegDatetime()->format('Y-m-d H:i:s'),
+            'stampStatus' => $item->getStampStatus(),
         ];
     }
 }

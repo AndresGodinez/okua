@@ -150,7 +150,11 @@ class GetLastBillInfoRegisterApiViewTest extends TestCase
 
         $item0 = $responseArray['data'][0];
 
+        $this->assertArrayHasKey('emitterRfc', $item0);
+        $this->assertArrayHasKey('emitterName', $item0);
         $this->assertArrayHasKey('email', $item0);
         $this->assertArrayHasKey('emailDatetime', $item0);
+        $this->assertArrayHasKey('total', $item0);
+        $this->assertArrayHasKey('stampStatus', $item0);
     }
 }
