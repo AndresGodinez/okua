@@ -172,7 +172,7 @@ class BillInfoApiView extends BaseApiView
      */
     public function getLastBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetLastBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var BillInfoRepository $repo */

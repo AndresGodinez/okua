@@ -33,7 +33,7 @@ class GetLastRegistersRequestData implements IValidableRequest
     protected $limit;
 
     /**
-     * GetLastBillInfoRegistersRequestData constructor.
+     * GetLastRegistersRequestData constructor.
      * @param int $limit
      */
     public function __construct(int $limit)
@@ -62,7 +62,7 @@ class GetLastRegistersRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<GetLastBillInfoRegistersRequestData [limit: %s]>", $this->limit);
+        return \sprintf("<GetLastRegistersRequestData [limit: %s]>", $this->limit);
     }
 
     /**
