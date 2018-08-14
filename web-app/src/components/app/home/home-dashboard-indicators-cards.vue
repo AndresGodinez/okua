@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-row w-full justify-center mt-4 flex-no-shrink">
-        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3">
+    <div class="flex flex-row w-full justify-around mt-4 flex-no-shrink">
+        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3 mx-4">
             <div class="absolute pin-t">
                 <a class="no-underline p-4 text-3xl bg-theme-color-4 text-white shadow-md">
                     <font-awesome-icon :icon="iconBillstTotal" />
@@ -15,7 +15,7 @@
             <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}
             </div>
         </div>
-        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/4">
+        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3 mx-4">
             <div class="absolute pin-t">
                 <a class="no-underline p-4 text-3xl bg-theme-color-2 text-white shadow-md">
                     <font-awesome-icon :icon="iconBillstTotal" />
@@ -30,7 +30,7 @@
             <div class="text-left tracking-wide text-xs text-grey">&Uacute;ltima actualizaci&oacute;n: {{updatedDate}}
             </div>
         </div>
-        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/4">
+        <div class="shadow-md bg-theme-color-1 relative p-4 w-1/3 mx-4">
             <div class="absolute pin-t">
                 <a class="no-underline p-4 text-3xl bg-theme-color-3 text-white shadow-md">
                     <font-awesome-icon :icon="iconBillstTotal" />
