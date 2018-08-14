@@ -53,7 +53,7 @@ class BillInfoMetadataBuilder
         $builder->createField('withheldTaxes', 'decimal')->columnName('withheld_taxes')->precision(12)->scale(5)->build();
         $builder->createField('stampStatus', 'smallint')->columnName('stamp_status')->option('default', EntityUtils::STAMP_STATUS_NOT_DEFINED)->build();
 
-        $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->build();
+        $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->cascadeAll()->build();
 
         $builder->addIndex(['cfdi_use_sat_code'], 's02_bill_info_cfdi_use_sat_code_index');
         $builder->addIndex(['document_datetime'], 's02_bill_info_document_datetime_index');

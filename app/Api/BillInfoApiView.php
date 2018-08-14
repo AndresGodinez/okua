@@ -10,6 +10,7 @@ namespace App\Api;
 
 
 use App\Entities\BillInfo;
+use App\Exceptions\ValidationException;
 use App\Models\GetBillsTotalRequestData;
 use App\Models\GetFilteredBillInfoRegistersCountRequestData;
 use App\Models\GetFilteredBillInfoRegistersRequestData;
@@ -305,24 +306,32 @@ class BillInfoApiView extends BaseApiView
         return $response;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface
+     * @throws ValidationException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     */
     public function getBillInfoTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
         $billInfoId = $args['billInfoId'] ?? 0;
 
         $register = $this->em->find(BillInfo::class, $billInfoId);
 
-        ResponseUtils::addContentTypeJsonHeader($response);        
+        if (!$register)
+            throw new ValidationException('The requested register does not exists');
 
-        $uuid = $register->getUuid();
         $taxes = $register->getTaxes()->toArray();
 
-        $resource = new Collection($taxes, new BillInfoTaxTransformer());
-        
         $manager = new Manager();
-        
+        $resource = new Collection($taxes, new BillInfoTaxTransformer());
         $data = $manager->createData($resource)->toJson();
 
+        ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write($data);
-
 
         return $response;
     }
