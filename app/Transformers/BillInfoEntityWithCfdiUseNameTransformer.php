@@ -9,6 +9,7 @@
 namespace App\Transformers;
 
 
+use App\Entities\BillInfo;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -23,6 +24,7 @@ class BillInfoEntityWithCfdiUseNameTransformer extends TransformerAbstract
      */
     public function transform(array $itemArr)
     {
+        /** @var BillInfo $item */
         $item = $itemArr[0];
         $cfdiUseName = $itemArr['cfdiUseName'] ?? null;
 
@@ -44,6 +46,7 @@ class BillInfoEntityWithCfdiUseNameTransformer extends TransformerAbstract
             'stampDatetime' => $item->getStampDatetime()->format('Y-m-d H:i:s'),
             'emailDatetime' => $item->getEmailDatetime()->format('Y-m-d H:i:s'),
             'regDatetime' => $item->getRegDatetime()->format('Y-m-d H:i:s'),
+            'stampStatus' => $item->getStampStatus(),
         ];
     }
 }
