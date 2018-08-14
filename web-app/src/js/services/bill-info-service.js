@@ -7,6 +7,7 @@ import BillInfoFilteredRegistersResponse from "../models/bill-info-filtered-regi
 import BillInfoGroupByClientResponse from "../models/bill-info-group-by-client-response";
 import BillInfoGroupByCfdiUseResponse from "../models/bill-info-group-by-cfdi-use-response";
 import BillInfoGroupByEmailResponse from "../models/bill-info-group-by-email-response";
+import SingleCountResponse from "../models/single-count-response";
 
 export default class BillInfoService {
   constructor(host = "") {
@@ -100,8 +101,21 @@ export default class BillInfoService {
     return await api.get();
   }
 
-  async getDataGroupedByClientAndFilter(filter) {
+  async getDataGroupedByClientAndFilterCount(filter) {
     const data = {
+      filter,
+    };
+
+    let api = new WebApi(`${this.host}/api/bill-info/group-by/client/count`, data);
+    api.converter = SingleCountResponse.makeFromObject;
+
+    return await api.get();
+  }
+
+  async getDataGroupedByClientAndFilter(limit, offset, filter) {
+    const data = {
+      limit,
+      offset,
       filter,
     };
 

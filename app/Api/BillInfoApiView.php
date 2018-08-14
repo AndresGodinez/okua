@@ -11,6 +11,8 @@ namespace App\Api;
 
 use App\Entities\BillInfo;
 use App\Exceptions\ValidationException;
+use App\Models\CountGetBillsInfoGroupedByRequestData;
+use App\Models\GetBillsInfoGroupedByRequestData;
 use App\Models\GetBillsTotalRequestData;
 use App\Models\GetFilteredBillInfoRegistersCountRequestData;
 use App\Models\GetFilteredBillInfoRegistersRequestData;
@@ -65,16 +67,43 @@ class BillInfoApiView extends BaseApiView
      * @param ResponseInterface $response
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getBillsInfoGroupByClient(ServerRequestInterface $request, ResponseInterface $response)
+    public function getBillsInfoGroupByClientCount(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData = CountGetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var BillInfoRepository $repo */
         $repo = $this->getEm()->getRepository(BillInfo::class);
 
-        $registers = $repo->getRegistersGroupedByClientAndFilter($requestData->getFilter());
+        $result = $repo->getRegistersGroupedByClientAndFilterCount($requestData->getFilter());
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['count' => (int)$result]));
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getBillsInfoGroupByClient(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        $repo = $this->getEm()->getRepository(BillInfo::class);
+
+        $registers = $repo->getRegistersGroupedByClientAndFilter(
+            $requestData->getLimit(),
+            $requestData->getOffset(),
+            $requestData->getFilter()
+        );
 
         $manager = new Manager();
         $resource = new Collection($registers, new BillInfoGroupByClientItemTransformer());

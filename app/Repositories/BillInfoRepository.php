@@ -9,8 +9,8 @@
 namespace App\Repositories;
 
 
-use App\Models\RangeTimeFilter;
 use App\Entities\CfdiUse;
+use App\Models\RangeTimeFilter;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -113,7 +113,8 @@ class BillInfoRepository extends EntityRepository
         string $emitterRfc = '',
         float $initialAmount = 0.00,
         float $finalAmount = 0.00
-    ) {
+    )
+    {
         $qb = $this->createQueryBuilder('a');
         $qb->select('a', 'b.name AS cfdiUseName');
         $qb->leftJoin(CfdiUse::class,
@@ -147,7 +148,8 @@ class BillInfoRepository extends EntityRepository
         string $emitterRfc = '',
         float $initialAmount = 0.00,
         float $finalAmount = 0.00
-    ) {
+    )
+    {
         $qb = $this->createQueryBuilder('a');
         $qb->select('COUNT(a.id) AS total');
 
@@ -156,55 +158,45 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getRegistersGroupedByClientAndFilter($filter)
+    public function getRegistersGroupedByClientAndFilter(int $limit, int $offset, string $filter)
     {
         $qb = $this->createQueryBuilder('a');
+        $this->prepareRegistersGroupedByClientAndFilterQuery($qb, $filter);
+
         $qb->select('a.emitterName', 'a.emitterRfc', 'SUM(a.total) AS amount');
-        $qb->where('a.type = :type');
-        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
         $qb->orderBy('a.emitterRfc', 'ASC');
-        $qb->groupBy('a.emitterRfc');
 
-        $now = new \DateTime();
-        $startDatetime = clone $now;
-        $endDatetime = clone $now;
-
-        if ($filter == RangeTimeFilter::FILTER_WEEK) {
-            $startDatetime->modify('monday this week');
-            $startDatetime->setTime(0, 0, 0);
-
-            $endDatetime->modify('sunday this week');
-            $endDatetime->setTime(23, 59, 59);
-        } else if ($filter == RangeTimeFilter::FILTER_MONTH) {
-            $startDatetime->modify('first day of this month');
-            $startDatetime->setTime(0, 0, 0);
-
-            $endDatetime->modify('last day of this month');
-            $endDatetime->setTime(23, 59, 59);
-        } else if ($filter == RangeTimeFilter::FILTER_YEAR) {
-            $startDatetime->modify('first day of january');
-            $startDatetime->setTime(0, 0, 0);
-
-            $endDatetime->modify('last day of december');
-            $endDatetime->setTime(23, 59, 59);
-        }
-
-        $qb->setParameters([
-            'type' => 'I',
-            'startDatetime' => $startDatetime,
-            'endDatetime' => $endDatetime,
-        ]);
+        $qb->setMaxResults($limit);
+        $qb->setFirstResult($offset);
 
         return $qb->getQuery()->execute();
     }
 
-    public function getRegistersGroupedByCfdiUseAndFilter($filter){
+    /**
+     * @param string $filter
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getRegistersGroupedByClientAndFilterCount(string $filter)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $this->prepareRegistersGroupedByClientAndFilterQuery($qb, $filter);
+
+        $qb->select('COUNT(a.emitterRfc) AS total');
+
+        $result = $qb->getQuery()->execute();
+
+        return \count($result);
+    }
+
+    public function getRegistersGroupedByCfdiUseAndFilter($filter)
+    {
         $qb = $this->createQueryBuilder('a');
         $qb->select('a.cfdiUseSatCode', 'b.name AS cfdiUseName', 'SUM(a.total) AS amount');
         $qb->leftJoin(CfdiUse::class,
-                      'b',
-                       \Doctrine\ORM\Query\Expr\Join::WITH,
-                       'a.cfdiUseSatCode = b.satCode');
+            'b',
+            \Doctrine\ORM\Query\Expr\Join::WITH,
+            'a.cfdiUseSatCode = b.satCode');
         $qb->where('a.type = :type');
         $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
         $qb->orderBy('a.cfdiUseSatCode', 'ASC');
@@ -243,7 +235,8 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-    public function getRegistersGroupedByEmailAndFilter($filter){
+    public function getRegistersGroupedByEmailAndFilter($filter)
+    {
         $qb = $this->createQueryBuilder('a');
         $qb->select('a.email', 'SUM(a.total) AS amount');
         $qb->where('a.type = :type');
@@ -411,7 +404,7 @@ class BillInfoRepository extends EntityRepository
             'endDatetime' => $endDatetime,
         ]);
 
-        
+
         $results = $qb->getQuery()->execute();
 
         $total = \array_reduce($results, function ($a, $register) {
@@ -420,5 +413,49 @@ class BillInfoRepository extends EntityRepository
 
 
         return $total;
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param string $filter
+     * @return QueryBuilder
+     */
+    private function prepareRegistersGroupedByClientAndFilterQuery(QueryBuilder &$qb, string $filter)
+    {
+        $qb->where('a.type = :type');
+        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+        $qb->groupBy('a.emitterRfc');
+
+        $now = new \DateTime();
+        $startDatetime = clone $now;
+        $endDatetime = clone $now;
+
+        if ($filter == RangeTimeFilter::FILTER_WEEK) {
+            $startDatetime->modify('monday this week');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('sunday this week');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_MONTH) {
+            $startDatetime->modify('first day of this month');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of this month');
+            $endDatetime->setTime(23, 59, 59);
+        } else if ($filter == RangeTimeFilter::FILTER_YEAR) {
+            $startDatetime->modify('first day of january');
+            $startDatetime->setTime(0, 0, 0);
+
+            $endDatetime->modify('last day of december');
+            $endDatetime->setTime(23, 59, 59);
+        }
+
+        $qb->setParameters([
+            'type' => 'I',
+            'startDatetime' => $startDatetime,
+            'endDatetime' => $endDatetime,
+        ]);
+
+        return $qb;
     }
 }

@@ -3,6 +3,8 @@
         <v2-table  :data="tableData"
                    :total="tableTotal"
                    :loading="tableLoading"
+                   :shown-pagination="true"
+                   :pagination-info="tablePaginationInfo"
                    class="bg-theme-color-1"
                    @page-change="onPageChange">
             <v2-table-column label="CLIENTE" prop="clientName" align="left" />
@@ -17,28 +19,42 @@
 </template>
 
 <script>
-  import GroupByClientTableRow from "../../../js/models/group-by-client-table-row";
   import BillInfoService from "../../../js/services/bill-info-service";
 
   const data = function () {
-    let tableData = [
-    ];
+    let tableData = [];
     let tableTotal = 0;
     let tableLoading = false;
+    let tablePage = 1;
+    let tableLimit = 5;
+    let tablePaginationInfo = {
+      text: '',
+      pageSize: tableLimit,
+      nextPageText: 'Sig',
+      prevPageText: 'Ant'
+    };
 
     return {
       tableData,
       tableTotal,
       tableLoading,
+      tablePage,
+      tableLimit,
+      tablePaginationInfo,
     };
   };
 
   const methods = {
     onPageChange(newPage) {
+      this.tablePage = newPage;
+
+      this.dispatchGetTableData();
     },
 
     dispatchGetTableData() {
       let filter = '';
+      let page = this.tablePage;
+      let limit = this.tableLimit;
 
       if (this.datetimeRangeFilter === 1) {
         filter = 'week';
@@ -50,17 +66,40 @@
 
       this.tableLoading = true;
 
-      this.getTableData(filter)
+      this.getTableData(page, limit, filter)
+        .then(() => {
+          if (this.tableTotal === 0) {
+            this.tablePaginationInfo.text = 'Mostrando 0 de 0 resultados.';
+          } else if (this.tableTotal > 0) {
+            let pluralTextInclude = this.tableTotal > 1 ? 's' : '';
+            this.tablePaginationInfo.text = `Mostrando ${this.tableLimit} de ${this.tableTotal} registro${pluralTextInclude}`;
+          } else {
+            this.tablePaginationInfo.text = '';
+          }
+        })
         .catch(error => console.error(error))
         .then(() => this.tableLoading = false);
     },
 
-    async getTableData(filter) {
+    async getTableData(page, limit, filter) {
+      // throw exception if invalid page
+      if (page <= 0) throw 'Invalid page number';
+
       let service = new BillInfoService();
-      let response = await service.getDataGroupedByClientAndFilter(filter);
+
+      if (page === 1 || !this.tableData) {
+        this.tableData = [];
+        let {count} = await service.getDataGroupedByClientAndFilterCount(filter);
+        this.tableTotal = count;
+      }
+
+      if (this.tableTotal === 0) return;
+
+      let offset = limit * (page - 1);
+
+      let response = await service.getDataGroupedByClientAndFilter(limit, offset, filter);
 
       this.tableData = response.data;
-      this.tableTotal = this.tableData.length;
 
       return response;
     },

@@ -65,6 +65,8 @@ class SiteRouter
             $group->map('GET', '/bill-info/group-by/cfdi-use', BillInfoApiView::class . '::getBillsInfoGroupByCfdiUse');
             $group->map('GET', '/bill-info/group-by/email', BillInfoApiView::class . '::getBillsInfoGroupByEmail');
 
+            $group->map('GET', '/bill-info/group-by/client/count', BillInfoApiView::class . '::getBillsInfoGroupByClientCount');
+
             $group->map('GET', '/bill-info/last-registers', BillInfoApiView::class . '::getLastBillInfoRegisters');
             $group->map('GET', '/bill-info/email/last-registers', BillInfoApiView::class . '::getLastBillInfoEmailRegisters');
 
