@@ -19,10 +19,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class BillInfoClientApiView
+ * Class BillInfoCfdiUseApiView
  * @package App\Api
  */
-class BillInfoClientApiView extends BaseApiView
+class BillInfoCfdiUseApiView extends BaseApiView
 {
     use EntityManagerViewTrait;
 
