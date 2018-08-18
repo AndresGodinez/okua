@@ -17,11 +17,6 @@
                     <span>{{scope.row.email}}</span>
                 </template>
             </v2-table-column>
-            <v2-table-column label="ERROR" prop="description" align="center" width="150">
-                <template slot-scope="scope">
-                    <span>{{scope.row.description}}</span>
-                </template>
-            </v2-table-column>
             <v2-table-column label="FECHA/HORA (CORREO)" prop="emailDatetime" align="center" >
                 <template slot-scope="scope">
                     <span>{{scope.row.emailDatetime}}</span>
@@ -61,10 +56,6 @@
   };
 
   const methods = {
-    goBills() {
-      RouteUtils.goBills();
-    },
-
     dispatchGetLastProcessErrors() {
       this.getLastProcessErrors()
         .then(response => {

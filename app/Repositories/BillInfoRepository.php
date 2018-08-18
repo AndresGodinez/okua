@@ -458,20 +458,4 @@ class BillInfoRepository extends EntityRepository
 
         return $qb;
     }
-
-    /**
-     * @param $limit
-     * @return mixed
-     */
-    public function getLastProcessError($limit)
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->select('a.email', 'a.emailDatetime');
-        $qb->orderBy('a.emailDatetime', 'DESC');
-        $qb->groupBy('a.email');
-        $qb->groupBy('a.emailDatetime');
-        $qb->setMaxResults($limit);
-
-        return $qb->getQuery()->execute();
-    }
 }

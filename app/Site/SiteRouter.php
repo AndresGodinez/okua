@@ -83,6 +83,9 @@ class SiteRouter
 
             $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarning');
             $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessError');
+
+            $group->map('GET', '/process/warning/{processWarningId:regId}', ProcessWarningApiView::class . '::getProcessWarningById');
+            $group->map('GET', '/process/error/{processErrorId:regId}', ProcessErrorApiView::class . '::getProcessErrorById');
         })
             ->setScheme('http');
 

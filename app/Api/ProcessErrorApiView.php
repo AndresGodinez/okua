@@ -55,4 +55,21 @@ class ProcessErrorApiView extends BaseApiView {
 
         return $response;
     }
+
+    public function getProcessErrorById(ServerRequestInterface $request, ResponseInterface $response, array $args){
+        $processErrorId = $args['processErrorId'] ?? 0;
+
+        $repo = $this->getEm()->getRepository(ProcessError::class);
+
+        $registers = $repo->getProcessErrorById($processErrorId);
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new ProcessErrorItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
 }

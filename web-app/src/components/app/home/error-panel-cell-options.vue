@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex-inline">
         <button v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2" title="VER">
-            <font-awesome-icon :icon="iconEye" class="w-8 h-8 p-2 text-white text-lg" @click="watchWarning()"/>
+            <font-awesome-icon :icon="iconEye" class="w-8 h-8 p-2 text-white text-lg" @click="watchError()"/>
         </button>
     </div>
 </template>
@@ -9,11 +9,13 @@
 
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
   import {faEye, faFileExcel, faFilePdf} from '@fortawesome/free-solid-svg-icons';
+  import AlertUtils from '../../../js/utils/alert-utils.js';
+  import ProcessErrorService from "../../../js/services/process-error-service";
 
   const methods = {
-    watchWarning() {
-      let id = this.row.id;
-      //TODO modal?
+    watchError() {
+      let description = this.row.description;
+      AlertUtils.showAlert(description, 'Error', 'info');
     },
   };
 
