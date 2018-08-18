@@ -30,7 +30,7 @@ class ProcessErrorMetadataBuilder
         $builder->setCustomRepositoryClass(ProcessErrorRepository::class);
 
         $builder->createField('id', 'bigint')->makePrimaryKey()->generatedValue()->build();
-        $builder->createField('code', 'int')->build();
+        $builder->createField('code', 'integer')->build();
         $builder->createField('description', 'string')->length(255)->build();
         $builder->createField('email', 'string')->length(100)->build();
         $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();

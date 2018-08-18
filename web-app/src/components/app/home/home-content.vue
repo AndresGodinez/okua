@@ -9,8 +9,8 @@
                 <home-dashboard-last-cfdis-panel/>
 
                 <div class="flex flex-row justify-between flex-no-shrink">
-                  <home-dashboard-warning-panel />
-                  <home-dashboard-error-panel />
+                  <home-dashboard-warning-panel class="flex-1 mr-2" />
+                  <home-dashboard-error-panel class="flex-1 ml-2" />
                 </div>
             </div>
 

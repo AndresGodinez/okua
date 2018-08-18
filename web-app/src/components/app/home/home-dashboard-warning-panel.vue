@@ -1,12 +1,11 @@
 <template>
-    <div class="flex flex-col w-2/5 mt-16 shadow-md mb-16 flex-no-shrink">
+    <div class="flex flex-col flex-1 mt-16 shadow-md mb-16 flex-no-shrink">
         <warning-panel-topbar />
 
         <v2-table :data="tableData"
                   :total="tableTotal"
                   :loading="tableLoading"
-                  :shown-pagination="true"
-                  :pagination-info="tablePaginationInfo"
+                  :shown-pagination="false"
                   class="bg-theme-color-1">
             <v2-table-column label="OPCIONES" prop="id" align="center">
                 <template slot-scope="scope">
@@ -54,7 +53,7 @@
       this.getLastProcessWarnings()
         .then(response => {
           this.tableData = !!response.data ? response.data : [];
-          this.tableTotal = !!this.tableData ? this.tableData.length() : 0;
+          this.tableTotal = !!this.tableData ? this.tableData.length : 0;
         })
         .then(() => this.tableLoading = false);
     },
