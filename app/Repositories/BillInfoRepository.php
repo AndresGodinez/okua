@@ -112,7 +112,8 @@ class BillInfoRepository extends EntityRepository
         $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
-        float $finalAmount = 0.00
+        float $finalAmount = 0.00,
+        $filterDatetimeType = 1
     )
     {
         $qb = $this->createQueryBuilder('a');
@@ -122,7 +123,7 @@ class BillInfoRepository extends EntityRepository
             \Doctrine\ORM\Query\Expr\Join::WITH,
             'a.cfdiUseSatCode = b.satCode');
 
-        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
+        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount, $filterDatetimeType);
 
         $qb->orderBy('a.emailDatetime', 'DESC');
         $qb->setMaxResults($limit);
@@ -147,13 +148,14 @@ class BillInfoRepository extends EntityRepository
         $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
-        float $finalAmount = 0.00
+        float $finalAmount = 0.00,
+        int $filterDatetimeType = 1
     )
     {
         $qb = $this->createQueryBuilder('a');
         $qb->select('COUNT(a.id) AS total');
 
-        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount);
+        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount, $filterDatetimeType);
 
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -283,11 +285,21 @@ class BillInfoRepository extends EntityRepository
         $endDatetime,
         string $emitterRfc = '',
         float $initialAmount = 0.00,
-        float $finalAmount = 0.00
+        float $finalAmount = 0.00,
+        $filterDatetimeType
     )
     {
         $qb->where('a.type = :type');
-        $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+
+        if ($filterDatetimeType === 1){
+            $qb->andWhere('a.documentDatetime BETWEEN :startDatetime AND :endDatetime');
+        }elseif ($filterDatetimeType === 2){
+            $qb->andWhere('a.stampDatetime BETWEEN :startDatetime AND :endDatetime');
+        }elseif ($filterDatetimeType === 3){
+            $qb->andWhere('a.emailDatetime BETWEEN :startDatetime AND :endDatetime');
+        }elseif ($filterDatetimeType === 4){
+            $qb->andWhere('a.regDatetime BETWEEN :startDatetime AND :endDatetime');
+        }
 
         if (!!$emitterRfc) {
             $qb->andWhere('a.emitterRfc = :emitterRfc');

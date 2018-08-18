@@ -33,10 +33,11 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
         $initialAmount = $data['initialAmount'] ?? 0.00;
         $finalAmount = $data['finalAmount'] ?? 0.00;
 
+        $filterDateType = $data['filterDateType'] ?? 1;
         $limit = (int)$limit;
         $offset = (int)$offset;
 
-        $inst = new GetFilteredBillInfoRegistersRequestData($limit, $offset, $startDatetime, $endDatetime);
+        $inst = new GetFilteredBillInfoRegistersRequestData($limit, $offset, $startDatetime, $endDatetime, $filterDateType);
 
         $initialAmount = (float)$initialAmount;
         $finalAmount = (float)$finalAmount;
@@ -76,12 +77,13 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
      * @param string $startDatetime
      * @param string $endDatetime
      */
-    public function __construct(int $limit, int $offset, string $startDatetime, string $endDatetime)
+    public function __construct(int $limit, int $offset, string $startDatetime, string $endDatetime, int $filterDateType)
     {
         $this->limit = $limit;
         $this->offset = $offset;
         $this->startDatetime = $startDatetime;
         $this->endDatetime = $endDatetime;
+        $this->filterDateType = $filterDateType;
     }
 
     /**
@@ -146,6 +148,22 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     public function setEndDatetime(string $endDatetime)
     {
         $this->endDatetime = $endDatetime;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFilterDateType(): int
+    {
+        return $this->filterDateType;
+    }
+
+    /**
+     * @param int $filterDateType
+     */
+    public function setFilterDateType(int $FilterDateType)
+    {
+        $this->FilterDateType = $FilterDateType;
     }
 
     /**

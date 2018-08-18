@@ -69,7 +69,7 @@ export default class BillInfoService {
     return await api.get();
   }
 
-  async getFilteredRegisters(limit, offset, startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00) {
+  async getFilteredRegisters(limit, offset, startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1) {
     const data = {
       limit,
       offset,
@@ -78,6 +78,7 @@ export default class BillInfoService {
       clientRfc,
       initialAmount,
       finalAmount,
+      filterDateType,
     };
 
     let api = new WebApi(`${this.host}/api/bill-info`, data);
@@ -86,13 +87,14 @@ export default class BillInfoService {
     return await api.get();
   }
 
-  async getFilteredRegistersCount(startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00) {
+  async getFilteredRegistersCount(startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1) {
     const data = {
       startDatetime,
       endDatetime,
       clientRfc,
       initialAmount,
       finalAmount,
+      filterDateType,
     };
 
     let api = new WebApi(`${this.host}/api/bill-info/count`, data);

@@ -31,7 +31,8 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
         $initialAmount = $data['initialAmount'] ?? 0.00;
         $finalAmount = $data['finalAmount'] ?? 0.00;
 
-        $inst = new GetFilteredBillInfoRegistersCountRequestData($startDatetime, $endDatetime);
+        $filterDateType = $data['filterDateType'] ?? 1;
+        $inst = new GetFilteredBillInfoRegistersCountRequestData($startDatetime, $endDatetime, $filterDateType);
         
         $initialAmount = (float)$initialAmount;
         $finalAmount = (float)$finalAmount;
@@ -63,10 +64,11 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
      * @param string $startDatetime
      * @param string $endDatetime
      */
-    public function __construct(string $startDatetime, string $endDatetime)
+    public function __construct(string $startDatetime, string $endDatetime, int $filterDateType)
     {
         $this->startDatetime = $startDatetime;
         $this->endDatetime = $endDatetime;
+        $this->filterDateType = $filterDateType;
     }
 
     /**
@@ -99,6 +101,22 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     public function setEndDatetime(string $endDatetime)
     {
         $this->endDatetime = $endDatetime;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFilterDateType(): int
+    {
+        return $this->filterDateType;
+    }
+
+    /**
+     * @param int $filterDateType
+     */
+    public function setFilterDateType(int $filterDateType)
+    {
+        $this->filterDateType = $filterDateType;
     }
 
     /**
