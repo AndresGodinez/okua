@@ -22,8 +22,8 @@
 <script>
   import {faAt, faClock, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-  import RouteUtils from "../../../js/utils/route-utils";
   import BillInfoService from "../../../js/services/bill-info-service";
+  import {mapActions} from "vuex";
 
   const data = function () {
     let lastEmailsData = [];
@@ -33,6 +33,9 @@
   };
 
   const methods = {
+    ...mapActions([
+      'toggleForceUpdateByNewRegisters',
+    ]),
     dispatchGetLastEmails() {
       this.getLastEmails(10)
         .then(response => {
@@ -43,10 +46,10 @@
             let newItem = newData[0];
 
             if (oldItem.email !== newItem.email || oldItem.emailDatetime !== newItem.emailDatetime) {
-              this.$store.dispatch('toggleForceUpdateByNewRegisters');
+              this.toggleForceUpdateByNewRegisters();
             }
           } else if (!!newData && (!this.lastEmailsData || !this.lastEmailsData.length)) {
-            this.$store.dispatch('toggleForceUpdateByNewRegisters');
+            this.toggleForceUpdateByNewRegisters();
           }
 
           this.lastEmailsData = response.data;

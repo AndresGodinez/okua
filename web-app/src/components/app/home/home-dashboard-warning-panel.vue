@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col w-2/5 mt-16 shadow-md mb-16 flex-no-shrink">
         <warning-panel-topbar />
+
         <v2-table :data="tableData"
                   :total="tableTotal"
                   :loading="tableLoading"
@@ -32,23 +33,16 @@
 </template>
 
 <script>
-  import RouteUtils from "../../../js/utils/route-utils";
   import ProcessWarningService from "../../../js/services/process-warning-service";
   import WarningPanelTopbar from "./warning-panel-topbar";
   import WarningPanelCellOptions from "./warning-panel-cell-options";
 
   const data = function () {
     let tableData = [];
-    let tableTotal = tableData.length;
+    let tableTotal = 0;
     let tableLoading = true;
     let tablePage = 1;
     let tableLimit = 5;
-    let tablePaginationInfo = {
-      text: '',
-      pageSize: tableLimit,
-      nextPageText: 'Sig',
-      prevPageText: 'Ant'
-    };
 
     return {
       tableData,
@@ -56,19 +50,16 @@
       tableLoading,
       tablePage,
       tableLimit,
-      tablePaginationInfo,
     };
   };
 
   const methods = {
-    goBills() {
-      RouteUtils.goBills();
-    },
-
     dispatchGetLastProcessWarnings() {
+      this.tableLoading = true;
       this.getLastProcessWarnings()
         .then(response => {
-          this.tableData = response.data;
+          this.tableData = !!response.data ? response.data : [];
+          this.tableTotal = !!this.tableData ? this.tableData.length() : 0;
         })
         .then(() => this.tableLoading = false);
     },

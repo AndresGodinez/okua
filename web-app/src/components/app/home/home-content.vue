@@ -6,8 +6,6 @@
 
         <div class="flex flex-row w-full px-8">
             <div class="flex flex-col flex-grow px-4 max-h-full overflow-y-auto overflow-hidden">
-                <datetime-range-filters/>
-
                 <home-dashboard-last-cfdis-panel/>
 
                 <div class="flex flex-row justify-between flex-no-shrink">
