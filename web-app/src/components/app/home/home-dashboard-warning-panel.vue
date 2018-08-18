@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col w-full mt-16 shadow-md mb-16 flex-no-shrink">
-        <last-cfdis-panel-topbar />
+    <div class="flex flex-col w-2/5 mt-16 shadow-md mb-16 flex-no-shrink">
+        <warning-panel-topbar />
         <v2-table :data="tableData"
                   :total="tableTotal"
                   :loading="tableLoading"
@@ -9,17 +9,17 @@
                   class="bg-theme-color-1">
             <v2-table-column label="OPCIONES" prop="id" align="center">
                 <template slot-scope="scope">
-                    <bills-info-table-cell-options :row="scope.row" />
+                    <warning-panel-cell-options :row="scope.row" />
                 </template>
             </v2-table-column>
-            <v2-table-column label="CLIENTE" prop="clientName" align="left" >
+            <v2-table-column label="EMAIL" prop="email" align="left" >
                 <template slot-scope="scope">
-                    <span>{{scope.row.clientName}}</span>
+                    <span>{{scope.row.email}}</span>
                 </template>
             </v2-table-column>
-            <v2-table-column label="CANTIDAD" prop="total" align="center" width="150">
+            <v2-table-column label="ADVERTENCIA" prop="description" align="center" width="150">
                 <template slot-scope="scope">
-                    <span>{{scope.row.total | currency}}</span>
+                    <span>{{scope.row.description}}</span>
                 </template>
             </v2-table-column>
             <v2-table-column label="FECHA/HORA (CORREO)" prop="emailDatetime" align="center" >
@@ -33,9 +33,9 @@
 
 <script>
   import RouteUtils from "../../../js/utils/route-utils";
-  import BillInfoService from "../../../js/services/bill-info-service";
-  import LastCfdisPanelTopbar from "./last-cfdis-panel-topbar";
-  import BillsInfoTableCellOptions from "../bills/bills-info-table-cell-options"
+  import ProcessWarningService from "../../../js/services/process-warning-service";
+  import WarningPanelTopbar from "./warning-panel-topbar";
+  import WarningPanelCellOptions from "./warning-panel-cell-options";
 
   const data = function () {
     let tableData = [];
@@ -65,17 +65,17 @@
       RouteUtils.goBills();
     },
 
-    dispatchGetLastRegisters() {
-      this.getLastRegisters()
+    dispatchGetLastProcessWarnings() {
+      this.getLastProcessWarnings()
         .then(response => {
           this.tableData = response.data;
         })
         .then(() => this.tableLoading = false);
     },
 
-    async getLastRegisters(limit = 5) {
-      let service = new BillInfoService();
-      return await service.getLastRegisters(limit);
+    async getLastProcessWarnings(limit = 5) {
+      let service = new ProcessWarningService();
+      return await service.getLastProcessWarnings(limit);
     },
   };
 
@@ -87,13 +87,13 @@
     methods,
     computed,
 
-    name: 'home-dashboard-last-cfdis-panel',
+    name: 'home-dashboard-warning-panel',
     components: {
-      LastCfdisPanelTopbar,
-      BillsInfoTableCellOptions,
+      WarningPanelTopbar,
+      WarningPanelCellOptions,
     },
     mounted() {
-      setTimeout(() => this.dispatchGetLastRegisters(), 500);
+      setTimeout(() => this.dispatchGetLastProcessWarnings(), 500);
     },
   }
 </script>

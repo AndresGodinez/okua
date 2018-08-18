@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full mt-16 shadow-md mb-16 flex-no-shrink">
+    <div class="flex flex-col w-3/4 mt-16 shadow-md mb-16 flex-no-shrink">
         <last-cfdis-panel-topbar />
         <v2-table :data="tableData"
                   :total="tableTotal"
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-  import RouteUtils from "../../../js/utils/route-utils";
-  import BillInfoService from "../../../js/services/bill-info-service";
+  import RouteUtils from "../../../../js/utils/route-utils";
+  import BillInfoService from "../../../../js/services/bill-info-service";
   import LastCfdisPanelTopbar from "./last-cfdis-panel-topbar";
-  import BillsInfoTableCellOptions from "../bills/bills-info-table-cell-options"
+  import BillsInfoTableCellOptions from "../../bills/bills-info-table-cell-options"
 
   const data = function () {
     let tableData = [];
