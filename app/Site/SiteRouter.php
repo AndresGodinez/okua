@@ -85,10 +85,12 @@ class SiteRouter
             // TODO: change to last-registers path
             $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarnings');
             $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessErrors');
+
+            $group->map('GET', '/process/warning/{processWarningId:regId}', ProcessWarningApiView::class . '::getProcessWarningById');
+            $group->map('GET', '/process/error/{processErrorId:regId}', ProcessErrorApiView::class . '::getProcessErrorById');
         })
             ->setScheme('http');
 
         return $route;
     }
 }
-

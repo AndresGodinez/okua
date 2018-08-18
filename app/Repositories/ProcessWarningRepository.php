@@ -30,4 +30,15 @@ class ProcessWarningRepository extends EntityRepository {
 
         return $qb->getQuery()->execute();
     }
+
+    public function getProcessWarningById($id){
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.id = :id');
+
+        $qb->setParameters([
+            'id' => $id,
+        ]);
+
+        return $qb->getQuery()->execute();
+    }
 }

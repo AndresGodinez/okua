@@ -54,4 +54,21 @@ class ProcessWarningApiView extends BaseApiView {
 
         return $response;
     }
+
+    public function getProcessWarningById(ServerRequestInterface $request, ResponseInterface $response, array $args){
+        $processWarningId = $args['processWarningId'] ?? 0;
+        
+        $repo = $this->getEm()->getRepository(ProcessWarning::class);
+
+        $registers = $repo->getProcessWarningById($processWarningId);
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new ProcessWarningItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
 }

@@ -9,11 +9,13 @@
 
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
   import {faEye, faFileExcel, faFilePdf} from '@fortawesome/free-solid-svg-icons';
+  import AlertUtils from '../../../js/utils/alert-utils.js';
 
   const methods = {
     watchWarning() {
-      let id = this.row.id;
-      //TODO modal?
+      let description = this.row.description;
+      
+      AlertUtils.showAlert(description, 'Alerta', 'info');
     },
   };
 
