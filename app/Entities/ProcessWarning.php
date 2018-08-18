@@ -6,8 +6,6 @@
 namespace App\Entities;
 
 use App\Entities\Mappings\ProcessWarningMetadataBuilder;
-use App\Utils\EntityUtils;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 class ProcessWarning {
@@ -24,8 +22,8 @@ class ProcessWarning {
 	/** @var null|int */
 	private $id;
 
-	/** @var null|string */
-	private $code;
+	/** @var int */
+	private $code = -1;
 
 	/** @var null|string */
 	private $description;
@@ -63,7 +61,7 @@ class ProcessWarning {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCode()
     {
@@ -71,7 +69,7 @@ class ProcessWarning {
     }
 
     /**
-     * @param mixed $code
+     * @param int $code
      *
      * @return self
      */

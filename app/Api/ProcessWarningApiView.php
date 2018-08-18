@@ -10,7 +10,6 @@ namespace App\Api;
 
 
 use App\Entities\ProcessWarning;
-use App\Exceptions\ValidationException;
 use App\Models\GetLastRegistersRequestData;
 use App\Repositories\ProcessWarningRepository;
 use App\Traits\EntityManagerViewTrait;
@@ -36,7 +35,7 @@ class ProcessWarningApiView extends BaseApiView {
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getLastProcessWarning(ServerRequestInterface $request, ResponseInterface $response)
+    public function getLastProcessWarnings(ServerRequestInterface $request, ResponseInterface $response)
     {
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();

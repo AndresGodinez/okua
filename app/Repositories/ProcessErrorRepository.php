@@ -19,7 +19,7 @@ use Doctrine\ORM\QueryBuilder;
  * @package App\Repositories
  */
 
-class processErrorRepository extends EntityRepository {
+class ProcessErrorRepository extends EntityRepository {
 
 	/**
      * @param $limit
@@ -28,7 +28,6 @@ class processErrorRepository extends EntityRepository {
     public function getLastProcessError($limit)
     {
         $qb = $this->createQueryBuilder('a');
-        //$qb->select('a.id', 'a.code', 'a.description', 'a.email', 'a.emailDatetime');
         $qb->orderBy('a.id', 'DESC');
         $qb->setMaxResults($limit);
 

@@ -9,17 +9,14 @@
 namespace App\Repositories;
 
 
-use App\Entities\ProcessWarning;
-use App\Models\RangeTimeFilter;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class ProcessWarningRepository
  * @package App\Repositories
  */
 
-class processWarningRepository extends EntityRepository {
+class ProcessWarningRepository extends EntityRepository {
 
 	/**
      * @param $limit
@@ -28,7 +25,6 @@ class processWarningRepository extends EntityRepository {
     public function getLastProcessWarning($limit)
     {
         $qb = $this->createQueryBuilder('a');
-        //$qb->select('a.code', 'a.description', 'a.email', 'a.emailDatetime', 'a.cfdiId');
         $qb->orderBy('a.id', 'DESC');
         $qb->setMaxResults($limit);
 

@@ -10,14 +10,15 @@ namespace App\Site;
 
 use App\Api\BillInfoApiView;
 use App\Api\BillInfoClientApiView;
+use App\Api\ProcessErrorApiView;
+use App\Api\ProcessWarningApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
-use App\Api\ProcessWarningApiView;
-use App\Api\ProcessErrorApiView;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
 use App\Views\MovementsLogView;
+use App\Views\ProvidersHomeView;
 use League\Container\Container;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -47,7 +48,7 @@ class SiteRouter
 
             $group->get('/movements-log', MovementsLogView::class . '::index');
 
-            $group->get('/providers/home', HomeView::class . '::providersIndex');
+            $group->get('/providers/home', ProvidersHomeView::class . '::index');
         })
             ->setScheme('http');
 
@@ -81,8 +82,9 @@ class SiteRouter
             $group->map('GET', '/bill-info/taxes/transfer/total', BillInfoApiView::class . '::getBillInfoTransferTotal');
             $group->map('GET', '/bill-info/taxes/withheld/total', BillInfoApiView::class . '::getBillInfoWithheldTotal');
 
-            $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarning');
-            $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessError');
+            // TODO: change to last-registers path
+            $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarnings');
+            $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessErrors');
         })
             ->setScheme('http');
 

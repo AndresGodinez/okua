@@ -13,10 +13,10 @@ use League\Fractal\TransformerAbstract;
 class ProcessWarningItemTransformer extends TransformerAbstract
 {
     /**
-     * @param array $item
+     * @param ProcessWarning $item
      * @return array
      */
-    public function transform(processWarning $item)
+    public function transform(ProcessWarning $item)
     {
         return [
             'id' => (int)$item->getId(),

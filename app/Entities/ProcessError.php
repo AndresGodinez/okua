@@ -6,8 +6,6 @@
 namespace App\Entities;
 
 use App\Entities\Mappings\ProcessErrorMetadataBuilder;
-use App\Utils\EntityUtils;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 class ProcessError {
@@ -24,7 +22,7 @@ class ProcessError {
 	/** @var null|int */
 	private $id;
 
-	/** @var null|string */
+	/** @var int */
 	private $code;
 
 	/** @var null|string */
@@ -60,7 +58,7 @@ class ProcessError {
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCode()
     {
@@ -68,7 +66,7 @@ class ProcessError {
     }
 
     /**
-     * @param mixed $code
+     * @param int $code
      *
      * @return self
      */

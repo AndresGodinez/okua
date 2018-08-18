@@ -10,7 +10,6 @@ namespace App\Api;
 
 
 use App\Entities\ProcessError;
-use App\Exceptions\ValidationException;
 use App\Models\GetLastRegistersRequestData;
 use App\Repositories\ProcessErrorRepository;
 use App\Traits\EntityManagerViewTrait;
@@ -36,7 +35,7 @@ class ProcessErrorApiView extends BaseApiView {
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getLastProcessError(ServerRequestInterface $request, ResponseInterface $response)
+    public function getLastProcessErrors(ServerRequestInterface $request, ResponseInterface $response)
     {
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();

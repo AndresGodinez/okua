@@ -30,7 +30,7 @@ class ProcessWarningMetadataBuilder
         $builder->setCustomRepositoryClass(ProcessWarningRepository::class);
 
         $builder->createField('id', 'bigint')->makePrimaryKey()->generatedValue()->build();
-        $builder->createField('code', 'string')->length(255)->build();
+        $builder->createField('code', 'int')->option('default', -1)->build();
         $builder->createField('description', 'string')->length(255)->build();
         $builder->createField('email', 'string')->length(100)->build();
         $builder->createField('emailDatetime', 'datetime')->columnName('email_datetime')->build();

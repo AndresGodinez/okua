@@ -11,6 +11,7 @@ namespace App\Site;
 use App\Site\ServicesProviders\ApiViewsServiceProvider;
 use App\Site\ServicesProviders\BaseServiceProvider;
 use App\Site\ServicesProviders\FrontViewsServiceProvider;
+use App\Site\ServicesProviders\ModuleProvidersServiceProvider;
 use League\Container\Container;
 
 /**
@@ -34,6 +35,9 @@ class SiteContainer
 
         # SECTION: adding site API back-end views containers
         $container->addServiceProvider(new ApiViewsServiceProvider);
+
+        # SECTION: modules
+        $container->addServiceProvider(new ModuleProvidersServiceProvider);
 
         return $container;
     }
