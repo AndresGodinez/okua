@@ -12,6 +12,8 @@ use App\Api\BillInfoApiView;
 use App\Api\BillInfoClientApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
+use App\Api\ProcessWarningApiView;
+use App\Api\ProcessErrorApiView;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
@@ -44,6 +46,8 @@ class SiteRouter
             $group->get('/bills', BillsView::class . '::index');
 
             $group->get('/movements-log', MovementsLogView::class . '::index');
+
+            $group->get('/providers/home', HomeView::class . '::providersIndex');
         })
             ->setScheme('http');
 
@@ -76,6 +80,9 @@ class SiteRouter
 
             $group->map('GET', '/bill-info/taxes/transfer/total', BillInfoApiView::class . '::getBillInfoTransferTotal');
             $group->map('GET', '/bill-info/taxes/withheld/total', BillInfoApiView::class . '::getBillInfoWithheldTotal');
+
+            $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarning');
+            $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessError');
         })
             ->setScheme('http');
 

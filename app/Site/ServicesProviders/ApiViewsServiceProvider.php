@@ -14,6 +14,8 @@ use App\Api\BillInfoApiView;
 use App\Api\BillInfoClientApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
+use App\Api\ProcessWarningApiView;
+use App\Api\ProcessErrorApiView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -31,6 +33,8 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         UserAuthApiView::class,
         BillInfoApiView::class,
         BillInfoClientApiView::class,
+        ProcessWarningApiView::class,
+        ProcessErrorApiView::class,
     ];
 
     /**
@@ -53,6 +57,14 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
 
         $container
             ->add(BillInfoClientApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
+
+        $container
+            ->add(ProcessWarningApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
+
+        $container
+            ->add(ProcessErrorApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
     }
 

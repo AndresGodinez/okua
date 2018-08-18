@@ -34,4 +34,21 @@ class HomeView extends BaseView
 
         return $response;
     }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
+    public function providersIndex(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $params = $request->getQueryParams();
+
+        $body = $this->templates->render('app/providers/home', []);
+
+        ResponseUtils::addContentTypeHtmlHeader($response);
+        $response->getBody()->write($body);
+
+        return $response;
+    }
 }
