@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col max-h-screen">
-        <app-menu selected="home"></app-menu>
+        <app-menu selected="providers"></app-menu>
 
         <app-navbar></app-navbar>
 

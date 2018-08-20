@@ -7,6 +7,10 @@ export default class RouteUtils {
     window.location.replace('/app/bills');
   }
 
+  static goModuleProviders() {
+    window.location.replace('/app/providers/home');
+  }
+
   static goHome() {
     window.location.replace('/app');
   }

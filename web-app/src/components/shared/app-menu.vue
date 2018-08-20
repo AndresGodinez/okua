@@ -23,6 +23,13 @@
                     </button>
                 </div>
 
+                <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'providers' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goModuleProviders()">
+                        <font-awesome-icon :icon="iconMenuProviders" />
+                        <span class="ml-2 uppercase">Proveedores</span>
+                    </button>
+                </div>
+
                 <!--<div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">-->
                     <!--<button class="text-left w-full hover:bg-grey-light h-16 px-4" :class="[selected === 'movements' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goMovements()">-->
                         <!--<font-awesome-icon :icon="iconMenuMovements" />-->
@@ -62,6 +69,10 @@
       RouteUtils.goBills();
     },
 
+    goModuleProviders() {
+      RouteUtils.goModuleProviders();
+    },
+
     goMovements() {
       RouteUtils.goBills();
     }
@@ -77,6 +88,10 @@
     },
 
     iconMenuBills() {
+      return faMoneyBill;
+    },
+
+    iconMenuProviders() {
       return faMoneyBill;
     },
 
