@@ -19,7 +19,7 @@
                 <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
                     <button class="text-left w-full h-16 px-4" :class="[selected === 'bills' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goBills()">
                         <font-awesome-icon :icon="iconMenuBills" />
-                        <span class="ml-2 uppercase">Facturas</span>
+                        <span class="ml-2 uppercase">CFDI Procesados</span>
                     </button>
                 </div>
 
@@ -46,7 +46,7 @@
 
 <script>
   import RouteUtils from "../../js/utils/route-utils";
-  import {faHome, faMoneyBill, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+  import {faHome, faFileInvoice, faFileInvoiceDollar, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
   const props = {
@@ -88,11 +88,11 @@
     },
 
     iconMenuBills() {
-      return faMoneyBill;
+      return faFileInvoice;
     },
 
     iconMenuProviders() {
-      return faMoneyBill;
+      return faFileInvoiceDollar;
     },
 
     iconMenuMovements() {
