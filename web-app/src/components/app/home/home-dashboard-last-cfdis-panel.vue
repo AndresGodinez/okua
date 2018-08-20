@@ -12,7 +12,7 @@
                     <bills-info-table-cell-options :row="scope.row" />
                 </template>
             </v2-table-column>
-            <v2-table-column label="CLIENTE" prop="clientName" align="left" >
+            <v2-table-column label="EMISOR" prop="clientName" align="left" >
                 <template slot-scope="scope">
                     <span>{{scope.row.clientName}}</span>
                 </template>

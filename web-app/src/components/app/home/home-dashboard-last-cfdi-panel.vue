@@ -8,7 +8,7 @@
                   </template>
               </v2-table-column>
               <v2-table-column label="#" prop="id" align="center" />
-              <v2-table-column label="CLIENTE" prop="emitterName" align="left" />
+              <v2-table-column label="EMISOR" prop="emitterName" align="left" />
               <v2-table-column label="R.F.C." prop="emitterRfc" align="left" />
               <v2-table-column label="USO CFDI" prop="cfdiUseSatCode" align="left" />
               <v2-table-column label="CANTIDAD" prop="total" align="left">

@@ -13,7 +13,7 @@
                 </template>
             </v2-table-column>
             <v2-table-column label="#" prop="id" align="center"/>
-            <v2-table-column label="CLIENTE" prop="clientName" align="left"/>
+            <v2-table-column label="EMISOR" prop="clientName" align="left"/>
             <v2-table-column label="R.F.C." prop="clientRfc" align="left"/>
             <v2-table-column label="USO CFDI" prop="cfdiUseSatCode" align="left"/>
             <v2-table-column label="CANTIDAD" prop="total" align="left">

@@ -7,7 +7,7 @@
                    :pagination-info="tablePaginationInfo"
                    class="bg-theme-color-1"
                    @page-change="onPageChange">
-            <v2-table-column label="CLIENTE" prop="clientName" align="left" />
+            <v2-table-column label="EMISOR" prop="clientName" align="left" />
             <v2-table-column label="R.F.C." prop="clientRfc" align="left" />
             <v2-table-column label="CANTIDAD" prop="amount" align="left" >
                 <template slot-scope="scope">

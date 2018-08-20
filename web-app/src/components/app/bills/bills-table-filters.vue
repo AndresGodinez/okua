@@ -8,7 +8,7 @@
             <div class="cit-collapsible-content-inner bg-white shadow-lg pt-2 pb-2">
                 <div class="flex flex-col m-auto p-4 w-4/5">
                     <div class="inline-flex mt-4 ml-4">
-                        <div class="flex-1 font-sans text-lg uppercase text-center">Cliente</div>
+                        <div class="flex-1 font-sans text-lg uppercase text-center">Emisor</div>
                         <div class="flex-1 font-sans text-lg uppercase text-center">Monto inicial</div>
                         <div class="flex-1 font-sans text-lg uppercase text-center">Monto final</div>
                     </div>

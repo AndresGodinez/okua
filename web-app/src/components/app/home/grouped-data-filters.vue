@@ -9,7 +9,7 @@
                              :class="[groupFilter === 1 ? 'bg-theme-color-4-darker border-theme-color-4-darker' : 'border-white']"
                              @click="setGroupFilter(1)">
                             <font-awesome-icon :icon="iconGroupByClient"/>
-                            <span class="ml-2 uppercase text-sm">Cliente</span>
+                            <span class="ml-2 uppercase text-sm">Emisor</span>
                         </div>
                     </li>
                     <li class="mr-3 disabled" :disabled="true">
