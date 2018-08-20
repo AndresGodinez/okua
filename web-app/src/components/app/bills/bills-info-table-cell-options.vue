@@ -3,7 +3,7 @@
         <div class="inline bg-transparent border-0" :title="iconCfdiValidateTitle">
             <font-awesome-icon :icon="iconCfdiValidate" class="w-8 h-8 p-2 text-lg border-0" :class="iconCfdiValidateClass"/>
         </div>
-        <button v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2" title="DESCARGAR PDF">
+        <button v-if="row.hasPdf === 1" v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2" title="DESCARGAR PDF">
             <font-awesome-icon :icon="iconCfdiDownloadPdf" class="w-8 h-8 p-2 text-white text-lg" @click="downloadPdf"/>
         </button>
         <button v-ripple class="bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm" title="DESCARGAR XML">

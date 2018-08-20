@@ -24,6 +24,7 @@ export default class BillInfoLastRegisterItem {
    * @param {string} obj.emailDatetime
    * @param {string} obj.regDatetime
    * @param {number} obj.stampStatus
+   * @param {number} obj.hasPdf
    *
    * @return BillInfoLastRegisterItem
    */
@@ -44,6 +45,7 @@ export default class BillInfoLastRegisterItem {
     register.total = obj.total;
     register.currency = obj.currency;
     register.stampStatus = obj.stampStatus;
+    register.hasPdf = obj.hasPdf;
 
     return register;
   }
@@ -120,5 +122,11 @@ export default class BillInfoLastRegisterItem {
      * @type {number}
      */
     this.stampStatus = BILL_INFO_STAMP_STATUSES.NOT_DEFINED;
+
+    /**
+     * @memberOf BillInfoLastRegisterItem
+     * @type {number}
+     */
+    this.hasPdf = -1;
   }
 }
