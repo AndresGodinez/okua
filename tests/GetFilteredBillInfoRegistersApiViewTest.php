@@ -161,6 +161,7 @@ class GetFilteredBillInfoRegistersApiViewTest extends TestCase
             'offset' => $offset,
             'startDatetime' => $startDatetimeStr,
             'endDatetime' => $endDatetimeStr,
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info', $params);
@@ -237,6 +238,7 @@ class GetFilteredBillInfoRegistersApiViewTest extends TestCase
             'startDatetime' => $startDatetimeStr,
             'endDatetime' => $endDatetimeStr,
             'clientRfc' => $testRfc,
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info', $params);
@@ -313,6 +315,7 @@ class GetFilteredBillInfoRegistersApiViewTest extends TestCase
             'endDatetime' => $endDatetimeStr,
             'initialAmount' => ($testAmount - 100),
             'finalAmount' => ($testAmount + 100),
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info', $params);
@@ -354,5 +357,6 @@ class GetFilteredBillInfoRegistersApiViewTest extends TestCase
         $this->assertArrayHasKey('stampDatetime', $item);
         $this->assertArrayHasKey('emailDatetime', $item);
         $this->assertArrayHasKey('regDatetime', $item);
+        $this->assertArrayHasKey('hasPdf', $item);
     }
 }

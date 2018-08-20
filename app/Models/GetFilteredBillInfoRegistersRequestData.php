@@ -34,8 +34,10 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
         $finalAmount = $data['finalAmount'] ?? 0.00;
 
         $filterDateType = $data['filterDateType'] ?? 1;
+
         $limit = (int)$limit;
         $offset = (int)$offset;
+        $filterDateType = (int)$filterDateType;
 
         $inst = new GetFilteredBillInfoRegistersRequestData($limit, $offset, $startDatetime, $endDatetime, $filterDateType);
 
@@ -70,12 +72,16 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /** @var float */
     protected $finalAmount = 0.00;
 
+    /** @var float */
+    protected $filterDateType = 1;
+
     /**
      * GetFilteredBillInfoRegistersRequestData constructor.
      * @param int $limit
      * @param int $offset
      * @param string $startDatetime
      * @param string $endDatetime
+     * @param int $filterDateType
      */
     public function __construct(int $limit, int $offset, string $startDatetime, string $endDatetime, int $filterDateType)
     {
@@ -161,9 +167,9 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     /**
      * @param int $filterDateType
      */
-    public function setFilterDateType(int $FilterDateType)
+    public function setFilterDateType(int $filterDateType)
     {
-        $this->FilterDateType = $FilterDateType;
+        $this->FilterDateType = $filterDateType;
     }
 
     /**
@@ -235,14 +241,15 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<GetFilteredBillInfoRegistersRequestData [limit: %d, offset: %d, startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f]>",
+        return \sprintf("<GetFilteredBillInfoRegistersRequestData [limit: %d, offset: %d, startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f, filterDateType: %d]>",
             $this->limit,
             $this->offset,
             $this->startDatetime,
             $this->endDatetime,
             $this->clientRfc,
             $this->initialAmount,
-            $this->finalAmount
+            $this->finalAmount,
+            $this->filterDateType
         );
     }
 

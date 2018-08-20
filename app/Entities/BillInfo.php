@@ -88,6 +88,9 @@ class BillInfo
     /** @var int */
     private $stampStatus = EntityUtils::STAMP_STATUS_NOT_DEFINED;
 
+    /** @var int */
+    private $hasPdf = 1;
+
     public function __construct() {
         $this->taxes = new ArrayCollection();
     }
@@ -433,6 +436,22 @@ class BillInfo
     }
 
     /**
+     * @return int
+     */
+    public function getHasPdf(): int
+    {
+        return $this->hasPdf;
+    }
+
+    /**
+     * @param int $hasPdf
+     */
+    public function setHasPdf(int $hasPdf)
+    {
+        $this->hasPdf = $hasPdf;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -443,7 +462,7 @@ class BillInfo
         $regDatetimeStr = !!$this->getRegDatetime() ? $this->getRegDatetime()->format('Y-m-d H:i:s') : '';
 
         return \sprintf(
-            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, transferTaxes: %d, withheldTaxes: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s, stampStatus: %d]>',
+            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, transferTaxes: %d, withheldTaxes: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s, stampStatus: %d, hasPdf: %d]>',
             !!$this->getId() ? $this->getId() : 0,
             $this->getEmitterName(),
             $this->getEmitterRfc(),
@@ -462,7 +481,8 @@ class BillInfo
             $stampDatetimeStr,
             $emailDatetimeStr,
             $regDatetimeStr,
-            $this->getStampStatus()
+            $this->getStampStatus(),
+            $this->getHasPdf()
         );
     }
 }

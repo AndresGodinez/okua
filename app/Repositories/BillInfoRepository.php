@@ -103,6 +103,7 @@ class BillInfoRepository extends EntityRepository
      * @param string $emitterRfc
      * @param float $initialAmount
      * @param float $finalAmount
+     * @param int $filterDatetimeType
      * @return mixed
      */
     public function getFilteredRegistersWithCfdiUseName(
@@ -133,13 +134,12 @@ class BillInfoRepository extends EntityRepository
     }
 
     /**
-     * @param int $limit
-     * @param int $offset
      * @param \DateTime|null $startDatetime
      * @param \DateTime|null $endDatetime
      * @param string $emitterRfc
      * @param float $initialAmount
      * @param float $finalAmount
+     * @param int $filterDatetimeType
      * @return mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

@@ -45,4 +45,5 @@ $fm->define(\App\Entities\BillInfo::class)->setDefinitions([
         \App\Utils\EntityUtils::STAMP_STATUS_NOT_FOUND,
         \App\Utils\EntityUtils::STAMP_STATUS_CANCELED,
     ]),
+    'hasPdf' => Faker::randomElement([0, 1]),
 ]);

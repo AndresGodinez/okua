@@ -156,5 +156,6 @@ class GetLastBillInfoRegisterApiViewTest extends TestCase
         $this->assertArrayHasKey('emailDatetime', $item0);
         $this->assertArrayHasKey('total', $item0);
         $this->assertArrayHasKey('stampStatus', $item0);
+        $this->assertArrayHasKey('hasPdf', $item0);
     }
 }

@@ -150,6 +150,7 @@ class GetFilteredBillInfoRegistersCountApiViewTest extends TestCase
             'offset' => $offset,
             'startDatetime' => $startDatetimeStr,
             'endDatetime' => $endDatetimeStr,
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/count', $params);
@@ -215,6 +216,7 @@ class GetFilteredBillInfoRegistersCountApiViewTest extends TestCase
             'startDatetime' => $startDatetimeStr,
             'endDatetime' => $endDatetimeStr,
             'clientRfc' => $testRfc,
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/count', $params);
@@ -283,6 +285,7 @@ class GetFilteredBillInfoRegistersCountApiViewTest extends TestCase
             'endDatetime' => $endDatetimeStr,
             'initialAmount' => $testAmount,
             'finalAmount' => $testAmount,
+            'filterDateType' => 3,
         ];
 
         $request = TestUtils::makeServerRequestMock('GET', '/api/bill-info/count', $params);
