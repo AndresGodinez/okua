@@ -2,10 +2,10 @@ import moment from "moment-es6";
 
 let startDatetime = moment().hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
 let endDatetime = moment().hour(23).minute(59).second(59).format('YYYY-MM-DD HH:mm:ss');
-
 let clientRfc = '';
 let initialAmount = 0;
 let finalAmount = 0;
+let filterDateType = 1;
 
 const types = {
   SET_START_DATETIME_FILTER: 'SET_START_DATETIME_FILTER',
@@ -14,12 +14,13 @@ const types = {
   SET_INITIAL_AMOUNT_FILTER: 'SET_INITIAL_AMOUNT_FILTER',
   SET_FINAL_AMOUNT_FILTER: 'SET_FINAL_AMOUNT_FILTER',
   SET_DISPATCH_BILLS_TABLE_REFRESH: 'SET_DISPATCH_BILLS_TABLE_REFRESH',
+  SET_FILTER_DATE_TYPE: 'FILTER_DATE_TYPE',
 };
 
 const state = {
   startDatetime,
   endDatetime,
-
+  filterDateType,
   clientRfc,
   initialAmount,
   finalAmount,
@@ -37,6 +38,10 @@ const actions = {
 
   changeEndDatetimeFilter({commit}, value) {
     commit(types.SET_END_DATETIME_FILTER, value);
+  },
+
+  changeFilterDateType({commit}, value){
+    commit(types.SET_FILTER_DATE_TYPE, value);
   },
 
   changeClientRfcFilter({commit}, value) {
@@ -59,6 +64,10 @@ const actions = {
 const mutations = {
   [types.SET_START_DATETIME_FILTER](state, value) {
     state.startDatetime = value;
+  },
+
+  [types.SET_FILTER_DATE_TYPE](state, value) {
+    state.filterDateType = value;
   },
 
   [types.SET_END_DATETIME_FILTER](state, value) {

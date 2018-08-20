@@ -4,7 +4,7 @@
             <div class="md:w-2/3">
                 <label class="block font-bold md:text-right mb-1 md:mb-0 pr-4 text-theme-color-4-darkest"
                        for="cit-bills-filter-start-date">
-                    Fecha de inicio (Factura)
+                    Fecha de inicio
                 </label>
             </div>
             <div class="md:w-1/3">
@@ -18,7 +18,7 @@
             <div class="md:w-2/3 mr-4">
                 <label class="block font-bold md:text-right mb-1 md:mb-0 pr-4 text-theme-color-4-darkest"
                        for="cit-bills-filter-end-date">
-                    Fecha Fin (Factura)
+                    Fecha Fin
                 </label>
             </div>
             <div class="md:w-1/3">
@@ -26,6 +26,21 @@
                           v-model="endDate" type="date" id="cit-bills-filter-end-date" format="yyyy-MM-dd" value-zone="America/Monterrey"
                           @input="onInputEndDate"
                 />
+            </div>
+        </div>
+        <div class="flex items-center mb-6 ml-12">
+            <div class="md:w-2/3 mr-4">
+              <label class="block font-bold md:text-right mb-1 md:mb-0 pr-4 text-theme-color-4-darkest" for="filter-date-type">
+                Tipo de Fecha
+              </label>
+            </div>
+            <div class="md:w-1/3">
+                <select class="bg-white shadow border-grey border-2 p-2 rounded-sm -ml-4 font-sans" v-model="dateType" @change="changeDateType">
+                  <option :value="1" >Fecha Factura</option>
+                  <option :value="2">Fecha Timbrado</option>
+                  <option :value="3">Fecha Correo</option>
+                  <option :value="4">Fecha Procesado</option>
+                </select>
             </div>
         </div>
     </div>
@@ -41,6 +56,7 @@
     return {
       startDate: now,
       endDate: now,
+      dateType: 1,
     }
   };
 
@@ -60,6 +76,10 @@
         this.$store.dispatch('changeEndDatetimeFilter', newDate);
       }
     },
+
+    changeDateType(){
+      this.$store.dispatch('changeFilterDateType', this.dateType);
+    }
   };
 
   const computed = {
@@ -70,6 +90,10 @@
     endDatetime() {
       return this.$store.state.section.endDatetime;
     },
+
+    filterDateType(){
+      return this.$store.state.section.filterDateType;
+    }
   };
 
   export default {

@@ -241,7 +241,8 @@ class BillInfoApiView extends BaseApiView
             $requestData->getEndDatetimeObj(),
             $requestData->getClientRfc(),
             $requestData->getInitialAmount(),
-            $requestData->getFinalAmount()
+            $requestData->getFinalAmount(),
+            $requestData->getFilterDateType()
         );
 
         $manager = new Manager();
@@ -274,7 +275,8 @@ class BillInfoApiView extends BaseApiView
             $requestData->getEndDatetimeObj(),
             $requestData->getClientRfc(),
             $requestData->getInitialAmount(),
-            $requestData->getFinalAmount()
+            $requestData->getFinalAmount(),
+            $requestData->getFilterDateType()
         );
 
         ResponseUtils::addContentTypeJsonHeader($response);

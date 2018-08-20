@@ -65,7 +65,7 @@
       let limit = this.tableLimit;
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
-
+      let filterDateType = this.filterDateType;
       let clientRfc = this.clientRfc;
       let initialAmount = this.initialAmount;
       let finalAmount = this.finalAmount;
@@ -80,7 +80,7 @@
 
       this.tableLoading = true;
 
-      this.getTableData(page, limit, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount)
+      this.getTableData(page, limit, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType)
         .then(() => {
           if (this.tableTotal === 0) {
             this.tablePaginationInfo.text = 'Mostrando 0 de 0 resultados.';
@@ -95,7 +95,7 @@
         .then(() => this.tableLoading = false);
     },
 
-    async getTableData(page, limit, startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00) {
+    async getTableData(page, limit, startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1) {
       // throw exception if invalid page
       if (page <= 0) throw 'Invalid page number';
 
@@ -103,7 +103,7 @@
 
       if (page === 1 || !this.tableData) {
         this.tableData = [];
-        let {count} = await service.getFilteredRegistersCount(startDatetime, endDatetime, clientRfc, initialAmount, finalAmount);
+        let {count} = await service.getFilteredRegistersCount(startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType);
         this.tableTotal = count;
       }
 
@@ -111,7 +111,7 @@
 
       let offset = limit * (page - 1);
 
-      let response = await service.getFilteredRegisters(limit, offset, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount);
+      let response = await service.getFilteredRegisters(limit, offset, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType);
 
       this.tableData = response.data;
 
@@ -143,6 +143,9 @@
     dispatchBillsTableRefresh() {
       return this.$store.state.section.dispatchBillsTableRefresh;
     },
+    filterDateType() {
+      return this.$store.state.section.filterDateType;
+    }
   };
 
   const watch = {
@@ -160,6 +163,11 @@
       this.tablePage = 1;
       this.dispatchGetTableData();
     },
+
+    filterDateType(){
+      this.tablePage = 1;
+      this.dispatchGetTableData();
+    }
   };
 
   export default {
