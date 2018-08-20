@@ -52,7 +52,7 @@ class BillInfoMetadataBuilder
         $builder->createField('transferTaxes', 'decimal')->columnName('transfer_taxes')->precision(12)->scale(5)->build();
         $builder->createField('withheldTaxes', 'decimal')->columnName('withheld_taxes')->precision(12)->scale(5)->build();
         $builder->createField('stampStatus', 'smallint')->columnName('stamp_status')->option('default', EntityUtils::STAMP_STATUS_NOT_DEFINED)->build();
-        $builder->createField('hasPdf', 'smallint')->columnName('has_pdf')->option('default', 1)->build();
+        $builder->createField('hasPdf', 'smallint')->columnName('has_pdf')->option('default', -1)->build();
 
         $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->cascadeAll()->build();
 

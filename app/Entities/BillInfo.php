@@ -89,7 +89,7 @@ class BillInfo
     private $stampStatus = EntityUtils::STAMP_STATUS_NOT_DEFINED;
 
     /** @var int */
-    private $hasPdf = 1;
+    private $hasPdf = -1;
 
     public function __construct() {
         $this->taxes = new ArrayCollection();
