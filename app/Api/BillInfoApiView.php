@@ -333,10 +333,10 @@ class BillInfoApiView extends BaseApiView
             'MONEDA' => 'string',
             'TIPO' => 'string',
             'TIPO DE PAGO' => 'string',
-            'FECHA DE FACTURA' => 'date',
-            'FECHA DE TIMBRADO' => 'date',
-            'FECHA DE EMAIL' => 'date',
-            'FECHA DE PROCESADO' => 'date',
+            'FECHA DE FACTURA' => 'datetime',
+            'FECHA DE TIMBRADO' => 'datetime',
+            'FECHA DE EMAIL' => 'datetime',
+            'FECHA DE PROCESADO' => 'datetime',
             'ESTATUS DE TIMBRADO' => 'integer',
             'TIENE PDF' => 'integer'
         ];
@@ -369,7 +369,7 @@ class BillInfoApiView extends BaseApiView
         $writer->writeToFile('file');
 
         # generate response
-        $response = ResponseUtils::setXlsxFileResponse('file', 'filename.xls');
+        $response = ResponseUtils::setXlsxFileResponse('file', 'filename.xlsx');
 
         # remove the file before exit
         //$this->localFilesystem->delete('filename.xls');
