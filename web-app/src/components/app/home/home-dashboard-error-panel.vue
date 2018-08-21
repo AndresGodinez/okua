@@ -30,6 +30,7 @@
   import ProcessErrorService from "../../../js/services/process-error-service";
   import ErrorPanelTopbar from "./error-panel-topbar";
   import ErrorPanelCellOptions from "./error-panel-cell-options";
+  import {delay} from "../../../js/utils/app-utils";
 
   const data = function () {
     let tableData = [];
@@ -65,12 +66,22 @@
   };
 
   const computed = {
+    forceUpdateByNewRegisters() {
+      return this.$store.state.section.forceUpdateByNewRegisters;
+    },
+  };
+
+  const watch = {
+    forceUpdateByNewRegisters() {
+      delay(500).then(() => this.dispatchGetLastProcessErrors());
+    },
   };
 
   export default {
     data,
     methods,
     computed,
+    watch,
 
     name: 'home-dashboard-error-panel',
     components: {
@@ -78,7 +89,7 @@
       ErrorPanelCellOptions,
     },
     mounted() {
-      setTimeout(() => this.dispatchGetLastProcessErrors(), 500);
+      delay(500).then(() => this.dispatchGetLastProcessErrors());
     },
   }
 </script>

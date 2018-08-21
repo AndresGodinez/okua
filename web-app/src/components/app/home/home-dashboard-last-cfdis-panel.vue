@@ -36,6 +36,7 @@
   import BillInfoService from "../../../js/services/bill-info-service";
   import LastCfdisPanelTopbar from "./last-cfdis-panel-topbar";
   import BillsInfoTableCellOptions from "../bills/bills-info-table-cell-options"
+  import {delay} from "../../../js/utils/app-utils";
 
   const data = function () {
     let tableData = [];
@@ -80,12 +81,22 @@
   };
 
   const computed = {
+    forceUpdateByNewRegisters() {
+      return this.$store.state.section.forceUpdateByNewRegisters;
+    },
+  };
+
+  const watch = {
+    forceUpdateByNewRegisters() {
+      delay(500).then(() => this.dispatchGetLastRegisters());
+    },
   };
 
   export default {
     data,
     methods,
     computed,
+    watch,
 
     name: 'home-dashboard-last-cfdis-panel',
     components: {
@@ -93,7 +104,7 @@
       BillsInfoTableCellOptions,
     },
     mounted() {
-      setTimeout(() => this.dispatchGetLastRegisters(), 500);
+      delay(500).then(() => this.dispatchGetLastRegisters());
     },
   }
 </script>

@@ -30,6 +30,7 @@
   import ProcessWarningService from "../../../js/services/process-warning-service";
   import WarningPanelTopbar from "./warning-panel-topbar";
   import WarningPanelCellOptions from "./warning-panel-cell-options";
+  import {delay} from "../../../js/utils/app-utils";
 
   const data = function () {
     let tableData = [];
@@ -65,12 +66,22 @@
   };
 
   const computed = {
+    forceUpdateByNewRegisters() {
+      return this.$store.state.section.forceUpdateByNewRegisters;
+    },
+  };
+
+  const watch = {
+    forceUpdateByNewRegisters() {
+      delay(500).then(() => this.dispatchGetLastProcessWarnings());
+    },
   };
 
   export default {
     data,
     methods,
     computed,
+    watch,
 
     name: 'home-dashboard-warning-panel',
     components: {
@@ -78,7 +89,7 @@
       WarningPanelCellOptions,
     },
     mounted() {
-      setTimeout(() => this.dispatchGetLastProcessWarnings(), 500);
+      delay(500).then(() => this.dispatchGetLastProcessWarnings());
     },
   }
 </script>
