@@ -5,9 +5,7 @@
  * Date: 16/04/18
  * Time: 09:38 AM
  */
-
 namespace App\Utils;
-
 
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response;
@@ -104,6 +102,27 @@ class ResponseUtils
 
         $response = new Response($stream, 200, [
             'Content-Type' => 'application/xml',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Length' => $fileSize,
+            'Content-Transfer-Encoding' => 'binary',
+            'Pragma' => 'public',
+        ]);
+
+        return $response;
+    }
+
+     /**
+     * @param string $content
+     * @param string $filename
+     * @return Response
+     */
+    public static function setXlsxFileResponse(string $content, string $filename)
+    {
+         $stream = new Stream($content, 'r');
+         $fileSize = $stream->getSize();
+
+        $response = new Response($stream, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
             'Content-Length' => $fileSize,
             'Content-Transfer-Encoding' => 'binary',

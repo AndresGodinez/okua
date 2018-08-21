@@ -133,6 +133,18 @@ class BillInfoRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function getFilteredReportRegisters($startDatetime, $endDatetime, string $emitterRfc = '', float $initialAmount = 0.00, float $finalAmount = 0.00, $filterDatetimeType = 1){
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a', 'b.name AS cfdiUseName');
+        $qb->leftJoin(CfdiUse::class, 'b', \Doctrine\ORM\Query\Expr\Join::WITH, 'a.cfdiUseSatCode = b.satCode');
+
+        $this->prepareFilteredRegistersQuery($qb, $startDatetime, $endDatetime, $emitterRfc, $initialAmount, $finalAmount, $filterDatetimeType);
+
+        $qb->orderBy('a.id', 'DESC');
+
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * @param \DateTime|null $startDatetime
      * @param \DateTime|null $endDatetime

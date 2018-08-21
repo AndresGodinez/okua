@@ -21,8 +21,14 @@
                     <span>{{scope.row.total | currency}}</span>
                 </template>
             </v2-table-column>
-            <v2-table-column label="FECHA/HORA (CORREO)" prop="emailDatetime" align="left"/>
+            <v2-table-column v-if="filterDateType === 1" label="FECHA/HORA (FACTURA)" prop="documentDatetime" align="left"/>
+            <v2-table-column v-if="filterDateType === 2" label="FECHA/HORA (TIMBRADO)" prop="stampDatetime" align="left"/>
+            <v2-table-column v-if="filterDateType === 3" label="FECHA/HORA (CORREO)" prop="emailDatetime" align="left"/>
+            <v2-table-column v-if="filterDateType === 4" label="FECHA/HORA (PROCESADO)" prop="regDatetime" align="left"/>
         </v2-table>
+        <div class="flex flex-row-reverse">
+          <button class="text-right px-4 bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2 pt-6 text-white rounded" @click="downloadXls">Descargar reporte</button>
+        </div>
     </div>
 </template>
 <script>
@@ -58,6 +64,21 @@
       this.tablePage = newPage;
 
       this.dispatchGetTableData();
+    },
+
+    downloadXls(){
+      let startDatetime = this.startDatetime;
+      let endDatetime = this.endDatetime;
+      let filterDateType = this.filterDateType;
+      let clientRfc = this.clientRfc;
+      let initialAmount = this.initialAmount;
+      let finalAmount = this.finalAmount;
+
+      let service = new BillInfoService();
+      let url = "/api/bill-info/xls";
+      let data = `?startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
+      window.open(url + data);
+//      let response = service.getBillInfoXls(startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType);
     },
 
     dispatchGetTableData() {
@@ -114,7 +135,6 @@
       let response = await service.getFilteredRegisters(limit, offset, startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType);
 
       this.tableData = response.data;
-
       return response;
     },
   };

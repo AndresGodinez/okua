@@ -60,6 +60,8 @@ class SiteRouter
             $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
 
             $group->map('GET', '/bill-info', BillInfoApiView::class . '::getFilteredBillInfoRegisters');
+
+            $group->map('GET', '/bill-info/xls', BillInfoApiView::class . '::getBillInfoXls');
             $group->map('GET', '/bill-info/{billInfoId:regId}/xml', BillInfoApiView::class . '::getBillInfoXml');
             $group->map('GET', '/bill-info/{billInfoId:regId}/pdf', BillInfoApiView::class . '::getBillInfoPdf');
             $group->map('GET', '/bill-info/count', BillInfoApiView::class . '::getFilteredBillInfoRegistersCount');

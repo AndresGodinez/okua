@@ -44,6 +44,7 @@ export default class BillsInfoTableRow {
     register.currency = obj.currency;
     register.stampStatus = obj.stampStatus;
     register.hasPdf = obj.hasPdf;
+    register.regDatetime = obj.regDatetime;
 
     return register;
   }

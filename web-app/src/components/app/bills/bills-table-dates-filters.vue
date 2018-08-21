@@ -36,7 +36,7 @@
             </div>
             <div class="md:w-1/3">
                 <select class="bg-white shadow border-grey border-2 p-2 rounded-sm -ml-4 font-sans" v-model="dateType" @change="changeDateType">
-                  <option :value="1" >Fecha Factura</option>
+                  <option :value="1">Fecha Factura</option>
                   <option :value="2">Fecha Timbrado</option>
                   <option :value="3">Fecha Correo</option>
                   <option :value="4">Fecha Procesado</option>

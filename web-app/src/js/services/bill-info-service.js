@@ -103,6 +103,22 @@ export default class BillInfoService {
     return await api.get();
   }
 
+  async getBillInfoXls(startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1){
+    const data = {
+      startDatetime,
+      endDatetime,
+      clientRfc,
+      initialAmount,
+      finalAmount,
+      filterDateType,
+    };
+
+    let api = new WebApi(`${this.host}/api/bill-info/xls`, data);
+    api.converter = BillInfoFilteredRegistersResponse.makeFromObject;
+
+    return await api.get();
+  }
+
   async getDataGroupedByClientAndFilterCount(filter) {
     const data = {
       filter,
