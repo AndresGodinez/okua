@@ -11,6 +11,8 @@ namespace Tests;
 use App\Entities\CfdiUse;
 use Doctrine\ORM\EntityManager;
 use League\FactoryMuffin\FactoryMuffin;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\ServerRequestFactory;
 
 
@@ -112,5 +114,69 @@ class TestUtils
         $fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'factories');
 
         return $fm;
+    }
+
+    /**
+     * @return string
+     */
+    public static function mockCreateRegisterResponse()
+    {
+        return \json_encode(['id' => 1, 'msg' => 'Register successfully created']);
+    }
+
+    /**
+     * @return string
+     */
+    public static function mockReadRegisterResponse()
+    {
+        return \json_encode(['id' => 1, 'name' => '', 'regStatus' => 1]);
+    }
+
+    /**
+     * @return string
+     */
+    public static function mockReadRegistersResponse()
+    {
+        return \json_encode(['data' => [
+            ['id' => 1, 'name' => '', 'regStatus' => 1],
+            ['id' => 2, 'name' => '', 'regStatus' => 1],
+            ['id' => 3, 'name' => '', 'regStatus' => 1],
+            ['id' => 4, 'name' => '', 'regStatus' => 1],
+            ['id' => 5, 'name' => '', 'regStatus' => 1],
+            ['id' => 6, 'name' => '', 'regStatus' => 1],
+            ['id' => 7, 'name' => '', 'regStatus' => 1],
+            ['id' => 8, 'name' => '', 'regStatus' => 1],
+            ['id' => 9, 'name' => '', 'regStatus' => 1],
+            ['id' => 10, 'name' => '', 'regStatus' => 1],
+        ]]);
+    }
+
+    /**
+     * @return string
+     */
+    public static function mockUpdateRegisterResponse()
+    {
+        return \json_encode(['id' => 1, 'msg' => 'Register successfully updated']);
+    }
+
+    /**
+     * @return string
+     */
+    public static function mockDeleteRegisterResponse()
+    {
+        return \json_encode(['id' => 1, 'msg' => 'Register successfully deleted']);
+    }
+
+    /**
+     * @param TestCase $testInst
+     * @param ResponseInterface $response
+     */
+    public static function runDefaultTestsJsonApiResponse(TestCase $testInst, ResponseInterface $response)
+    {
+        $testInst->assertNotNull($response);
+        $testInst->assertTrue($response->hasHeader(self::HEADER_CONTENT_TYPE));
+
+        $contentType = $response->getHeaderLine(self::HEADER_CONTENT_TYPE);
+        $testInst->assertEquals($contentType, self::CONTENT_TYPE_APPLICATION_JSON_UTF8);
     }
 }

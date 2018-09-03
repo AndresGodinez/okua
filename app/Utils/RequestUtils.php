@@ -15,6 +15,8 @@ namespace App\Utils;
  */
 class RequestUtils
 {
+    const HEADER_AUTHORIZATION = 'authorization';
+
     /**
      * @param array $server
      * @param array $defBody

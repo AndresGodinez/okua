@@ -14,6 +14,8 @@ try {
     $response = $router->dispatch($container->get('request'), $container->get('response'));
 } catch (\App\Exceptions\ValidationException $ex) {
     $response = \App\Utils\ExceptionUtils::prepareValidationExceptionResponse($container->get('response'), $ex);
+} catch (\App\Exceptions\ApiSecurityException $ex) {
+    $response = \App\Utils\ExceptionUtils::prepareApiSecurityExceptionResponse($container->get('response'), $ex);
 } catch (\App\Exceptions\RemoteApiException $ex) {
     $response = \App\Utils\ExceptionUtils::prepareRemoteApiExceptionResponse($container->get('response'), $ex);
 }

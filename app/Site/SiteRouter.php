@@ -13,7 +13,9 @@ use App\Api\CfdiEmitterApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
 use App\Api\TestApiView;
+use App\Api\UserApiView;
 use App\Api\UserAuthApiView;
+use App\Utils\SiteRouterUtils;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
@@ -90,6 +92,9 @@ class SiteRouter
 
             $group->map('GET', '/process/warning/{processWarningId:regId}', ProcessWarningApiView::class . '::getProcessWarningById');
             $group->map('GET', '/process/error/{processErrorId:regId}', ProcessErrorApiView::class . '::getProcessErrorById');
+
+            // user crud routes
+            SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/user', UserApiView::class, true);
         })
             ->setScheme('http');
 
