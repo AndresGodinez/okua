@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
- * Class BillInfoTaxMetadataBuilder
+ * Class CfdiTaxMetadataBuilder
  * @package App\Entities\Mappings
  */
 class CfdiTaxMetadataBuilder
@@ -38,6 +38,6 @@ class CfdiTaxMetadataBuilder
         $builder->createField('taxRateFee', 'decimal')->columnName('tax_rate_fee')->precision(10)->scale(6)->build();
         $builder->createField('amount', 'decimal')->precision(12)->scale(5)->build();
 
-        $builder->createManyToOne('billInfo', Cfdi::class)->addJoinColumn('bill_info_id', 'id')->inversedBy('taxes')->build();
+        $builder->createManyToOne('cfdi', Cfdi::class)->addJoinColumn('cfdi_id', 'id')->inversedBy('taxes')->build();
     }
 }

@@ -12,27 +12,27 @@ use App\Interfaces\IValidableRequest;
 
 
 /**
- * Class CountGetBillsInfoGroupedByRequestData
+ * Class GetCfdiTotalRequestData
  * @package App\Models
  */
-class CountGetBillsInfoGroupedByRequestData implements IValidableRequest
+class GetCfdiTotalRequestData implements IValidableRequest
 {
     /**
      * @param $data
-     * @return CountGetBillsInfoGroupedByRequestData
+     * @return GetCfdiTotalRequestData
      */
     public static function makeFromArray($data)
     {
         $filter = $data['filter'] ?? '';
 
-        return new CountGetBillsInfoGroupedByRequestData($filter);
+        return new GetCfdiTotalRequestData($filter);
     }
 
     /** @var string */
     protected $filter = '';
 
     /**
-     * CountGetBillsInfoGroupedByRequestData constructor.
+     * GetCfdiTotalRequestData constructor.
      * @param string $filter
      */
     public function __construct(string $filter)
@@ -61,7 +61,7 @@ class CountGetBillsInfoGroupedByRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<CountGetBillsInfoGroupedByRequestData [filter: %s]>", $this->filter);
+        return \sprintf("<GetCfdiTotalRequestData [filter: %s]>", $this->filter);
     }
 
     /**

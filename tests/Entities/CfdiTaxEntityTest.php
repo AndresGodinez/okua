@@ -90,7 +90,7 @@ class CfdiTaxEntityTest extends TestCase
 
         /** @var CfdiTax $register */
         $register = self::$fm->instance(CfdiTax::class);
-        $register->setBillInfo($billInfo);
+        $register->setCfdi($billInfo);
 
         $billInfo->addTax($register);
 

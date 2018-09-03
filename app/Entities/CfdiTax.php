@@ -46,7 +46,7 @@ class CfdiTax
     private $amount;    
 
     /** @var Cfdi */
-    private $billInfo;
+    private $cfdi;
 
     /**
      * @return mixed
@@ -171,19 +171,19 @@ class CfdiTax
     /**
      * @return Cfdi
      */
-    public function getBillInfo()
+    public function getCfdi()
     {
-        return $this->billInfo;
+        return $this->cfdi;
     }
 
     /**
-     * @param Cfdi $billInfo
+     * @param Cfdi $cfdi
      *
      * @return self
      */
-    public function setBillInfo($billInfo)
+    public function setCfdi($cfdi)
     {
-        $this->billInfo = $billInfo;
+        $this->cfdi = $cfdi;
 
         return $this;
     }
@@ -194,14 +194,14 @@ class CfdiTax
     public function __toString()
     {
         return \sprintf(
-            "<CfdiTax [id: %d, taxSatCode: %s, type: %s, taxFactor: %s, taxRateFee: %f, amount: %f, billInfoId: %d]>",
+            "<CfdiTax [id: %d, taxSatCode: %s, type: %s, taxFactor: %s, taxRateFee: %f, amount: %f, cfdiId: %d]>",
             !!$this->getId() ? $this->getId() : 0,
             $this->getTaxSatCode(),
             $this->getType(),
             $this->getTaxFactor(),
             $this->getTaxRateFee(),
             $this->getAmount(),
-            !!$this->getBillInfo() ? $this->getBillInfo()->getId() : 0
+            !!$this->getCfdi() ? $this->getCfdi()->getId() : 0
         );
     }
 }

@@ -13,10 +13,10 @@ use App\Entities\Cfdi;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class BillInfoEntityTransformer
+ * Class CfdiEntityTransformer
  * @package App\Transformers
  */
-class BillInfoEntityTransformer extends TransformerAbstract
+class CfdiEntityTransformer extends TransformerAbstract
 {
     /**
      * @param Cfdi $item

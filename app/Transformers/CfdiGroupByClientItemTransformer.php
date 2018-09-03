@@ -12,10 +12,10 @@ namespace App\Transformers;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class BillInfoGroupByCfdiUseItemTransformer
+ * Class CfdiGroupByClientItemTransformer
  * @package App\Transformers
  */
-class BillInfoGroupByCfdiUseItemTransformer extends TransformerAbstract
+class CfdiGroupByClientItemTransformer extends TransformerAbstract
 {
     /**
      * @param array $item
@@ -25,8 +25,8 @@ class BillInfoGroupByCfdiUseItemTransformer extends TransformerAbstract
     {
         return [
             'id' => 0,
-            'cfdiUseSatCode' => $item['cfdiUseSatCode'],
-            'cfdiUseName' => $item['cfdiUseName'],
+            'clientName' => $item['emitterName'],
+            'clientRfc' => $item['emitterRfc'],
             'amount' => (float)$item['amount'],
         ];
     }

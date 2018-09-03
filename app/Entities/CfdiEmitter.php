@@ -9,7 +9,7 @@
 namespace App\Entities;
 
 
-use App\Entities\Mappings\BillInfoClientMetadataBuilder;
+use App\Entities\Mappings\CfdiEmitterMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
@@ -23,7 +23,7 @@ class CfdiEmitter
      */
     public static function loadMetadata(ClassMetadata $metadata)
     {
-        $builder = new BillInfoClientMetadataBuilder();
+        $builder = new CfdiEmitterMetadataBuilder();
         $builder($metadata);
     }
 

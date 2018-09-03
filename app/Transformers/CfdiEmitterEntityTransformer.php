@@ -13,7 +13,7 @@ use App\Entities\CfdiEmitter;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class BillInfoClientEntityTransformer
+ * Class CfdiEmitterEntityTransformer
  * @package App\Transformers
  */
 class CfdiEmitterEntityTransformer extends TransformerAbstract

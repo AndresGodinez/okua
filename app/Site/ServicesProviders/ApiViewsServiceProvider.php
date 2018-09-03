@@ -10,8 +10,8 @@ namespace App\Site\ServicesProviders;
 
 
 use App\Api\BaseApiView;
-use App\Api\BillInfoApiView;
-use App\Api\BillInfoClientApiView;
+use App\Api\CfdiApiView;
+use App\Api\CfdiEmitterApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
 use App\Api\ProcessWarningApiView;
@@ -31,8 +31,8 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
     protected $provides = [
         TestApiView::class,
         UserAuthApiView::class,
-        BillInfoApiView::class,
-        BillInfoClientApiView::class,
+        CfdiApiView::class,
+        CfdiEmitterApiView::class,
         ProcessWarningApiView::class,
         ProcessErrorApiView::class,
     ];
@@ -52,11 +52,11 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         $container->add(UserAuthApiView::class);
 
         $container
-            ->add(BillInfoApiView::class)
+            ->add(CfdiApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
 
         $container
-            ->add(BillInfoClientApiView::class)
+            ->add(CfdiEmitterApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
 
         $container

@@ -12,7 +12,7 @@ namespace App\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class BillInfoTaxRepository
+ * Class CfdiTaxRepository
  * @package App\Repositories
  */
 class CfdiTaxRepository extends EntityRepository

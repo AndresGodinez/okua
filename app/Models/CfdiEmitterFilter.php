@@ -10,10 +10,10 @@ namespace App\Models;
 
 
 /**
- * Class BillInfoClientFilter
+ * Class CfdiEmitterFilter
  * @package App\Models
  */
-class BillInfoClientFilter
+class CfdiEmitterFilter
 {
     /** @var string */
     protected $code;
@@ -22,7 +22,7 @@ class BillInfoClientFilter
     protected $name;
 
     /**
-     * BillInfoClientFilter constructor.
+     * CfdiEmitterFilter constructor.
      * @param $code
      * @param $name
      */
@@ -69,6 +69,6 @@ class BillInfoClientFilter
      */
     public function __toString()
     {
-        return \sprintf("<BillInfoClientFilter [code: %s, name: %s]>", $this->code, $this->name);
+        return \sprintf("<CfdiEmitterFilter [code: %s, name: %s]>", $this->code, $this->name);
     }
 }

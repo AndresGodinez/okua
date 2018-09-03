@@ -13,14 +13,14 @@ use App\Exceptions\ValidationException;
 use App\Interfaces\IValidableRequest;
 
 /**
- * Class GetFilteredBillInfoRegistersCountRequestData
+ * Class GetFilteredCfdiRegistersCountRequestData
  * @package App\Models
  */
-class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
+class GetFilteredCfdiRegistersCountRequestData implements IValidableRequest
 {
     /**
      * @param $data
-     * @return GetFilteredBillInfoRegistersCountRequestData
+     * @return GetFilteredCfdiRegistersCountRequestData
      */
     public static function makeFromArray($data)
     {
@@ -32,7 +32,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
         $finalAmount = $data['finalAmount'] ?? 0.00;
 
         $filterDateType = $data['filterDateType'] ?? 1;
-        $inst = new GetFilteredBillInfoRegistersCountRequestData($startDatetime, $endDatetime, $filterDateType);
+        $inst = new GetFilteredCfdiRegistersCountRequestData($startDatetime, $endDatetime, $filterDateType);
         
         $initialAmount = (float)$initialAmount;
         $finalAmount = (float)$finalAmount;
@@ -60,7 +60,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
     protected $finalAmount = 0.00;
 
     /**
-     * GetFilteredBillInfoRegistersCountRequestData constructor.
+     * GetFilteredCfdiRegistersCountRequestData constructor.
      * @param string $startDatetime
      * @param string $endDatetime
      */
@@ -188,7 +188,7 @@ class GetFilteredBillInfoRegistersCountRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<GetFilteredBillInfoRegistersCountRequestData [startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f]>",
+        return \sprintf("<GetFilteredCfdiRegistersCountRequestData [startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f]>",
             $this->startDatetime,
             $this->endDatetime,
             $this->clientRfc,

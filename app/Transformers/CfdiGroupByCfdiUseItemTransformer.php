@@ -9,14 +9,13 @@
 namespace App\Transformers;
 
 
-use App\Entities\Cfdi;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class BillInfoEmailItemTransformer
+ * Class CfdiGroupByCfdiUseItemTransformer
  * @package App\Transformers
  */
-class BillInfoEmailItemTransformer extends TransformerAbstract
+class CfdiGroupByCfdiUseItemTransformer extends TransformerAbstract
 {
     /**
      * @param array $item
@@ -25,8 +24,10 @@ class BillInfoEmailItemTransformer extends TransformerAbstract
     public function transform(array $item)
     {
         return [
-            'email' => $item['email'],
-            'emailDatetime' => $item['emailDatetime']->format('Y-m-d H:i:s'),
+            'id' => 0,
+            'cfdiUseSatCode' => $item['cfdiUseSatCode'],
+            'cfdiUseName' => $item['cfdiUseName'],
+            'amount' => (float)$item['amount'],
         ];
     }
 }

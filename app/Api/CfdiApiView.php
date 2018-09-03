@@ -11,20 +11,20 @@ namespace App\Api;
 
 use App\Entities\Cfdi;
 use App\Exceptions\ValidationException;
-use App\Models\CountGetBillsInfoGroupedByRequestData;
-use App\Models\GetBillsInfoGroupedByRequestData;
-use App\Models\GetBillsTotalRequestData;
-use App\Models\GetFilteredBillInfoRegistersCountRequestData;
-use App\Models\GetFilteredBillInfoRegistersRequestData;
+use App\Models\CountGetCfdiGroupedByRequestData;
+use App\Models\GetCfdiGroupedByRequestData;
+use App\Models\GetCfdiTotalRequestData;
+use App\Models\GetFilteredCfdiRegistersCountRequestData;
+use App\Models\GetFilteredCfdiRegistersRequestData;
 use App\Models\GetLastRegistersRequestData;
 use App\Repositories\CfdiRepository;
 use App\Traits\EntityManagerViewTrait;
-use App\Transformers\BillInfoEmailItemTransformer;
-use App\Transformers\BillInfoEntityTransformer;
-use App\Transformers\BillInfoEntityWithCfdiUseNameTransformer;
-use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
-use App\Transformers\BillInfoGroupByClientItemTransformer;
-use App\Transformers\BillInfoGroupByEmailItemTransformer;
+use App\Transformers\CfdiEmailItemTransformer;
+use App\Transformers\CfdiEntityTransformer;
+use App\Transformers\CfdiEntityWithCfdiUseNameTransformer;
+use App\Transformers\CfdiGroupByCfdiUseItemTransformer;
+use App\Transformers\CfdiGroupByClientItemTransformer;
+use App\Transformers\CfdiGroupByEmailItemTransformer;
 use App\Transformers\CfdiTaxTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
@@ -33,10 +33,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class BillInfoApiView
+ * Class CfdiApiView
  * @package App\Api
  */
-class BillInfoApiView extends BaseApiView
+class CfdiApiView extends BaseApiView
 {
     use EntityManagerViewTrait;
 
@@ -46,9 +46,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillsTotal(ServerRequestInterface $request, ResponseInterface $response)
+    public function getCfdiTotal(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetCfdiTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -69,9 +69,9 @@ class BillInfoApiView extends BaseApiView
      * @throws \App\Exceptions\ValidationException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getBillsInfoGroupByClientCount(ServerRequestInterface $request, ResponseInterface $response)
+    public function getCfdiGroupByClientCount(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = CountGetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
+        $requestData = CountGetCfdiGroupedByRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -91,9 +91,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillsInfoGroupByClient(ServerRequestInterface $request, ResponseInterface $response)
+    public function getCfdiGroupByClient(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetCfdiGroupedByRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -106,7 +106,7 @@ class BillInfoApiView extends BaseApiView
         );
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoGroupByClientItemTransformer());
+        $resource = new Collection($registers, new CfdiGroupByClientItemTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -121,9 +121,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillsInfoGroupByCfdiUse(ServerRequestInterface $request, ResponseInterface $response)
+    public function getCfdiGroupByCfdiUse(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetCfdiTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -132,7 +132,7 @@ class BillInfoApiView extends BaseApiView
         $registers = $repo->getRegistersGroupedByCfdiUseAndFilter($requestData->getFilter());
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoGroupByCfdiUseItemTransformer());
+        $resource = new Collection($registers, new CfdiGroupByCfdiUseItemTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -147,9 +147,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillsInfoGroupByEmail(ServerRequestInterface $request, ResponseInterface $response)
+    public function getCfdiGroupByEmail(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetCfdiTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -158,7 +158,7 @@ class BillInfoApiView extends BaseApiView
         $registers = $repo->getRegistersGroupedByEmailAndFilter($requestData->getFilter());
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoGroupByEmailItemTransformer());
+        $resource = new Collection($registers, new CfdiGroupByEmailItemTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -173,7 +173,7 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getLastBillInfoEmailRegisters(ServerRequestInterface $request, ResponseInterface $response)
+    public function getLastCfdiEmailRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
@@ -184,7 +184,7 @@ class BillInfoApiView extends BaseApiView
         $registers = $repo->getLastRegistersGroupedByEmail($requestData->getLimit());
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoEmailItemTransformer());
+        $resource = new Collection($registers, new CfdiEmailItemTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -199,7 +199,7 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getLastBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
+    public function getLastCfdiRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
@@ -211,7 +211,7 @@ class BillInfoApiView extends BaseApiView
 
         // todo: cambiar transformer
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoEntityTransformer());
+        $resource = new Collection($registers, new CfdiEntityTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -226,9 +226,9 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getFilteredBillInfoRegisters(ServerRequestInterface $request, ResponseInterface $response)
+    public function getFilteredCfdiRegisters(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetFilteredBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetFilteredCfdiRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -246,7 +246,7 @@ class BillInfoApiView extends BaseApiView
         );
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoEntityWithCfdiUseNameTransformer());
+        $resource = new Collection($registers, new CfdiEntityWithCfdiUseNameTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);
@@ -262,9 +262,9 @@ class BillInfoApiView extends BaseApiView
      * @throws \App\Exceptions\ValidationException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getFilteredBillInfoRegistersCount(ServerRequestInterface $request, ResponseInterface $response)
+    public function getFilteredCfdiRegistersCount(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $requestData = GetFilteredBillInfoRegistersCountRequestData::makeFromArray($request->getQueryParams());
+        $requestData = GetFilteredCfdiRegistersCountRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -294,14 +294,14 @@ class BillInfoApiView extends BaseApiView
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function getBillInfoXml(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    public function getCfdiXml(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
 
-        $billInfoId = $args['billInfoId'] ?? 0;
+        $cfdiId = $args['CfdiId'] ?? 0;
 
         /** @var Cfdi $register */
-        $register = $this->em->find(Cfdi::class, $billInfoId);
+        $register = $this->em->find(Cfdi::class, $cfdiId);
 
         $filePath = $register->getFilesPath();
         $uuid = $register->getUuid();
@@ -321,13 +321,13 @@ class BillInfoApiView extends BaseApiView
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function getBillInfoPdf(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    public function getCfdiPdf(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
         $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
 
-        $billInfoId = $args['billInfoId'] ?? 0;
+        $cfdiId = $args['CfdiId'] ?? 0;
 
-        $register = $this->em->find(Cfdi::class, $billInfoId);
+        $register = $this->em->find(Cfdi::class, $cfdiId);
 
         $filePath = $register->getFilesPath();
         $uuid = $register->getUuid();
@@ -347,10 +347,10 @@ class BillInfoApiView extends BaseApiView
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function getBillInfoTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
-        $billInfoId = $args['billInfoId'] ?? 0;
+    public function getCfdiTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
+        $cfdiId = $args['CfdiId'] ?? 0;
 
-        $register = $this->em->find(Cfdi::class, $billInfoId);
+        $register = $this->em->find(Cfdi::class, $cfdiId);
 
         if (!$register)
             throw new ValidationException('The requested register does not exists');
@@ -373,8 +373,8 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillInfoTransferTotal(ServerRequestInterface $request, ResponseInterface $response){
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+    public function getCfdiTransferTotal(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetCfdiTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */
@@ -394,8 +394,8 @@ class BillInfoApiView extends BaseApiView
      * @return ResponseInterface
      * @throws \App\Exceptions\ValidationException
      */
-    public function getBillInfoWithheldTotal(ServerRequestInterface $request, ResponseInterface $response){
-        $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
+    public function getCfdiWithheldTotal(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetCfdiTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
         /** @var CfdiRepository $repo */

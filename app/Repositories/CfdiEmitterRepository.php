@@ -12,10 +12,10 @@ namespace App\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class BillInfoClientRepository
+ * Class CfdiEmitterRepository
  * @package App\Repositories
  */
-class BillInfoClientRepository extends EntityRepository
+class CfdiEmitterRepository extends EntityRepository
 {
 
 }

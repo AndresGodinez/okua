@@ -12,14 +12,14 @@ use App\Interfaces\IValidableRequest;
 
 
 /**
- * Class GetBillsInfoGroupedByRequestData
+ * Class GetCfdiGroupedByRequestData
  * @package App\Models
  */
-class GetBillsInfoGroupedByRequestData implements IValidableRequest
+class GetCfdiGroupedByRequestData implements IValidableRequest
 {
     /**
      * @param $data
-     * @return GetBillsInfoGroupedByRequestData
+     * @return GetCfdiGroupedByRequestData
      */
     public static function makeFromArray($data)
     {
@@ -27,7 +27,7 @@ class GetBillsInfoGroupedByRequestData implements IValidableRequest
         $offset = $data['offset'] ?? 0;
         $filter = $data['filter'] ?? '';
 
-        return new GetBillsInfoGroupedByRequestData($limit, $offset, $filter);
+        return new GetCfdiGroupedByRequestData($limit, $offset, $filter);
     }
 
     /** @var int */
@@ -40,7 +40,7 @@ class GetBillsInfoGroupedByRequestData implements IValidableRequest
     protected $filter = '';
 
     /**
-     * GetBillsInfoGroupedByRequestData constructor.
+     * GetCfdiGroupedByRequestData constructor.
      * @param int $limit
      * @param int $offset
      * @param string $filter
@@ -105,7 +105,7 @@ class GetBillsInfoGroupedByRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<GetBillsInfoGroupedByRequestData [limit: %d, offset: %d, filter: %s]>", $this->limit, $this->offset, $this->filter);
+        return \sprintf("<GetCfdiGroupedByRequestData [limit: %d, offset: %d, filter: %s]>", $this->limit, $this->offset, $this->filter);
     }
 
     /**

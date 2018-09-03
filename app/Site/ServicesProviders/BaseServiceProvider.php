@@ -103,6 +103,7 @@ class BaseServiceProvider extends AbstractServiceProvider
 
             // the connection configuration
             $dbParams = array(
+                'host'   => $host,
                 'driver'   => $driver,
                 'user'     => $user,
                 'password' => $password,

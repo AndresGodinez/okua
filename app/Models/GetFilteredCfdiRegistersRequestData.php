@@ -13,14 +13,14 @@ use App\Exceptions\ValidationException;
 use App\Interfaces\IValidableRequest;
 
 /**
- * Class GetFilteredBillInfoRegistersRequestData
+ * Class GetFilteredCfdiRegistersRequestData
  * @package App\Models
  */
-class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
+class GetFilteredCfdiRegistersRequestData implements IValidableRequest
 {
     /**
      * @param $data
-     * @return GetFilteredBillInfoRegistersRequestData
+     * @return GetFilteredCfdiRegistersRequestData
      */
     public static function makeFromArray($data)
     {
@@ -39,7 +39,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
         $offset = (int)$offset;
         $filterDateType = (int)$filterDateType;
 
-        $inst = new GetFilteredBillInfoRegistersRequestData($limit, $offset, $startDatetime, $endDatetime, $filterDateType);
+        $inst = new GetFilteredCfdiRegistersRequestData($limit, $offset, $startDatetime, $endDatetime, $filterDateType);
 
         $initialAmount = (float)$initialAmount;
         $finalAmount = (float)$finalAmount;
@@ -76,7 +76,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
     protected $filterDateType = 1;
 
     /**
-     * GetFilteredBillInfoRegistersRequestData constructor.
+     * GetFilteredCfdiRegistersRequestData constructor.
      * @param int $limit
      * @param int $offset
      * @param string $startDatetime
@@ -241,7 +241,7 @@ class GetFilteredBillInfoRegistersRequestData implements IValidableRequest
      */
     public function __toString()
     {
-        return \sprintf("<GetFilteredBillInfoRegistersRequestData [limit: %d, offset: %d, startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f, filterDateType: %d]>",
+        return \sprintf("<GetFilteredCfdiRegistersRequestData [limit: %d, offset: %d, startDatetime: %s, endDatetime: %s, clientRfc: %s, initialAmount: %f, finalAmount: %f, filterDateType: %d]>",
             $this->limit,
             $this->offset,
             $this->startDatetime,

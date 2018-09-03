@@ -8,8 +8,8 @@
 
 namespace App\Site;
 
-use App\Api\BillInfoApiView;
-use App\Api\BillInfoClientApiView;
+use App\Api\CfdiEmitterApiView;
+use App\Api\CfdiApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
 use App\Api\TestApiView;
@@ -59,28 +59,28 @@ class SiteRouter
 
             $group->map('POST', '/user/authenticate', UserAuthApiView::class . '::userAuth');
 
-            $group->map('GET', '/bill-info', BillInfoApiView::class . '::getFilteredBillInfoRegisters');
-            $group->map('GET', '/bill-info/{billInfoId:regId}/xml', BillInfoApiView::class . '::getBillInfoXml');
-            $group->map('GET', '/bill-info/{billInfoId:regId}/pdf', BillInfoApiView::class . '::getBillInfoPdf');
-            $group->map('GET', '/bill-info/count', BillInfoApiView::class . '::getFilteredBillInfoRegistersCount');
+            $group->map('GET', '/bill-info', CfdiApiView::class . '::getFilteredCfdiRegisters');
+            $group->map('GET', '/bill-info/{CfdiId:regId}/xml', CfdiApiView::class . '::getCfdiXml');
+            $group->map('GET', '/bill-info/{CfdiId:regId}/pdf', CfdiApiView::class . '::getCfdiPdf');
+            $group->map('GET', '/bill-info/count', CfdiApiView::class . '::getFilteredCfdiRegistersCount');
 
-            $group->map('GET', '/bill-info/total', BillInfoApiView::class . '::getBillsTotal');
+            $group->map('GET', '/bill-info/total', CfdiApiView::class . '::getCfdiTotal');
 
-            $group->map('GET', '/bill-info/group-by/client', BillInfoApiView::class . '::getBillsInfoGroupByClient');
-            $group->map('GET', '/bill-info/group-by/cfdi-use', BillInfoApiView::class . '::getBillsInfoGroupByCfdiUse');
-            $group->map('GET', '/bill-info/group-by/email', BillInfoApiView::class . '::getBillsInfoGroupByEmail');
+            $group->map('GET', '/bill-info/group-by/client', CfdiApiView::class . '::getCfdiGroupByClient');
+            $group->map('GET', '/bill-info/group-by/cfdi-use', CfdiApiView::class . '::getCfdiGroupByCfdiUse');
+            $group->map('GET', '/bill-info/group-by/email', CfdiApiView::class . '::getCfdiGroupByEmail');
 
-            $group->map('GET', '/bill-info/group-by/client/count', BillInfoApiView::class . '::getBillsInfoGroupByClientCount');
+            $group->map('GET', '/bill-info/group-by/client/count', CfdiApiView::class . '::getCfdiGroupByClientCount');
 
-            $group->map('GET', '/bill-info/last-registers', BillInfoApiView::class . '::getLastBillInfoRegisters');
-            $group->map('GET', '/bill-info/email/last-registers', BillInfoApiView::class . '::getLastBillInfoEmailRegisters');
+            $group->map('GET', '/bill-info/last-registers', CfdiApiView::class . '::getLastCfdiRegisters');
+            $group->map('GET', '/bill-info/email/last-registers', CfdiApiView::class . '::getLastCfdiEmailRegisters');
 
-            $group->map('GET', 'bill-info-client', BillInfoClientApiView::class. '::getRegistersOrderedByName');
+            $group->map('GET', 'bill-info-client', CfdiEmitterApiView::class. '::getRegistersOrderedByName');
 
-            $group->map('GET', '/bill-info/{billInfoId:regId}/taxes', BillInfoApiView::class . '::getBillInfoTaxes');
+            $group->map('GET', '/bill-info/{CfdiId:regId}/taxes', CfdiApiView::class . '::getCfdiTaxes');
 
-            $group->map('GET', '/bill-info/taxes/transfer/total', BillInfoApiView::class . '::getBillInfoTransferTotal');
-            $group->map('GET', '/bill-info/taxes/withheld/total', BillInfoApiView::class . '::getBillInfoWithheldTotal');
+            $group->map('GET', '/bill-info/taxes/transfer/total', CfdiApiView::class . '::getCfdiTransferTotal');
+            $group->map('GET', '/bill-info/taxes/withheld/total', CfdiApiView::class . '::getCfdiWithheldTotal');
 
             // TODO: change to last-registers path
             $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarnings');
