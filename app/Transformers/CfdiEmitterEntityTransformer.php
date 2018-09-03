@@ -9,20 +9,20 @@
 namespace App\Transformers;
 
 
-use App\Entities\BillInfoClient;
+use App\Entities\CfdiEmitter;
 use League\Fractal\TransformerAbstract;
 
 /**
  * Class BillInfoClientEntityTransformer
  * @package App\Transformers
  */
-class BillInfoClientEntityTransformer extends TransformerAbstract
+class CfdiEmitterEntityTransformer extends TransformerAbstract
 {
     /**
-     * @param BillInfoClient $item
+     * @param CfdiEmitter $item
      * @return array
      */
-    public function transform(BillInfoClient $item)
+    public function transform(CfdiEmitter $item)
     {
         return [
             'emitterName' => $item->getEmitterName(),

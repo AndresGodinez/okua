@@ -9,9 +9,9 @@
 namespace App\Api;
 
 
-use App\Entities\BillInfoClient;
+use App\Entities\CfdiEmitter;
 use App\Traits\EntityManagerViewTrait;
-use App\Transformers\BillInfoClientEntityTransformer;
+use App\Transformers\CfdiEmitterEntityTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -19,10 +19,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class BillInfoClientApiView
+ * Class CfdiEmitterApiView
  * @package App\Api
  */
-class BillInfoClientApiView extends BaseApiView
+class CfdiEmitterApiView extends BaseApiView
 {
     use EntityManagerViewTrait;
 
@@ -35,11 +35,11 @@ class BillInfoClientApiView extends BaseApiView
     {
         ResponseUtils::addContentTypeJsonHeader($response);
 
-        $repo = $this->em->getRepository(BillInfoClient::class);
+        $repo = $this->em->getRepository(CfdiEmitter::class);
         $registers = $repo->findAll();
 
         $manager = new Manager();
-        $resource = new Collection($registers, new BillInfoClientEntityTransformer());
+        $resource = new Collection($registers, new CfdiEmitterEntityTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);

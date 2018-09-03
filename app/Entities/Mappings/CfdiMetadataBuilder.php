@@ -54,7 +54,7 @@ class CfdiMetadataBuilder
         $builder->createField('stampStatus', 'smallint')->columnName('stamp_status')->option('default', EntityUtils::STAMP_STATUS_NOT_DEFINED)->build();
         $builder->createField('hasPdf', 'smallint')->columnName('has_pdf')->option('default', -1)->build();
 
-        $builder->createOneToMany('taxes', CfdiTax::class)->mappedBy('billInfo')->cascadeAll()->build();
+        $builder->createOneToMany('taxes', CfdiTax::class)->mappedBy('cfdi')->cascadeAll()->build();
 
         $builder->addIndex(['cfdi_use_sat_code'], 's02_cfdis_cfdi_use_sat_code_index');
         $builder->addIndex(['document_datetime'], 's02_cfdis_document_datetime_index');

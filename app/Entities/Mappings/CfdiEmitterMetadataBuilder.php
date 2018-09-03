@@ -9,15 +9,15 @@
 namespace App\Entities\Mappings;
 
 
-use App\Repositories\BillInfoClientRepository;
+use App\Repositories\CfdiEmitterRepository;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
- * Class BillInfoClientMetadataBuilder
+ * Class CfdiEmitterMetadataBuilder
  * @package App\Entities\Mappings
  */
-class BillInfoClientMetadataBuilder
+class CfdiEmitterMetadataBuilder
 {
     /**
      * @param ClassMetadata $metadata
@@ -26,12 +26,12 @@ class BillInfoClientMetadataBuilder
     {
         $builder = new ClassMetadataBuilder($metadata);
 
-        $builder->setTable('u01_bill_info_clients');
-        $builder->setCustomRepositoryClass(BillInfoClientRepository::class);
+        $builder->setTable('u01_cfdi_emitters');
+        $builder->setCustomRepositoryClass(CfdiEmitterRepository::class);
 
         $builder->createField('emitterRfc', 'string')->columnName('emitter_rfc')->makePrimaryKey()->length(255)->build();
         $builder->createField('emitterName', 'string')->columnName('emitter_name')->length(255)->build();
 
-        $builder->addIndex(['emitter_rfc'], 's02_bill_info_emitter_rfc_index');
+        $builder->addIndex(['emitter_rfc'], 's02_cfdi_emitter_emitter_rfc_index');
     }
 }
