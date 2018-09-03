@@ -22,6 +22,9 @@ use League\Plates\Engine;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Config;
+use League\Flysystem\Filesystem;
 
 /**
  * Class BaseServiceProvider
@@ -78,6 +81,14 @@ class BaseServiceProvider extends AbstractServiceProvider
             $dotenv->load();
             $config = $_ENV;
             return $config;
+        });
+
+        $container->share('local-filesystem', function () {
+            $adapter = new Local(BASE_DIR . '/storage/local');
+            $filesystem = new Filesystem($adapter, new Config([
+                'disable_asserts' => true,
+            ]));
+            return $filesystem;
         });
 
         $container->add('entity-manager', function ($config) {

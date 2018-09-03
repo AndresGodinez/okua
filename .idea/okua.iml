@@ -30,6 +30,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/plates" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/route" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/legierski/aes" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mk-j/php_xlsxwriter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/fast-route" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />

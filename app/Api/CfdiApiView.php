@@ -16,9 +16,11 @@ use App\Models\GetCfdiGroupedByRequestData;
 use App\Models\GetCfdiTotalRequestData;
 use App\Models\GetFilteredCfdiRegistersCountRequestData;
 use App\Models\GetFilteredCfdiRegistersRequestData;
+use App\Models\GetFilteredCfdiReportData;
 use App\Models\GetLastRegistersRequestData;
 use App\Repositories\CfdiRepository;
 use App\Traits\EntityManagerViewTrait;
+use App\Traits\LocalFilesystemViewTrait;
 use App\Transformers\CfdiEmailItemTransformer;
 use App\Transformers\CfdiEntityTransformer;
 use App\Transformers\CfdiEntityWithCfdiUseNameTransformer;
@@ -27,10 +29,12 @@ use App\Transformers\CfdiGroupByClientItemTransformer;
 use App\Transformers\CfdiGroupByEmailItemTransformer;
 use App\Transformers\CfdiTaxTransformer;
 use App\Utils\ResponseUtils;
+use League\Flysystem\Filesystem;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use XLSXWriter;
 
 /**
  * Class CfdiApiView
@@ -39,6 +43,17 @@ use Psr\Http\Message\ServerRequestInterface;
 class CfdiApiView extends BaseApiView
 {
     use EntityManagerViewTrait;
+
+    use LocalFilesystemViewTrait;
+
+    /**
+     * ReportsApiView constructor.
+     * @param FileSystem $localFilesystem
+     */
+    public function __construct(Filesystem $localFilesystem)
+    {
+        $this->localFilesystem = $localFilesystem;
+    }
 
     /**
      * @param ServerRequestInterface $request
@@ -281,6 +296,81 @@ class CfdiApiView extends BaseApiView
 
         ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write(\json_encode(['count' => (int)$result]));
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getCfdiXls(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $requestData = GetFilteredCfdiReportData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
+
+        $headerStyle = ['halign' => 'center', 'fill' => '#43a0bf', 'border' => 'left,right,top,bottom', 'font-size' => 12, 'widths' => [30, 15, 30, 30, 35, 15]];
+        $cellStyle = ['halign' => 'center', 'font-style' => 'bold', 'border' => 'left,right,top,bottom', 'font-size' => 14, 'height' => 20];
+
+        $header = [
+            'ID' => 'string',
+            'EMAIL' => 'integer',
+            'EMISOR' => 'string',
+            'RFC' => 'string',
+            'UUID' => 'string',
+            'CODIGO USO CFDI' => 'string',
+            'USO CFDI' => 'string',
+            'SUBTOTAL' => 'price',
+            'DISCOUNT' => 'price',
+            'TOTAL' => 'price',
+            'MONEDA' => 'string',
+            'TIPO' => 'string',
+            'TIPO DE PAGO' => 'string',
+            'FECHA DE FACTURA' => 'datetime',
+            'FECHA DE TIMBRADO' => 'datetime',
+            'FECHA DE EMAIL' => 'datetime',
+            'FECHA DE PROCESADO' => 'datetime',
+            'ESTATUS DE TIMBRADO' => 'integer',
+            'TIENE PDF' => 'integer'
+        ];
+
+        $sheetName = 'datos';
+
+        $registers = $repo->getFilteredReportRegisters(
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getClientRfc(),
+            $requestData->getInitialAmount(),
+            $requestData->getFinalAmount(),
+            $requestData->getFilterDateType()
+        );
+
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader($sheetName, $header, $headerStyle);
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new CfdiEntityWithCfdiUseNameTransformer());
+        $data = $manager->createData($resource)->toJson();
+        $data = json_decode($data, true);
+        $values = array_values($data['data']);
+        
+        foreach ($data['data'] as $key) {
+            $array = array_values($key);
+            $writer->writeSheetRow($sheetName, $array);
+        }
+
+        $writer->writeToFile('file');
+
+        # generate response
+        $response = ResponseUtils::setXlsxFileResponse('file', 'filename.xlsx');
+
+        # remove the file before exit
+        //$this->localFilesystem->delete('filename.xls');
 
         return $response;
     }
