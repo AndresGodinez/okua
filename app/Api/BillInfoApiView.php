@@ -9,7 +9,7 @@
 namespace App\Api;
 
 
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use App\Exceptions\ValidationException;
 use App\Models\CountGetBillsInfoGroupedByRequestData;
 use App\Models\GetBillsInfoGroupedByRequestData;
@@ -17,7 +17,7 @@ use App\Models\GetBillsTotalRequestData;
 use App\Models\GetFilteredBillInfoRegistersCountRequestData;
 use App\Models\GetFilteredBillInfoRegistersRequestData;
 use App\Models\GetLastRegistersRequestData;
-use App\Repositories\BillInfoRepository;
+use App\Repositories\CfdiRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\BillInfoEmailItemTransformer;
 use App\Transformers\BillInfoEntityTransformer;
@@ -51,8 +51,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $total = $repo->getIncomeTotalByRangeTimeFilter($requestData->getFilter());
 
@@ -74,8 +74,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = CountGetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $result = $repo->getRegistersGroupedByClientAndFilterCount($requestData->getFilter());
 
@@ -96,8 +96,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsInfoGroupedByRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getRegistersGroupedByClientAndFilter(
             $requestData->getLimit(),
@@ -126,8 +126,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getRegistersGroupedByCfdiUseAndFilter($requestData->getFilter());
 
@@ -152,8 +152,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getRegistersGroupedByEmailAndFilter($requestData->getFilter());
 
@@ -178,8 +178,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getLastRegistersGroupedByEmail($requestData->getLimit());
 
@@ -204,8 +204,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetLastRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getLastRegistersGroupedByBill($requestData->getLimit());
 
@@ -231,8 +231,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetFilteredBillInfoRegistersRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $registers = $repo->getFilteredRegistersWithCfdiUseName(
             $requestData->getLimit(),
@@ -267,8 +267,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetFilteredBillInfoRegistersCountRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class);
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $result = $repo->getFilteredRegistersCount(
             $requestData->getStartDatetimeObj(),
@@ -300,8 +300,8 @@ class BillInfoApiView extends BaseApiView
 
         $billInfoId = $args['billInfoId'] ?? 0;
 
-        /** @var BillInfo $register */
-        $register = $this->em->find(BillInfo::class, $billInfoId);
+        /** @var Cfdi $register */
+        $register = $this->em->find(Cfdi::class, $billInfoId);
 
         $filePath = $register->getFilesPath();
         $uuid = $register->getUuid();
@@ -327,7 +327,7 @@ class BillInfoApiView extends BaseApiView
 
         $billInfoId = $args['billInfoId'] ?? 0;
 
-        $register = $this->em->find(BillInfo::class, $billInfoId);
+        $register = $this->em->find(Cfdi::class, $billInfoId);
 
         $filePath = $register->getFilesPath();
         $uuid = $register->getUuid();
@@ -350,7 +350,7 @@ class BillInfoApiView extends BaseApiView
     public function getBillInfoTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
         $billInfoId = $args['billInfoId'] ?? 0;
 
-        $register = $this->em->find(BillInfo::class, $billInfoId);
+        $register = $this->em->find(Cfdi::class, $billInfoId);
 
         if (!$register)
             throw new ValidationException('The requested register does not exists');
@@ -377,8 +377,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class); 
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $total = $repo->getTransferTaxesTotalByFilter($requestData->getFilter());
 
@@ -398,8 +398,8 @@ class BillInfoApiView extends BaseApiView
         $requestData = GetBillsTotalRequestData::makeFromArray($request->getQueryParams());
         $requestData->validate();
 
-        /** @var BillInfoRepository $repo */
-        $repo = $this->getEm()->getRepository(BillInfo::class); 
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
 
         $total = $repo->getWithheldTaxesTotalByFilter($requestData->getFilter());
 

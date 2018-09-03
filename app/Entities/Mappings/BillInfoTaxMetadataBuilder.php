@@ -10,7 +10,7 @@ namespace App\Entities\Mappings;
 
 
 use App\Repositories\BillInfoTaxRepository;
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
@@ -38,6 +38,6 @@ class BillInfoTaxMetadataBuilder
         $builder->createField('taxRateFee', 'decimal')->columnName('tax_rate_fee')->precision(10)->scale(6)->build();
         $builder->createField('amount', 'decimal')->precision(12)->scale(5)->build();
 
-        $builder->createManyToOne('billInfo', BillInfo::class)->addJoinColumn('bill_info_id', 'id')->inversedBy('taxes')->build();
+        $builder->createManyToOne('billInfo', Cfdi::class)->addJoinColumn('bill_info_id', 'id')->inversedBy('taxes')->build();
     }
 }

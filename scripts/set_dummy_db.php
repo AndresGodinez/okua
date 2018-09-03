@@ -23,7 +23,7 @@ $em = $container->get('entity-manager');
 $em->getConnection()->exec('TRUNCATE ' . $em->getClassMetadata(\App\Entities\User::class)->getTableName());
 
 /** @noinspection PhpUnhandledExceptionInspection */
-$em->getConnection()->exec('TRUNCATE ' . $em->getClassMetadata(\App\Entities\BillInfo::class)->getTableName());
+$em->getConnection()->exec('TRUNCATE ' . $em->getClassMetadata(\App\Entities\Cfdi::class)->getTableName());
 
 // init muffins factory
 $fm = new \League\FactoryMuffin\FactoryMuffin();
@@ -76,10 +76,10 @@ $em->getConnection()->beginTransaction();
 
 $seedCount = 500;
 for ($i = 0; $i < $seedCount; ++$i) {
-    $billInfo = $fm->instance(\App\Entities\BillInfo::class, [
+    $cfdi = $fm->instance(\App\Entities\Cfdi::class, [
         'type' => 'I',
     ]);
-    $em->persist($billInfo);
+    $em->persist($cfdi);
 }
 
 try {

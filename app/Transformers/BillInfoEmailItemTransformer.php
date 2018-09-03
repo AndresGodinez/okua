@@ -9,7 +9,7 @@
 namespace App\Transformers;
 
 
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use League\Fractal\TransformerAbstract;
 
 /**

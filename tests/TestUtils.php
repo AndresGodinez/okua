@@ -10,6 +10,7 @@ namespace Tests;
 
 use App\Entities\CfdiUse;
 use Doctrine\ORM\EntityManager;
+use League\FactoryMuffin\FactoryMuffin;
 use Zend\Diactoros\ServerRequestFactory;
 
 
@@ -79,5 +80,37 @@ class TestUtils
         $em->clear();
 
         return true;
+    }
+
+    public static function initConstBaseDir()
+    {
+        if (!defined("BASE_DIR")) {
+            define("BASE_DIR", \realpath(__DIR__ . "/../"));
+        }
+    }
+
+    public static function initConstTesting()
+    {
+        if (!defined("TESTING")) {
+            define("TESTING", true);
+        }
+    }
+
+    public static function initConsts()
+    {
+        self::initConstBaseDir();
+        self::initConstTesting();
+    }
+
+    /**
+     * @return FactoryMuffin
+     * @throws \League\FactoryMuffin\Exceptions\DirectoryNotFoundException
+     */
+    public static function initFactories()
+    {
+        $fm = new FactoryMuffin();
+        $fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'factories');
+
+        return $fm;
     }
 }

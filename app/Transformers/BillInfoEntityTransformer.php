@@ -9,7 +9,7 @@
 namespace App\Transformers;
 
 
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -19,10 +19,10 @@ use League\Fractal\TransformerAbstract;
 class BillInfoEntityTransformer extends TransformerAbstract
 {
     /**
-     * @param BillInfo $item
+     * @param Cfdi $item
      * @return array
      */
-    public function transform(BillInfo $item)
+    public function transform(Cfdi $item)
     {
         return [
             'id' => (int)$item->getId(),

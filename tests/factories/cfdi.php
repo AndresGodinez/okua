@@ -12,7 +12,7 @@
 use League\FactoryMuffin\Faker\Facade as Faker;
 
 
-$fm->define(\App\Entities\BillInfo::class)->setDefinitions([
+$fm->define(\App\Entities\Cfdi::class)->setDefinitions([
     'email' => Faker::freeEmail(),
     'emitterName' => Faker::name(),
     'emitterRfc' => Faker::regexify('[A-Z]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z\d]{3}'),
@@ -31,7 +31,7 @@ $fm->define(\App\Entities\BillInfo::class)->setDefinitions([
     'emailDatetime' => Faker::dateTimeThisMonth(),
     'regDatetime' => Faker::dateTimeThisMonth(),
     'filesPath' => function ($object, $saved) {
-        /** @var \App\Entities\BillInfo $object */
+        /** @var \App\Entities\Cfdi $object */
 
         $regDatetime = $object->getRegDatetime();
         $regDatetimeStr = $regDatetime->format('Y-m-d');

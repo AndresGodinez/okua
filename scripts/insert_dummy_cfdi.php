@@ -31,7 +31,7 @@ $em->getConnection()->beginTransaction();
 
 $now = new \DateTime();
 
-$billInfo = $fm->instance(\App\Entities\BillInfo::class, [
+$cfdi = $fm->instance(\App\Entities\Cfdi::class, [
     'email' => 'israel.torres@connectit.com.mx',
     'type' => 'I',
     'documentDatetime' => $now,
@@ -39,7 +39,7 @@ $billInfo = $fm->instance(\App\Entities\BillInfo::class, [
     'stampDatetime' => $now,
     'regDatetime' => $now,
 ]);
-$em->persist($billInfo);
+$em->persist($cfdi);
 
 try {
     $em->flush();

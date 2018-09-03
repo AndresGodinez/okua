@@ -15,10 +15,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Class BillInfoRepository
+ * Class CfdiRepository
  * @package App\Repositories
  */
-class BillInfoRepository extends EntityRepository
+class CfdiRepository extends EntityRepository
 {
     /**
      * @param $filter

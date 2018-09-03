@@ -1,21 +1,22 @@
 <?php
 
-namespace Tests;
+namespace Tests\Entities;
 
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use App\Site\SiteContainer;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\ORM\EntityManager;
 use League\Container\Container;
 use League\FactoryMuffin\FactoryMuffin;
 use PHPUnit\Framework\TestCase;
+use Tests\TestUtils;
 
 
 /**
- * Class BillInfoEntityTest
+ * Class CfdiEntityTest
  * @package Tests
  */
-class BillInfoEntityTest extends TestCase
+class CfdiEntityTest extends TestCase
 {
     /** @var Container */
     protected static $container = null;
@@ -32,25 +33,15 @@ class BillInfoEntityTest extends TestCase
      */
     public static function setUpBeforeClass()/* The :void return type declaration that should be here would cause a BC issue */
     {
-        if (!defined("BASE_DIR")) {
-            define("BASE_DIR", \realpath(__DIR__ . "/../"));
-        }
+        TestUtils::initConsts();
 
-        if (!defined("TESTING")) {
-            define("TESTING", true);
-        }
-
-        self::$fm = new FactoryMuffin();
-
-
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        self::$fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'factories');
+        self::$fm = TestUtils::initFactories();
 
         self::$container = SiteContainer::make();
 
         self::$em = self::$container->get('entity-manager');
 
-        $classMetadata = self::$em->getClassMetadata(BillInfo::class);
+        $classMetadata = self::$em->getClassMetadata(Cfdi::class);
         self::$em->getConnection()->exec('TRUNCATE ' . $classMetadata->getTableName());
     }
 
@@ -69,7 +60,7 @@ class BillInfoEntityTest extends TestCase
             self::$em = self::$container->get('entity-manager');
         }
 
-        $classMetadata = self::$em->getClassMetadata(BillInfo::class);
+        $classMetadata = self::$em->getClassMetadata(Cfdi::class);
         self::$em->getConnection()->exec('ALTER TABLE ' . $classMetadata->getTableName() . ' AUTO_INCREMENT = 1');
 
         self::$em->getConnection()->beginTransaction();
@@ -89,8 +80,8 @@ class BillInfoEntityTest extends TestCase
      */
     public function testCreateRegister()
     {
-        /** @var BillInfo $register */
-        $register = self::$fm->instance(BillInfo::class);
+        /** @var Cfdi $register */
+        $register = self::$fm->instance(Cfdi::class);
 
         self::$em->persist($register);
         self::$em->flush();

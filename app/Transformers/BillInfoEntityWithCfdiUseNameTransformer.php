@@ -9,7 +9,7 @@
 namespace App\Transformers;
 
 
-use App\Entities\BillInfo;
+use App\Entities\Cfdi;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -24,7 +24,7 @@ class BillInfoEntityWithCfdiUseNameTransformer extends TransformerAbstract
      */
     public function transform(array $itemArr)
     {
-        /** @var BillInfo $item */
+        /** @var Cfdi $item */
         $item = $itemArr[0];
         $cfdiUseName = $itemArr['cfdiUseName'] ?? null;
 

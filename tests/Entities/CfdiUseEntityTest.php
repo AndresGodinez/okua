@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Entities;
 
 use App\Entities\CfdiUse;
 use App\Site\SiteContainer;
@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use League\Container\Container;
 use League\FactoryMuffin\FactoryMuffin;
 use PHPUnit\Framework\TestCase;
+use Tests\TestUtils;
 
 
 /**
@@ -32,19 +33,9 @@ class CfdiUseEntityTest extends TestCase
      */
     public static function setUpBeforeClass()/* The :void return type declaration that should be here would cause a BC issue */
     {
-        if (!defined("BASE_DIR")) {
-            define("BASE_DIR", \realpath(__DIR__ . "/../"));
-        }
+        TestUtils::initConsts();
 
-        if (!defined("TESTING")) {
-            define("TESTING", true);
-        }
-
-        self::$fm = new FactoryMuffin();
-
-
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        self::$fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'factories');
+        self::$fm = TestUtils::initFactories();
 
         self::$container = SiteContainer::make();
 

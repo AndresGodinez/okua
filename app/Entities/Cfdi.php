@@ -9,19 +9,19 @@
 namespace App\Entities;
 
 
-use App\Entities\Mappings\BillInfoMetadataBuilder;
+use App\Entities\Mappings\CfdiMetadataBuilder;
 use App\Utils\EntityUtils;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class BillInfo
+class Cfdi
 {
     /**
      * @param ClassMetadata $metadata
      */
     public static function loadMetadata(ClassMetadata $metadata)
     {
-        $builder = new BillInfoMetadataBuilder();
+        $builder = new CfdiMetadataBuilder();
         $builder($metadata);
     }
 
@@ -462,7 +462,7 @@ class BillInfo
         $regDatetimeStr = !!$this->getRegDatetime() ? $this->getRegDatetime()->format('Y-m-d H:i:s') : '';
 
         return \sprintf(
-            '<BillInfo [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, transferTaxes: %d, withheldTaxes: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s, stampStatus: %d, hasPdf: %d]>',
+            '<Cfdi [id: %d, emitterName: %s, emitterRfc: %s, email: %s, uuid: %s, cfdiUseSatCode: %s, subtotal: %f, discount: %f, total: %f, transferTaxes: %d, withheldTaxes: %f, currency: %s, type: %s, paymentType: %s, documentDatetime: %s, stampDatetime: %s, emailDatetime: %s, regDatetime: %s, stampStatus: %d, hasPdf: %d]>',
             !!$this->getId() ? $this->getId() : 0,
             $this->getEmitterName(),
             $this->getEmitterRfc(),

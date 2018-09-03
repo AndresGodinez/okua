@@ -9,17 +9,17 @@
 namespace App\Entities\Mappings;
 
 
-use App\Repositories\BillInfoRepository;
+use App\Entities\BillInfoTax;
+use App\Repositories\CfdiRepository;
 use App\Utils\EntityUtils;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use App\Entities\BillInfoTax;
 
 /**
- * Class BillInfoMetadataBuilder
+ * Class CfdiMetadataBuilder
  * @package App\Entities\Mappings
  */
-class BillInfoMetadataBuilder
+class CfdiMetadataBuilder
 {
     /**
      * @param ClassMetadata $metadata
@@ -28,8 +28,8 @@ class BillInfoMetadataBuilder
     {
         $builder = new ClassMetadataBuilder($metadata);
 
-        $builder->setTable('s02_bill_info');
-        $builder->setCustomRepositoryClass(BillInfoRepository::class);
+        $builder->setTable('s02_cfdis');
+        $builder->setCustomRepositoryClass(CfdiRepository::class);
 
         $builder->createField('id', 'bigint')->makePrimaryKey()->generatedValue()->build();
 
@@ -56,11 +56,11 @@ class BillInfoMetadataBuilder
 
         $builder->createOneToMany('taxes', BillInfoTax::class)->mappedBy('billInfo')->cascadeAll()->build();
 
-        $builder->addIndex(['cfdi_use_sat_code'], 's02_bill_info_cfdi_use_sat_code_index');
-        $builder->addIndex(['document_datetime'], 's02_bill_info_document_datetime_index');
-        $builder->addIndex(['email_datetime'], 's02_bill_info_email_datetime_index');
-        $builder->addIndex(['email'], 's02_bill_info_email_index');
-        $builder->addIndex(['emitter_rfc'], 's02_bill_info_emitter_rfc_index');
-        $builder->addIndex(['type'], 's02_bill_info_type_index');
+        $builder->addIndex(['cfdi_use_sat_code'], 's02_cfdis_cfdi_use_sat_code_index');
+        $builder->addIndex(['document_datetime'], 's02_cfdis_document_datetime_index');
+        $builder->addIndex(['email_datetime'], 's02_cfdis_email_datetime_index');
+        $builder->addIndex(['email'], 's02_cfdis_email_index');
+        $builder->addIndex(['emitter_rfc'], 's02_cfdis_emitter_rfc_index');
+        $builder->addIndex(['type'], 's02_cfdis_type_index');
     }
 }

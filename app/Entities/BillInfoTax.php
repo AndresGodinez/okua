@@ -45,7 +45,7 @@ class BillInfoTax
     /** @var float */
     private $amount;    
 
-    /** @var BillInfo */
+    /** @var Cfdi */
     private $billInfo;
 
     /**
@@ -169,7 +169,7 @@ class BillInfoTax
     }
 
     /**
-     * @return BillInfo
+     * @return Cfdi
      */
     public function getBillInfo()
     {
@@ -177,7 +177,7 @@ class BillInfoTax
     }
 
     /**
-     * @param BillInfo $billInfo
+     * @param Cfdi $billInfo
      *
      * @return self
      */
