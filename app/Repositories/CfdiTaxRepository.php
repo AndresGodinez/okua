@@ -15,6 +15,6 @@ use Doctrine\ORM\EntityRepository;
  * Class BillInfoTaxRepository
  * @package App\Repositories
  */
-class BillInfoTaxRepository extends EntityRepository
+class CfdiTaxRepository extends EntityRepository
 {
 }

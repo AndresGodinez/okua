@@ -9,7 +9,7 @@
 namespace App\Entities\Mappings;
 
 
-use App\Repositories\BillInfoTaxRepository;
+use App\Repositories\CfdiTaxRepository;
 use App\Entities\Cfdi;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
  * Class BillInfoTaxMetadataBuilder
  * @package App\Entities\Mappings
  */
-class BillInfoTaxMetadataBuilder
+class CfdiTaxMetadataBuilder
 {
     /**
      * @param ClassMetadata $metadata
@@ -27,8 +27,8 @@ class BillInfoTaxMetadataBuilder
     {
         $builder = new ClassMetadataBuilder($metadata);
 
-        $builder->setTable('s02_bill_info_taxes');
-        $builder->setCustomRepositoryClass(BillInfoTaxRepository::class);
+        $builder->setTable('s02_cfdi_taxes');
+        $builder->setCustomRepositoryClass(CfdiTaxRepository::class);
 
         $builder->createField('id', 'bigint')->makePrimaryKey()->generatedValue()->build();
 

@@ -25,7 +25,7 @@ use App\Transformers\BillInfoEntityWithCfdiUseNameTransformer;
 use App\Transformers\BillInfoGroupByCfdiUseItemTransformer;
 use App\Transformers\BillInfoGroupByClientItemTransformer;
 use App\Transformers\BillInfoGroupByEmailItemTransformer;
-use App\Transformers\BillInfoTaxTransformer;
+use App\Transformers\CfdiTaxTransformer;
 use App\Utils\ResponseUtils;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -358,7 +358,7 @@ class BillInfoApiView extends BaseApiView
         $taxes = $register->getTaxes()->toArray();
 
         $manager = new Manager();
-        $resource = new Collection($taxes, new BillInfoTaxTransformer());
+        $resource = new Collection($taxes, new CfdiTaxTransformer());
         $data = $manager->createData($resource)->toJson();
 
         ResponseUtils::addContentTypeJsonHeader($response);

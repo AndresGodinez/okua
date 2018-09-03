@@ -12,7 +12,7 @@
 use League\FactoryMuffin\Faker\Facade as Faker;
 
 
-$fm->define(\App\Entities\BillInfoTax::class)->setDefinitions([
+$fm->define(\App\Entities\CfdiTax::class)->setDefinitions([
     'taxSatCode' => Faker::randomElement(['001','002','003']),
     'type' => Faker::randomElement(['t','w']),
     'taxFactor' => Faker::randomElement(['exempt','rate','fee']),

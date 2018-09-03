@@ -9,21 +9,21 @@
 namespace App\Entities;
 
 
-use App\Entities\Mappings\BillInfoTaxMetadataBuilder;
+use App\Entities\Mappings\CfdiTaxMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
- * Class BillInfoTax
+ * Class CfdiTax
  * @package App\Entities
  */
-class BillInfoTax
+class CfdiTax
 {
     /**
      * @param ClassMetadata $metadata
      */
     public static function loadMetadata(ClassMetadata $metadata)
     {
-        $builder = new BillInfoTaxMetadataBuilder;
+        $builder = new CfdiTaxMetadataBuilder;
         $builder($metadata);
     }
 
@@ -194,7 +194,7 @@ class BillInfoTax
     public function __toString()
     {
         return \sprintf(
-            "<BillInfoTax [id: %d, taxSatCode: %s, type: %s, taxFactor: %s, taxRateFee: %f, amount: %f, billInfoId: %d]>",
+            "<CfdiTax [id: %d, taxSatCode: %s, type: %s, taxFactor: %s, taxRateFee: %f, amount: %f, billInfoId: %d]>",
             !!$this->getId() ? $this->getId() : 0,
             $this->getTaxSatCode(),
             $this->getType(),

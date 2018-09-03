@@ -10,18 +10,18 @@ namespace App\Transformers;
 
 
 use League\Fractal\TransformerAbstract;
-use App\Entities\BillInfoTax;
+use App\Entities\CfdiTax;
 /**
- * Class BillInfoTaxTransformer
+ * Class CfdiTaxTransformer
  * @package App\Transformers
  */
-class BillInfoTaxTransformer extends TransformerAbstract
+class CfdiTaxTransformer extends TransformerAbstract
 {
     /**
      * @param array $item
      * @return array
      */
-    public function transform(BillInfoTax $item)
+    public function transform(CfdiTax $item)
     {
         return [
             'id' => (int)$item->getId(),

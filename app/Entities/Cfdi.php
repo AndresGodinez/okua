@@ -96,10 +96,10 @@ class Cfdi
     }
 
     /**
-     * @param BillInfoTax $tax
+     * @param CfdiTax $tax
      * @return bool
      */
-    public function addTax(BillInfoTax $tax)
+    public function addTax(CfdiTax $tax)
     {
         if (!$this->taxes) {
             $this->taxes = new ArrayCollection();
