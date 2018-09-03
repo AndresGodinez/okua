@@ -388,7 +388,7 @@ class CfdiApiView extends BaseApiView
     {
         $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
 
-        $cfdiId = $args['CfdiId'] ?? 0;
+        $cfdiId = $args['cfdiId'] ?? 0;
 
         /** @var Cfdi $register */
         $register = $this->em->find(Cfdi::class, $cfdiId);
@@ -415,7 +415,7 @@ class CfdiApiView extends BaseApiView
     {
         $filesDoneDir = $this->config['FILES_DONE_DIR'] ?? '';
 
-        $cfdiId = $args['CfdiId'] ?? 0;
+        $cfdiId = $args['cfdiId'] ?? 0;
 
         $register = $this->em->find(Cfdi::class, $cfdiId);
 
@@ -438,7 +438,7 @@ class CfdiApiView extends BaseApiView
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getCfdiTaxes(ServerRequestInterface $request, ResponseInterface $response, array $args) {
-        $cfdiId = $args['CfdiId'] ?? 0;
+        $cfdiId = $args['cfdiId'] ?? 0;
 
         $register = $this->em->find(Cfdi::class, $cfdiId);
 

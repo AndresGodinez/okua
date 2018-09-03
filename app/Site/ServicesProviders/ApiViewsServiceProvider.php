@@ -53,6 +53,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
 
         $container
             ->add(CfdiApiView::class)
+            ->withArgument('local-filesystem')
             ->withMethodCall('setEm', ['entity-manager']);
 
         $container
@@ -67,10 +68,6 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
             ->add(ProcessErrorApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
 
-        $container
-            ->add(BillInfoApiView::class)
-            ->withArgument('local-filesystem')
-            ->withMethodCall('setEm', ['entity-manager']);
     }
 
     /**
