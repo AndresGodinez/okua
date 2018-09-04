@@ -25,8 +25,6 @@ class CrudEmitterApiViewTest extends TestCase
 {
     const BASE_ROUTE = '/api/emitter';
 
-    const TOKEN = 'a';
-
     /** @var Container */
     protected static $container = null;
 
@@ -100,7 +98,7 @@ class CrudEmitterApiViewTest extends TestCase
     public function testCreateRegisterSuccessfully()
     {
         $request = TestUtils::makeServerRequestMock('POST', self::BASE_ROUTE);
-        $request = $request->withHeader('authorization', 'Bearer ' . self::TOKEN);
+        $request = $request->withHeader('authorization', 'Bearer ' . TestUtils::API_TOKEN);
 
         $response = self::$router->dispatch($request, self::$container->get('response'));
 
@@ -115,7 +113,7 @@ class CrudEmitterApiViewTest extends TestCase
     public function testReadRegistersSuccessfully()
     {
         $request = TestUtils::makeServerRequestMock('GET', self::BASE_ROUTE);
-        $request = $request->withHeader('authorization', 'Bearer ' . self::TOKEN);
+        $request = $request->withHeader('authorization', 'Bearer ' . TestUtils::API_TOKEN);
 
         $response = self::$router->dispatch($request, self::$container->get('response'));
 
@@ -139,7 +137,7 @@ class CrudEmitterApiViewTest extends TestCase
     public function testReadRegisterSuccessfully()
     {
         $request = TestUtils::makeServerRequestMock('GET', self::BASE_ROUTE . '/1');
-        $request = $request->withHeader('authorization', 'Bearer ' . self::TOKEN);
+        $request = $request->withHeader('authorization', 'Bearer ' . TestUtils::API_TOKEN);
 
         $response = self::$router->dispatch($request, self::$container->get('response'));
 
@@ -155,7 +153,7 @@ class CrudEmitterApiViewTest extends TestCase
     public function testUpdateRegisterSuccessfully()
     {
         $request = TestUtils::makeServerRequestMock('PUT', self::BASE_ROUTE . '/1');
-        $request = $request->withHeader('authorization', 'Bearer ' . self::TOKEN);
+        $request = $request->withHeader('authorization', 'Bearer ' . TestUtils::API_TOKEN);
 
         $response = self::$router->dispatch($request, self::$container->get('response'));
 
@@ -170,7 +168,7 @@ class CrudEmitterApiViewTest extends TestCase
     public function testDeleteRegisterSuccessfully()
     {
         $request = TestUtils::makeServerRequestMock('DELETE', self::BASE_ROUTE . '/1');
-        $request = $request->withHeader('authorization', 'Bearer ' . self::TOKEN);
+        $request = $request->withHeader('authorization', 'Bearer ' . TestUtils::API_TOKEN);
 
         $response = self::$router->dispatch($request, self::$container->get('response'));
 

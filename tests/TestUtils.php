@@ -18,6 +18,8 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class TestUtils
 {
+    const API_TOKEN = 'a';
+
     const HEADER_CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_APPLICATION_JSON_UTF8 = 'application/json; charset=utf-8';
 
