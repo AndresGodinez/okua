@@ -11,6 +11,7 @@ namespace App\Site;
 use App\Api\AlertEmailResponseApiView;
 use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
+use App\Api\EmitterApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
 use App\Api\TestApiView;
@@ -99,6 +100,9 @@ class SiteRouter
 
             // alert-email-response crud routes
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/alert-email-response', AlertEmailResponseApiView::class, true);
+
+            // emitter crud routes
+            SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/emitter', EmitterApiView::class, true);
         })
             ->setScheme('http');
 
