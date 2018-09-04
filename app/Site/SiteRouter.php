@@ -13,6 +13,7 @@ use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
 use App\Api\EmitterApiView;
 use App\Api\FilterEmitterApiView;
+use App\Api\FilterReceptorApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
 use App\Api\TestApiView;
@@ -107,6 +108,9 @@ class SiteRouter
 
             // filter-emitter crud routes
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/filter-emitter', FilterEmitterApiView::class, true);
+
+            // filter-receptor crud routes
+            SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/filter-receptor', FilterReceptorApiView::class, true);
         })
             ->setScheme('http');
 
