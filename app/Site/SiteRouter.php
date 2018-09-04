@@ -8,6 +8,7 @@
 
 namespace App\Site;
 
+use App\Api\AlertEmailResponseApiView;
 use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
 use App\Api\ProcessErrorApiView;
@@ -95,6 +96,9 @@ class SiteRouter
 
             // user crud routes
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/user', UserApiView::class, true);
+
+            // alert-email-response crud routes
+            SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/alert-email-response', AlertEmailResponseApiView::class, true);
         })
             ->setScheme('http');
 
