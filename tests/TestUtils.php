@@ -9,6 +9,8 @@
 namespace Tests;
 
 use App\Entities\CfdiUse;
+use App\Models\EmailServiceConfig;
+use App\Utils\ResponseUtils;
 use Doctrine\ORM\EntityManager;
 use League\FactoryMuffin\FactoryMuffin;
 use PHPUnit\Framework\TestCase;
@@ -47,6 +49,8 @@ class TestUtils
         ['satCode' => 'D10', 'name' => 'Pagos por servicios educativos (colegiaturas)'],
         ['satCode' => 'P01', 'name' => 'Por definir'],
     ];
+
+    const TEST_EMAIL_SERVICE_CONFIG_FILEPATH = '/test/config/email-serv.data';
 
     /**
      * @param $method
@@ -176,9 +180,30 @@ class TestUtils
     public static function runDefaultTestsJsonApiResponse(TestCase $testInst, ResponseInterface $response)
     {
         $testInst->assertNotNull($response);
-        $testInst->assertTrue($response->hasHeader(self::HEADER_CONTENT_TYPE));
+        $testInst->assertTrue($response->hasHeader(ResponseUtils::HEADER_CORS), 'The response does not have the CORS header');
+        $testInst->assertTrue($response->hasHeader(self::HEADER_CONTENT_TYPE), 'The response does not have the CONTENT_TYPE header');
 
         $contentType = $response->getHeaderLine(self::HEADER_CONTENT_TYPE);
-        $testInst->assertEquals($contentType, self::CONTENT_TYPE_APPLICATION_JSON_UTF8);
+        $testInst->assertEquals($contentType, self::CONTENT_TYPE_APPLICATION_JSON_UTF8, 'The response CONTENT_TYPE header is not JSON');
+    }
+
+    public static function mockEmailServiceConfig()
+    {
+        $hostname = 'test';
+        $inboxName = 'INBOX';
+        $username = 'test';
+        $pswd = 'blablabla';
+        $tagOk = 'OK';
+        $tagIssue = 'ISSUE';
+
+        $serviceConfig = new EmailServiceConfig();
+        $serviceConfig->setHostname($hostname);
+        $serviceConfig->setInboxName($inboxName);
+        $serviceConfig->setUsername($username);
+        $serviceConfig->setPswd($pswd);
+        $serviceConfig->setTagOk($tagOk);
+        $serviceConfig->setTagIssue($tagIssue);
+
+        return $serviceConfig;
     }
 }

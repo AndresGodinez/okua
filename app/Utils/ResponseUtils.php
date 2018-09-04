@@ -17,12 +17,14 @@ use Zend\Diactoros\Stream;
  */
 class ResponseUtils
 {
+    const HEADER_CORS = 'Access-Control-Allow-Origin';
+
     /**
      * @param ResponseInterface $response
      */
     public static function addCorsHeader(ResponseInterface &$response)
     {
-        $response = $response->withHeader('Access-Control-Allow-Origin', '*');
+        $response = $response->withHeader(self::HEADER_CORS, '*');
     }
 
     /**

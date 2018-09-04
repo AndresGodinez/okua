@@ -16,9 +16,12 @@ use App\Api\FilterEmitterApiView;
 use App\Api\FilterReceptorApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
+use App\Api\SharedConfigApiView;
 use App\Api\TestApiView;
 use App\Api\UserApiView;
 use App\Api\UserAuthApiView;
+use App\Site\Middlewares\CorsApiMiddleware;
+use App\Site\Middlewares\SecureApiMiddleware;
 use App\Utils\SiteRouterUtils;
 use App\Views\BillsView;
 use App\Views\HomeView;
@@ -112,6 +115,19 @@ class SiteRouter
             // filter-receptor crud routes
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/filter-receptor', FilterReceptorApiView::class, true);
         })
+            ->middleware(new CorsApiMiddleware)
+            ->setScheme('http');
+
+        // email-service-config routes
+        $route->group('/api/config/email-service', function (RouteGroup $group) {
+            // read config from shared-storage
+            $group->map('GET', '/', SharedConfigApiView::class . '::readEmailServiceConfig');
+
+            // update config from shared-storage
+            $group->map('PUT', '/', SharedConfigApiView::class . '::updateEmailServiceConfig');
+        })
+            ->middleware(new SecureApiMiddleware)
+            ->middleware(new CorsApiMiddleware)
             ->setScheme('http');
 
         return $route;

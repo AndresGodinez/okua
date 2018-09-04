@@ -12,10 +12,11 @@ namespace App\Site\ServicesProviders;
 use App\Api\BaseApiView;
 use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
+use App\Api\ProcessErrorApiView;
+use App\Api\ProcessWarningApiView;
+use App\Api\SharedConfigApiView;
 use App\Api\TestApiView;
 use App\Api\UserAuthApiView;
-use App\Api\ProcessWarningApiView;
-use App\Api\ProcessErrorApiView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -35,6 +36,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         CfdiEmitterApiView::class,
         ProcessWarningApiView::class,
         ProcessErrorApiView::class,
+        SharedConfigApiView::class,
     ];
 
     /**
@@ -68,6 +70,10 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
             ->add(ProcessErrorApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
 
+
+        $container->add(SharedConfigApiView::class)
+            ->withMethodCall('setEmailServiceConfig', ['email-service-config'])
+            ->withMethodCall('setSharedFilesystem', ['shared-filesystem']);
     }
 
     /**

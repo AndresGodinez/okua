@@ -43,6 +43,7 @@ class BaseServiceProvider extends AbstractServiceProvider
         'config',
         'entity-manager',
         'emitter',
+        'shared-filesystem',
     ];
 
 
@@ -83,13 +84,15 @@ class BaseServiceProvider extends AbstractServiceProvider
             return $config;
         });
 
-        $container->share('local-filesystem', function () {
-            $adapter = new Local(BASE_DIR . '/storage/local');
+        $container->share('shared-filesystem', function ($config) {
+            $sharedDir = $config['OKUA_SHARED_DIR'] ?? '';
+            $adapter = new Local($sharedDir);
             $filesystem = new Filesystem($adapter, new Config([
                 'disable_asserts' => true,
             ]));
             return $filesystem;
-        });
+        })
+        ->withArgument('config');
 
         $container->add('entity-manager', function ($config) {
             $dbEntitiesPath = $config['DOCTRINE_ENTITIES_PATH'] ?? false;
