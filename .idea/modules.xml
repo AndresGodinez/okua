@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/okua.iml" filepath="$PROJECT_DIR$/.idea/okua.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../dbs/okua-db/.idea/okua-db.iml" filepath="$PROJECT_DIR$/../../dbs/okua-db/.idea/okua-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../okua-service/.idea/okua-service.iml" filepath="$PROJECT_DIR$/../okua-service/.idea/okua-service.iml" />
     </modules>
   </component>
 </project>

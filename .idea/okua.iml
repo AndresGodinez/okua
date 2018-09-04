@@ -71,5 +71,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="okua-db" />
+    <orderEntry type="module" module-name="okua-service" />
   </component>
 </module>
