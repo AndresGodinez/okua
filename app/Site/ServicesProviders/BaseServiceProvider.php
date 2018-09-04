@@ -9,7 +9,6 @@
 namespace App\Site\ServicesProviders;
 
 
-use App\Factories\ConnectionFactory;
 use App\Site\SiteRouter;
 use App\Utils\RequestUtils;
 use Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver;
@@ -18,13 +17,13 @@ use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Config;
+use League\Flysystem\Filesystem;
 use League\Plates\Engine;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Config;
-use League\Flysystem\Filesystem;
 
 /**
  * Class BaseServiceProvider
@@ -44,6 +43,7 @@ class BaseServiceProvider extends AbstractServiceProvider
         'entity-manager',
         'emitter',
         'shared-filesystem',
+        'local-filesystem',
     ];
 
 
@@ -93,6 +93,15 @@ class BaseServiceProvider extends AbstractServiceProvider
             return $filesystem;
         })
         ->withArgument('config');
+
+        $container->share('local-filesystem', function () {
+            $sharedDir = BASE_DIR . '/storage/local' ?? '';
+            $adapter = new Local($sharedDir);
+            $filesystem = new Filesystem($adapter, new Config([
+                'disable_asserts' => true,
+            ]));
+            return $filesystem;
+        });
 
         $container->add('entity-manager', function ($config) {
             $dbEntitiesPath = $config['DOCTRINE_ENTITIES_PATH'] ?? false;
