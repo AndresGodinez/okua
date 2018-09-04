@@ -21,6 +21,11 @@ use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 use Tests\TestUtils;
 
+
+/**
+ * Class GetCfdiTransferTaxesTotalApiViewTest
+ * @package Tests\Api
+ */
 class GetCfdiTransferTaxesTotalApiViewTest extends TestCase
 {
     /** @var Container */

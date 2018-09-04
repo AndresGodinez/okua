@@ -21,6 +21,11 @@ use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 use Tests\TestUtils;
 
+
+/**
+ * Class GetLastBillInfoRegisterApiViewTest
+ * @package Tests\Api
+ */
 class GetLastBillInfoRegisterApiViewTest extends TestCase
 {
     /** @var Container */

@@ -20,6 +20,11 @@ use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 use Tests\TestUtils;
 
+
+/**
+ * Class GetCfdiTotalApiViewTest
+ * @package Tests\Api
+ */
 class GetCfdiTotalApiViewTest extends TestCase
 {
     /** @var Container */

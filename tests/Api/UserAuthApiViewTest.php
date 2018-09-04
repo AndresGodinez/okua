@@ -19,7 +19,7 @@ use Tests\TestUtils;
 
 /**
  * Class UserAuthApiViewTest
- * @package Tests
+ * @package Tests\Api
  */
 class UserAuthApiViewTest extends TestCase
 {

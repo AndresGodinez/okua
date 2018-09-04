@@ -21,6 +21,11 @@ use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
 use Tests\TestUtils;
 
+
+/**
+ * Class GetFilteredCfdiRegistersCountApiViewTest
+ * @package Tests\Api
+ */
 class GetFilteredCfdiRegistersCountApiViewTest extends TestCase
 {
     /** @var Container */

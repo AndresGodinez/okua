@@ -6,7 +6,7 @@
  * Time: 02:38 PM
  */
 
-namespace Api;
+namespace Tests\Api;
 
 
 use App\Api\AbstractBaseCrudApiView;
