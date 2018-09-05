@@ -15,6 +15,7 @@ use App\Repositories\EmitterRepository;
 use App\Site\SiteContainer;
 use App\Utils\EntityUtils;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Entity;
 use League\Container\Container;
 use League\FactoryMuffin\FactoryMuffin;
 use League\Route\RouteCollection;
@@ -50,6 +51,13 @@ class CrudEmitterApiViewTest extends TestCase
         TestUtils::initConsts();
 
         self::$fm = TestUtils::initFactories();
+
+        EntityUtils::$mockedEm = null;
+    }
+
+    public static function tearDownAfterClass()
+    {
+        EntityUtils::$mockedEm = null;
     }
 
     protected function setUp()

@@ -11,6 +11,7 @@ namespace Tests\Api;
 
 use App\Exceptions\ApiSecurityException;
 use App\Site\SiteContainer;
+use App\Utils\EntityUtils;
 use League\Container\Container;
 use League\Route\RouteCollection;
 use PHPUnit\Framework\TestCase;
@@ -40,6 +41,13 @@ class CrudUserApiViewTest extends TestCase
         self::$container = SiteContainer::make();
 
         TestUtils::initConsts();
+
+        EntityUtils::$mockedEm = null;
+    }
+
+    public static function tearDownAfterClass()
+    {
+        EntityUtils::$mockedEm = null;
     }
 
     protected function setUp()

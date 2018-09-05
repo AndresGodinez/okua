@@ -50,6 +50,13 @@ class CrudFilterReceptorApiViewTest extends TestCase
         TestUtils::initConsts();
 
         self::$fm = TestUtils::initFactories();
+
+        EntityUtils::$mockedEm = null;
+    }
+
+    public static function tearDownAfterClass()
+    {
+        EntityUtils::$mockedEm = null;
     }
 
     protected function setUp()
