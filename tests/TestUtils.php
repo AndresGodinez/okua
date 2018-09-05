@@ -117,7 +117,7 @@ class TestUtils
     public static function initFactories()
     {
         $fm = new FactoryMuffin();
-        $fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'factories');
+        $fm->loadFactories(__DIR__ . DIRECTORY_SEPARATOR . 'models-factories');
 
         return $fm;
     }
