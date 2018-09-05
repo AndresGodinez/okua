@@ -32,7 +32,7 @@ class CreateEmitterRequestDataFactory
 
         $inst = new CreateEmitterRequestData();
 
-        $inst->setName(isset($data['name']) ?? '');
+        $inst->setName($data['name'] ?? '');
         $inst->setRfc($data['rfc'] ?? '');
         $inst->setEmail($data['email'] ?? '');
 
