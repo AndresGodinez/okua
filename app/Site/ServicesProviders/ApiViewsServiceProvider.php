@@ -14,6 +14,7 @@ use App\Api\BaseApiView;
 use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
 use App\Api\EmitterApiView;
+use App\Api\FilterEmitterApiView;
 use App\Api\ProcessErrorApiView;
 use App\Api\ProcessWarningApiView;
 use App\Api\SharedConfigApiView;
@@ -42,6 +43,7 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
 
         AlertEmailResponseApiView::class,
         EmitterApiView::class,
+        FilterEmitterApiView::class,
     ];
 
     /**
@@ -86,6 +88,9 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
             ->withMethodCall('setEm', ['entity-manager']);
 
         $container->add(EmitterApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
+
+        $container->add(FilterEmitterApiView::class)
             ->withMethodCall('setEm', ['entity-manager']);
     }
 
