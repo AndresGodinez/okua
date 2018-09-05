@@ -9,6 +9,7 @@
 namespace App\Site\ServicesProviders;
 
 
+use App\Api\AlertEmailResponseApiView;
 use App\Api\BaseApiView;
 use App\Api\CfdiApiView;
 use App\Api\CfdiEmitterApiView;
@@ -37,6 +38,8 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         ProcessWarningApiView::class,
         ProcessErrorApiView::class,
         SharedConfigApiView::class,
+
+        AlertEmailResponseApiView::class,
     ];
 
     /**
@@ -74,6 +77,10 @@ class ApiViewsServiceProvider extends AbstractServiceProvider implements Bootabl
         $container->add(SharedConfigApiView::class)
             ->withMethodCall('setEmailServiceConfig', ['email-service-config'])
             ->withMethodCall('setSharedFilesystem', ['shared-filesystem']);
+
+        // catalogs api services
+        $container->add(AlertEmailResponseApiView::class)
+            ->withMethodCall('setEm', ['entity-manager']);
     }
 
     /**

@@ -65,6 +65,16 @@ class ResponseUtils
      * @param ResponseInterface $response
      * @param string $msg
      */
+    public static function setForbiddenJsonResponse(ResponseInterface &$response, string $msg)
+    {
+        $response = $response->withStatus(403);
+        self::setMessageJsonResponse($response, $msg);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param string $msg
+     */
     public static function setMessageJsonResponse(ResponseInterface &$response, string $msg)
     {
         self::addContentTypeJsonHeader($response);

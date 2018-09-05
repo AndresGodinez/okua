@@ -10,6 +10,7 @@ namespace App\Site\ServicesProviders;
 
 
 use App\Site\SiteRouter;
+use App\Utils\EntityUtils;
 use App\Utils\RequestUtils;
 use Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver;
 use Doctrine\ORM\EntityManager;
@@ -112,6 +113,10 @@ class BaseServiceProvider extends AbstractServiceProvider
             $charset = $config['DOCTRINE_CHARSET'] ?? 'utf8';
 
             if (\defined('TESTING') && !!TESTING) {
+                if (EntityUtils::$mockedEm != null) {
+                    return EntityUtils::$mockedEm;
+                }
+
                 $dbname = $config['DOCTRINE_TEST_DB'] ?? false;
             } else {
                 $dbname = $config['DOCTRINE_DB'] ?? false;
