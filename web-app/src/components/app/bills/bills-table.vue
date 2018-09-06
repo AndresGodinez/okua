@@ -27,7 +27,7 @@
             <v2-table-column v-if="filterDateType === 4" label="FECHA/HORA (PROCESADO)" prop="regDatetime" align="left"/>
         </v2-table>
         <div class="flex flex-row-reverse">
-          <button class="text-right px-4 bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2 pt-6 text-white rounded" @click="downloadXls">Descargar reporte</button>
+          <button class="text-right px-4 bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2 pt-6 text-white rounded" @click="downloadXlsx">Exportar a Excel</button>
         </div>
     </div>
 </template>
@@ -66,7 +66,7 @@
       this.dispatchGetTableData();
     },
 
-    downloadXls(){
+    downloadXlsx(){
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
       let filterDateType = this.filterDateType;
@@ -74,11 +74,10 @@
       let initialAmount = this.initialAmount;
       let finalAmount = this.finalAmount;
 
-      let service = new BillInfoService();
-      let url = "/api/bill-info/xls";
-      let data = `?startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
-      window.open(url + data);
-//      let response = service.getBillInfoXls(startDatetime, endDatetime, clientRfc, initialAmount, finalAmount, filterDateType);
+      let url = "/api/bill-info/xlsx";
+      let data = `startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
+
+      window.open(`${url}?${data}`);
     },
 
     dispatchGetTableData() {

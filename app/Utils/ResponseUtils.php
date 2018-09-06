@@ -124,13 +124,13 @@ class ResponseUtils
     }
 
      /**
-     * @param string $content
+     * @param string $filePath
      * @param string $filename
      * @return Response
      */
-    public static function setXlsxFileResponse(string $content, string $filename)
+    public static function setXlsxFileResponse(string $filePath, string $filename)
     {
-         $stream = new Stream($content, 'r');
+         $stream = new Stream($filePath, 'r');
          $fileSize = $stream->getSize();
 
         $response = new Response($stream, 200, [

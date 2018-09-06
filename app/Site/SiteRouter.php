@@ -87,8 +87,8 @@ class SiteRouter
             $group->map('GET', '/bill-info/{cfdiId:regId}/pdf', CfdiApiView::class . '::getCfdiPdf');
             $group->map('GET', '/bill-info/count', CfdiApiView::class . '::getFilteredCfdiRegistersCount');
 
-            $group->map('GET', '/bill-info/xls', CfdiApiView::class . '::getCfdiXls');
-            $group->map('GET', '/bill-info/zip-files', CfdiApiView::class . '::getBillInfoZip');
+            $group->map('GET', '/bill-info/xlsx', CfdiApiView::class . '::getCfdiXlsx');
+            $group->map('GET', '/bill-info/zip-files', CfdiApiView::class . '::getCfdiZip');
 
             $group->map('GET', '/bill-info/total', CfdiApiView::class . '::getCfdiTotal');
 
