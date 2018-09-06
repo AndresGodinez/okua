@@ -13,10 +13,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class ErrorView
+ * Class ProcessWarningsView
  * @package App\Views
  */
-class ErrorView extends BaseView
+class ProcessWarningsView extends BaseView
 {
     /**
      * @param ServerRequestInterface $request
@@ -27,7 +27,7 @@ class ErrorView extends BaseView
     {
         $params = $request->getQueryParams();
 
-        $body = $this->templates->render('app/error', []);
+        $body = $this->templates->render('app/process-warnings', []);
 
         ResponseUtils::addContentTypeHtmlHeader($response);
         $response->getBody()->write($body);

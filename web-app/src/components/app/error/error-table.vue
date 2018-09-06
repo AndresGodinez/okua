@@ -7,7 +7,7 @@
                    class="bg-theme-color-1"
                    @page-change="onPageChange">
             <v2-table-column label="ID" prop="id" align="left" />
-            <v2-table-column label="ADVERTENCIA" prop="description" align="left" />
+            <v2-table-column label="ERROR" prop="description" align="left" />
             <v2-table-column label="EMAIL" prop="email" align="left" />
             <v2-table-column v-if="filterDateType === 1" label="FECHA/HORA (EMAIL)" prop="emailDatetime" align="left"/>
             <v2-table-column v-if="filterDateType === 2" label="FECHA/HORA (PROCESADO)" prop="regDatetime" align="left"/>

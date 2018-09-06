@@ -14,8 +14,8 @@ use App\Views\BaseView;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
-use App\Views\WarningView;
-use App\Views\ErrorView;
+use App\Views\ProcessWarningsView;
+use App\Views\ProcessErrorsView;
 use App\Views\MovementsLogView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
@@ -34,8 +34,8 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         HomeView::class,
         BillsView::class,
         MovementsLogView::class,
-        WarningView::class,
-        ErrorView::class,
+        ProcessWarningsView::class,
+        ProcessErrorsView::class,
 
         AdminConfigEmailServiceView::class,
     ];
@@ -55,8 +55,8 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         $container->add(HomeView::class);
         $container->add(BillsView::class);
         $container->add(MovementsLogView::class);
-        $container->add(WarningView::class);
-        $container->add(ErrorView::class);
+        $container->add(ProcessWarningsView::class);
+        $container->add(ProcessErrorsView::class);
 
         $container->add(AdminConfigEmailServiceView::class);
     }

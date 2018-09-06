@@ -26,12 +26,12 @@ use App\Site\Middlewares\ValidateSessionViewMiddleware;
 use App\Utils\SiteRouterUtils;
 use App\Views\AdminConfigEmailServiceView;
 use App\Views\BillsView;
-use App\Views\ErrorView;
 use App\Views\HomeView;
 use App\Views\LoginView;
 use App\Views\MovementsLogView;
+use App\Views\ProcessErrorsView;
+use App\Views\ProcessWarningsView;
 use App\Views\ProvidersHomeView;
-use App\Views\WarningView;
 use League\Container\Container;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -59,9 +59,9 @@ class SiteRouter
 
             $group->get('/bills', BillsView::class . '::index');
             
-            $group->get('/warnings', WarningView::class . '::index');
+            $group->get('/process-warnings', ProcessWarningsView::class . '::index');
 
-            $group->get('/errors', ErrorView::class . '::index');
+            $group->get('/process-errors', ProcessErrorsView::class . '::index');
 
             $group->get('/movements-log', MovementsLogView::class . '::index');
 

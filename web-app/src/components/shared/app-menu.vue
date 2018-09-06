@@ -11,28 +11,42 @@
 
                 <div class="w-full uppercase text-center font-bold text-xl px-6">
                     <button class="text-left w-full h-16 px-4" :class="[selected === 'home' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goHome()">
-                        <font-awesome-icon :icon="iconMenuHome" />
+                        <font-awesome-icon class="w-10" :icon="iconMenuHome" />
                         <span class="ml-2 uppercase">Inicio</span>
                     </button>
                 </div>
 
                 <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
                     <button class="text-left w-full h-16 px-4" :class="[selected === 'bills' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goBills()">
-                        <font-awesome-icon :icon="iconMenuBills" />
+                        <font-awesome-icon class="w-10" :icon="iconMenuBills" />
                         <span class="ml-2 uppercase">CFDI Procesados</span>
                     </button>
                 </div>
 
                 <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'process-warnings' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goProcessWarnings()">
+                        <font-awesome-icon class="w-10" :icon="iconMenuProcessWarnings" />
+                        <span class="ml-2 uppercase">Advertencias</span>
+                    </button>
+                </div>
+
+                <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'process-errors' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goProcessErrors()">
+                        <font-awesome-icon class="w-10" :icon="iconMenuProcessErrors" />
+                        <span class="ml-2 uppercase">Errores</span>
+                    </button>
+                </div>
+
+                <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
                     <button class="text-left w-full h-16 px-4" :class="[selected === 'providers' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goModuleProviders()">
-                        <font-awesome-icon :icon="iconMenuProviders" />
+                        <font-awesome-icon class="w-10" :icon="iconMenuProviders" />
                         <span class="ml-2 uppercase">Proveedores</span>
                     </button>
                 </div>
 
                 <!--<div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">-->
                     <!--<button class="text-left w-full hover:bg-grey-light h-16 px-4" :class="[selected === 'movements' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goMovements()">-->
-                        <!--<font-awesome-icon :icon="iconMenuMovements" />-->
+                        <!--<font-awesome-icon class="w-10" :icon="iconMenuMovements" />-->
                         <!--<span class="ml-2 uppercase">Movimientos</span>-->
                     <!--</button>-->
                 <!--</div>-->
@@ -46,7 +60,7 @@
 
 <script>
   import RouteUtils from "../../js/utils/route-utils";
-  import {faHome, faFileInvoice, faFileInvoiceDollar, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+  import {faHome, faFileInvoice, faExclamationCircle, faTimes, faFileInvoiceDollar, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
   const props = {
@@ -69,6 +83,14 @@
       RouteUtils.goBills();
     },
 
+    goProcessWarnings() {
+      RouteUtils.goProcessWarnings();
+    },
+
+    goProcessErrors() {
+      RouteUtils.goProcessErrors();
+    },
+
     goModuleProviders() {
       RouteUtils.goModuleProviders();
     },
@@ -89,6 +111,14 @@
 
     iconMenuBills() {
       return faFileInvoice;
+    },
+
+    iconMenuProcessWarnings() {
+      return faExclamationCircle;
+    },
+
+    iconMenuProcessErrors() {
+      return faTimes;
     },
 
     iconMenuProviders() {
