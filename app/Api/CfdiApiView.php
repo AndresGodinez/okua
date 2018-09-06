@@ -366,7 +366,7 @@ class CfdiApiView extends BaseApiView
             $writer->writeSheetRow($sheetName, $array);
         }
 
-        $filename = \tempnam($filesTmpDir, 'rp') . '.xlsx';
+        $filename = $filesTmpDir . \DIRECTORY_SEPARATOR . \uniqid('rp', false) . '.xlsx';
         $writer->writeToFile($filename);
 
         $reportFilename = 'okua_' . (new \DateTime)->format('Ymd_Hi') . '.xlsx';

@@ -105,8 +105,10 @@
       let initialAmount = this.initialAmount;
       let finalAmount = this.finalAmount;
 
-      let url = "/api/bill-info/xlsx";
-      let data = `startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
+      let url = "/api/cfdi/xlsx";
+      let tmpData = TokenUtils.appendAesTokenToData({});
+
+      let data = `a=${tmpData.a}&startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
 
       window.open(`${url}?${data}`);
     },

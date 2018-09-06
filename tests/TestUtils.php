@@ -26,6 +26,7 @@ class TestUtils
     const CONTENT_TYPE_APPLICATION_JSON_UTF8 = 'application/json; charset=utf-8';
     const CONTENT_TYPE_TEXT_HTML_UTF8 = 'text/html; charset=utf-8';
     const CONTENT_TYPE_APPLICATION_ZIP = 'application/zip, application/octet-stream';
+    const CONTENT_TYPE_APPLICATION_SPREADSHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
     const CFDI_USES = [
         ['satCode' => 'G01', 'name' => 'Adquisición de mercancias'],

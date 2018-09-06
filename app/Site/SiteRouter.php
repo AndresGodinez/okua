@@ -88,8 +88,6 @@ class SiteRouter
             $group->map('GET', '/bill-info/{cfdiId:regId}/pdf', CfdiApiView::class . '::getCfdiPdf');
             $group->map('GET', '/bill-info/count', CfdiApiView::class . '::getFilteredCfdiRegistersCount');
 
-            $group->map('GET', '/bill-info/xlsx', CfdiApiView::class . '::getCfdiXlsx');
-
             $group->map('GET', '/bill-info/total', CfdiApiView::class . '::getCfdiTotal');
 
             $group->map('GET', '/bill-info/group-by/client', CfdiApiView::class . '::getCfdiGroupByClient');
@@ -141,8 +139,9 @@ class SiteRouter
             ->setScheme('http');
 
         // download files as zip with custom security as a query parameter
-        $route->group('/api/cfdi/zip-files', function (RouteGroup $group) {
-            $group->map('GET', '/', CfdiApiView::class . '::getCfdiZip');
+        $route->group('/api/cfdi', function (RouteGroup $group) {
+            $group->map('GET', '/zip-files', CfdiApiView::class . '::getCfdiZip');
+            $group->map('GET', '/xlsx', CfdiApiView::class . '::getCfdiXlsx');
         })
             ->middleware(new SecureApiQueryParamMiddleware)
             ->setScheme('http');
