@@ -26,8 +26,13 @@
             <v2-table-column v-if="filterDateType === 3" label="FECHA/HORA (CORREO)" prop="emailDatetime" align="left"/>
             <v2-table-column v-if="filterDateType === 4" label="FECHA/HORA (PROCESADO)" prop="regDatetime" align="left"/>
         </v2-table>
-        <div class="flex flex-row-reverse">
-          <button class="text-right px-4 bg-theme-color-4 hover:bg-theme-color-4-lighter rounded-sm mx-2 pt-6 text-white rounded" @click="downloadXlsx">Exportar a Excel</button>
+
+        <div class="flex justify-end px-4 mt-4">
+            <button v-ripple
+                    class="text-left h-16 px-4 bg-theme-color-3 hover:bg-theme-color-3-lighter text-white rounded"
+                    @click="downloadXlsx">
+                <span class="ml-2 uppercase">Exportar a Excel</span>
+            </button>
         </div>
     </div>
 </template>
