@@ -21,7 +21,7 @@ $em = $container->get('entity-manager');
 // init muffins factory
 $fm = new \League\FactoryMuffin\FactoryMuffin();
 
-$factoriesPath = BASE_DIR . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'factories';
+$factoriesPath = BASE_DIR . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'models-factories';
 
 /** @noinspection PhpUnhandledExceptionInspection */
 $fm->loadFactories($factoriesPath);
