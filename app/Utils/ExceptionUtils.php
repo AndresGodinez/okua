@@ -13,6 +13,8 @@ use App\Exceptions\ApiSecurityException;
 use App\Exceptions\RemoteApiException;
 use App\Exceptions\ValidationException;
 use App\Exceptions\ViewInvalidSessionException;
+use App\Exceptions\ViewSecurityException;
+use App\Exceptions\ViewValidationException;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 
@@ -78,6 +80,10 @@ class ExceptionUtils
 
         if ($e instanceof ViewInvalidSessionException)
             $template = 'errors/view-invalid-session-exception';
+        else if ($e instanceof ViewValidationException)
+            $template = 'errors/view-validation-exception';
+        else if ($e instanceof ViewSecurityException)
+            $template = 'errors/view-security-exception';
 
         $body = $templates->render($template, ['msg' => $e->getMessage()]);
 

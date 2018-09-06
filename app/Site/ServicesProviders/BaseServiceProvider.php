@@ -82,6 +82,12 @@ class BaseServiceProvider extends AbstractServiceProvider
             $dotenv = new Dotenv(BASE_DIR);
             $dotenv->load();
             $config = $_ENV;
+
+            if (\defined('TESTING') && !!TESTING) {
+                $config['FILES_DONE_DIR'] = $config['TEST_FILES_DONE_DIR'];
+                $config['FILES_TMP_DIR'] = $config['TEST_FILES_TMP_DIR'];
+            }
+
             return $config;
         });
 

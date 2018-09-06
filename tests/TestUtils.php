@@ -25,6 +25,7 @@ class TestUtils
     const HEADER_CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_APPLICATION_JSON_UTF8 = 'application/json; charset=utf-8';
     const CONTENT_TYPE_TEXT_HTML_UTF8 = 'text/html; charset=utf-8';
+    const CONTENT_TYPE_APPLICATION_ZIP = 'application/zip, application/octet-stream';
 
     const CFDI_USES = [
         ['satCode' => 'G01', 'name' => 'Adquisición de mercancias'],

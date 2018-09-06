@@ -27,10 +27,17 @@
             <v2-table-column v-if="filterDateType === 4" label="FECHA/HORA (PROCESADO)" prop="regDatetime" align="left"/>
         </v2-table>
 
-        <div class="flex justify-end px-4 mt-4">
+        <div class="flex justify-end mt-4">
             <button v-ripple
-                    class="text-left h-16 px-4 bg-theme-color-3 hover:bg-theme-color-3-lighter text-white rounded"
+                    class="text-left h-16 px-4 bg-theme-color-4 hover:bg-theme-color-4-darker text-white rounded mr-6"
+                    @click="downloadZip">
+                <font-awesome-icon :icon="iconDownloadZipFooterBtn"/>
+                <span class="ml-2 uppercase">Comprimir y Descargar archivos</span>
+            </button>
+            <button v-ripple
+                    class="text-left h-16 px-4 bg-theme-color-4 hover:bg-theme-color-4-darker text-white rounded"
                     @click="downloadXlsx">
+                <font-awesome-icon :icon="iconDownloadXlsxFooterBtn"/>
                 <span class="ml-2 uppercase">Exportar a Excel</span>
             </button>
         </div>
@@ -40,6 +47,9 @@
   import BillsInfoTableCellOptions from "./bills-info-table-cell-options"
   import BillsInfoTableRow from "../../../js/models/bills-info-table-row";
   import BillInfoService from "../../../js/services/bill-info-service";
+  import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+  import {faFileArchive, faFileExcel} from '@fortawesome/free-solid-svg-icons';
+  import TokenUtils from "../../../js/utils/token-utils";
 
   const data = function () {
     let tableData = [];
@@ -69,6 +79,22 @@
       this.tablePage = newPage;
 
       this.dispatchGetTableData();
+    },
+
+    downloadZip(){
+      let startDatetime = this.startDatetime;
+      let endDatetime = this.endDatetime;
+      let filterDateType = this.filterDateType;
+      let clientRfc = this.clientRfc;
+      let initialAmount = this.initialAmount;
+      let finalAmount = this.finalAmount;
+
+      let url = "/api/cfdi/zip-files";
+      let tmpData = TokenUtils.appendAesTokenToData({});
+
+      let data = `a=${tmpData.a}&startDatetime=${startDatetime}&endDatetime=${endDatetime}&clientRfc=${clientRfc}&initialAmount=${initialAmount}&finalAmount=${finalAmount}&filterDateType=${filterDateType}`;
+
+      window.open(`${url}?${data}`);
     },
 
     downloadXlsx(){
@@ -167,9 +193,18 @@
     dispatchBillsTableRefresh() {
       return this.$store.state.section.dispatchBillsTableRefresh;
     },
+
     filterDateType() {
       return this.$store.state.section.filterDateType;
-    }
+    },
+
+    iconDownloadZipFooterBtn() {
+      return faFileArchive;
+    },
+
+    iconDownloadXlsxFooterBtn() {
+      return faFileExcel;
+    },
   };
 
   const watch = {
@@ -201,7 +236,10 @@
     watch,
 
     name: 'bills-table',
-    components: {BillsInfoTableCellOptions},
+    components: {
+      FontAwesomeIcon,
+      BillsInfoTableCellOptions,
+    },
     mounted() {
       setTimeout(() => {
         this.dispatchGetTableData();

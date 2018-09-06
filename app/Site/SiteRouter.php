@@ -22,6 +22,7 @@ use App\Api\UserApiView;
 use App\Api\UserAuthApiView;
 use App\Site\Middlewares\CorsApiMiddleware;
 use App\Site\Middlewares\SecureApiMiddleware;
+use App\Site\Middlewares\SecureApiQueryParamMiddleware;
 use App\Site\Middlewares\ValidateSessionViewMiddleware;
 use App\Utils\SiteRouterUtils;
 use App\Views\AdminConfigEmailServiceView;
@@ -88,7 +89,6 @@ class SiteRouter
             $group->map('GET', '/bill-info/count', CfdiApiView::class . '::getFilteredCfdiRegistersCount');
 
             $group->map('GET', '/bill-info/xlsx', CfdiApiView::class . '::getCfdiXlsx');
-            $group->map('GET', '/bill-info/zip-files', CfdiApiView::class . '::getCfdiZip');
 
             $group->map('GET', '/bill-info/total', CfdiApiView::class . '::getCfdiTotal');
 
@@ -138,6 +138,13 @@ class SiteRouter
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/filter-receptor', FilterReceptorApiView::class, true);
         })
             ->middleware(new CorsApiMiddleware)
+            ->setScheme('http');
+
+        // download files as zip with custom security as a query parameter
+        $route->group('/api/cfdi/zip-files', function (RouteGroup $group) {
+            $group->map('GET', '/', CfdiApiView::class . '::getCfdiZip');
+        })
+            ->middleware(new SecureApiQueryParamMiddleware)
             ->setScheme('http');
 
         // email-service-config routes

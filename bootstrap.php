@@ -20,6 +20,10 @@ try {
     $response = \App\Utils\ExceptionUtils::prepareRemoteApiExceptionResponse($container->get('response'), $ex);
 } catch (\App\Exceptions\ViewInvalidSessionException $ex) {
     $response = \App\Utils\ExceptionUtils::prepareViewError($container->get('templates'), $container->get('response'), $ex);
+} catch (\App\Exceptions\ViewValidationException $ex) {
+    $response = \App\Utils\ExceptionUtils::prepareViewError($container->get('templates'), $container->get('response'), $ex);
+} catch (\App\Exceptions\ViewSecurityException $ex) {
+    $response = \App\Utils\ExceptionUtils::prepareViewError($container->get('templates'), $container->get('response'), $ex);
 }
 
 $container->get('emitter')->emit($response);

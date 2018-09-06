@@ -11,6 +11,7 @@ namespace App\Api;
 
 use App\Entities\Cfdi;
 use App\Exceptions\ValidationException;
+use App\Exceptions\ViewValidationException;
 use App\Models\CountGetCfdiGroupedByRequestData;
 use App\Models\GetCfdiGroupedByRequestData;
 use App\Models\GetCfdiTotalRequestData;
@@ -403,19 +404,92 @@ class CfdiApiView extends BaseApiView
         return $response;
     }
 
-     /**
+    /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
-     * @throws \App\Exceptions\ValidationException
+     * @throws ViewValidationException
      */
     public function getCfdiZip(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $files_to_zip = array(
+        $filesTmpDir = $this->config['FILES_TMP_DIR'];
+        $filesDoneDir = $this->config['FILES_DONE_DIR'];
+
+        $requestData = GetFilteredCfdiReportData::makeFromArray($request->getQueryParams());
+
+        try {
+            $requestData->validate();
+        } catch (ValidationException $e) {
+            \error_log($e->getMessage());
+            throw new ViewValidationException('Invalid filter parameters');
+        }
+
+        /** @var CfdiRepository $repo */
+        $repo = $this->getEm()->getRepository(Cfdi::class);
+
+        $registers = $repo->getFilteredReportRegisters(
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getClientRfc(),
+            $requestData->getInitialAmount(),
+            $requestData->getFinalAmount(),
+            $requestData->getFilterDateType()
         );
 
-//        $zipFile = $this->create_zip($files_to_zip,'', false);
-//        $response = ResponseUtils::setZipFileResponse('file', 'my-archive.zip');
+        if (!$registers) {
+            throw new ViewValidationException('No registers found to export files', 400);
+        }
+
+        $filesData = \array_map(function ($register) use ($filesDoneDir) {
+            /** @var Cfdi $item */
+            $item = $register[0];
+
+            $itemFiles = [
+                'rfc' => $item->getEmitterRfc(),
+                'uuid' => $item->getUuid(),
+                'xml' => $filesDoneDir . $item->getFilesPath() . \DIRECTORY_SEPARATOR . $item->getUuid() . '.xml',
+                'pdf' => '',
+            ];
+
+            if ($item->getHasPdf() == 1) {
+                $itemFiles['pdf'] = $filesDoneDir . $item->getFilesPath() . \DIRECTORY_SEPARATOR . $item->getUuid() . '.pdf';
+            }
+
+            return $itemFiles;
+        }, $registers);
+
+        $filename = $filesTmpDir . \DIRECTORY_SEPARATOR . 'zip' . \DIRECTORY_SEPARATOR . \uniqid('rp', false) . '.zip';
+
+        $zip = new \ZipArchive();
+
+        if ($zip->open($filename, \ZipArchive::CREATE) !== TRUE) {
+            throw new ViewValidationException('Cant create the file', 400);
+        }
+
+        $hasValidFiles = false;
+        foreach ($filesData as $item) {
+            $baseDir = '/' . $item['rfc'];
+
+            if (\file_exists($item['xml'])) {
+                $zip->addFile($item['xml'], $baseDir . '/' . $item['uuid'] . '.xml');
+                $hasValidFiles = true;
+            }
+
+            if (!!$item['pdf'] && \file_exists($item['xml'])) {
+                $zip->addFile($item['pdf'], $baseDir . '/' . $item['uuid'] . '.pdf');
+                $hasValidFiles = true;
+            }
+        }
+
+        if (!$hasValidFiles) {
+            throw new ViewValidationException('The search has no valid files for the registers', 400);
+        }
+
+        $zip->close();
+
+        $zipFilename = 'okua_' . (new \DateTime)->format('Ymd_Hi') . '.zip';
+
+        $response = ResponseUtils::setZipFileResponse($filename, $zipFilename);
 
         return $response;
     }
