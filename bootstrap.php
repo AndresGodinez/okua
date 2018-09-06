@@ -18,6 +18,8 @@ try {
     $response = \App\Utils\ExceptionUtils::prepareApiSecurityExceptionResponse($container->get('response'), $ex);
 } catch (\App\Exceptions\RemoteApiException $ex) {
     $response = \App\Utils\ExceptionUtils::prepareRemoteApiExceptionResponse($container->get('response'), $ex);
+} catch (\App\Exceptions\ViewInvalidSessionException $ex) {
+    $response = \App\Utils\ExceptionUtils::prepareViewError($container->get('templates'), $container->get('response'), $ex);
 }
 
 $container->get('emitter')->emit($response);

@@ -22,7 +22,9 @@ use App\Api\UserApiView;
 use App\Api\UserAuthApiView;
 use App\Site\Middlewares\CorsApiMiddleware;
 use App\Site\Middlewares\SecureApiMiddleware;
+use App\Site\Middlewares\ValidateSessionViewMiddleware;
 use App\Utils\SiteRouterUtils;
+use App\Views\AdminConfigEmailServiceView;
 use App\Views\BillsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
@@ -59,6 +61,12 @@ class SiteRouter
 
             $group->get('/providers/home', ProvidersHomeView::class . '::index');
         })
+            ->setScheme('http');
+
+        $route->group('/admin', function (RouteGroup $group) {
+            $group->get('/config/email-service', AdminConfigEmailServiceView::class . '::index');
+        })
+            ->middleware(new ValidateSessionViewMiddleware($container->get('config')))
             ->setScheme('http');
 
 

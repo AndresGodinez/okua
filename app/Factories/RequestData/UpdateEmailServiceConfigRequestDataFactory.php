@@ -30,11 +30,11 @@ class UpdateEmailServiceConfigRequestDataFactory
         $inst = new UpdateEmailServiceConfigRequestData();
 
         $inst->setHostname($data['hostname'] ?? '');
-        $inst->setInboxName($data['inboxName'] ?? '');
+        $inst->setInboxName($data['inboxName'] ?? 'INBOX');
         $inst->setUsername($data['username'] ?? '');
         $inst->setPswd($data['pswd'] ?? '');
-        $inst->setTagOk($data['tagOk'] ?? '');
-        $inst->setTagIssue($data['tagIssue'] ?? '');
+        $inst->setTagOk($data['tagOk'] ?? 'Processed');
+        $inst->setTagIssue($data['tagIssue'] ?? 'Issues');
 
         return $inst;
     }

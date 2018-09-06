@@ -24,6 +24,7 @@ class TestUtils
 
     const HEADER_CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_APPLICATION_JSON_UTF8 = 'application/json; charset=utf-8';
+    const CONTENT_TYPE_TEXT_HTML_UTF8 = 'text/html; charset=utf-8';
 
     const CFDI_USES = [
         ['satCode' => 'G01', 'name' => 'Adquisición de mercancias'],
@@ -185,6 +186,19 @@ class TestUtils
 
         $contentType = $response->getHeaderLine(self::HEADER_CONTENT_TYPE);
         $testInst->assertEquals($contentType, self::CONTENT_TYPE_APPLICATION_JSON_UTF8, 'The response CONTENT_TYPE header is not JSON');
+    }
+
+    /**
+     * @param TestCase $testInst
+     * @param ResponseInterface $response
+     */
+    public static function runDefaultTestsHtmlViewResponse(TestCase $testInst, ResponseInterface $response)
+    {
+        $testInst->assertNotNull($response);
+        $testInst->assertTrue($response->hasHeader(self::HEADER_CONTENT_TYPE), 'The response does not have the CONTENT_TYPE header');
+
+        $contentType = $response->getHeaderLine(self::HEADER_CONTENT_TYPE);
+        $testInst->assertEquals($contentType, self::CONTENT_TYPE_TEXT_HTML_UTF8, 'The response CONTENT_TYPE header is not HTML');
     }
 
     public static function mockEmailServiceConfig()

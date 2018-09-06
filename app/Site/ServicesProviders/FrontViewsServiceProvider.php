@@ -9,6 +9,7 @@
 namespace App\Site\ServicesProviders;
 
 
+use App\Views\AdminConfigEmailServiceView;
 use App\Views\BaseView;
 use App\Views\BillsView;
 use App\Views\HomeView;
@@ -31,6 +32,8 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         HomeView::class,
         BillsView::class,
         MovementsLogView::class,
+
+        AdminConfigEmailServiceView::class,
     ];
 
     /**
@@ -48,6 +51,8 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         $container->add(HomeView::class);
         $container->add(BillsView::class);
         $container->add(MovementsLogView::class);
+
+        $container->add(AdminConfigEmailServiceView::class);
     }
 
     /**

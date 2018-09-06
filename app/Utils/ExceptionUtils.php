@@ -12,6 +12,8 @@ namespace App\Utils;
 use App\Exceptions\ApiSecurityException;
 use App\Exceptions\RemoteApiException;
 use App\Exceptions\ValidationException;
+use App\Exceptions\ViewInvalidSessionException;
+use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -57,6 +59,29 @@ class ExceptionUtils
         $response = $response->withStatus($e->getCode());
         ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write(\json_encode(["message" => $e->getMessage()]));
+
+        return $response;
+    }
+
+    /**
+     * @param Engine $templates
+     * @param ResponseInterface $response
+     * @param \Exception $e
+     * @return ResponseInterface
+     */
+    public static function prepareViewError(Engine $templates, ResponseInterface $response, \Exception $e)
+    {
+        $response = $response->withStatus($e->getCode());
+        ResponseUtils::addContentTypeHtmlHeader($response);
+
+        $template = '';
+
+        if ($e instanceof ViewInvalidSessionException)
+            $template = 'errors/view-invalid-session-exception';
+
+        $body = $templates->render($template, ['msg' => $e->getMessage()]);
+
+        $response->getBody()->write($body);
 
         return $response;
     }
