@@ -24,6 +24,8 @@ mix.less(`${ASSETS_DIR}/styles/app/home/home-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/providers/home/home-index.less`, 'css/providers-home');
 mix.less(`${ASSETS_DIR}/styles/app/bills/bills-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/movements-log/movements-log-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/warning/warning-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/error/error-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/admin/config/admin-config-email-service-index.less`, 'css');
 
 mix
@@ -31,6 +33,8 @@ mix
   .js(`${ASSETS_DIR}/js/app/login/login-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/home/home-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/bills/bills-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/warning/warning-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/error/error-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/movements-log/movements-log-index`, 'js')
   .js(`${ASSETS_DIR}/js/admin/config/email-service-index`, 'js/admin-config-email-service-index.js')
   .extract(["vue"], 'js/vendor')

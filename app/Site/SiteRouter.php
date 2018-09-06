@@ -26,10 +26,12 @@ use App\Site\Middlewares\ValidateSessionViewMiddleware;
 use App\Utils\SiteRouterUtils;
 use App\Views\AdminConfigEmailServiceView;
 use App\Views\BillsView;
+use App\Views\ErrorView;
 use App\Views\HomeView;
 use App\Views\LoginView;
 use App\Views\MovementsLogView;
 use App\Views\ProvidersHomeView;
+use App\Views\WarningView;
 use League\Container\Container;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -56,6 +58,10 @@ class SiteRouter
             $group->get('/dashboard', HomeView::class . '::index');
 
             $group->get('/bills', BillsView::class . '::index');
+            
+            $group->get('/warnings', WarningView::class . '::index');
+
+            $group->get('/errors', ErrorView::class . '::index');
 
             $group->get('/movements-log', MovementsLogView::class . '::index');
 
@@ -82,6 +88,7 @@ class SiteRouter
             $group->map('GET', '/bill-info/count', CfdiApiView::class . '::getFilteredCfdiRegistersCount');
 
             $group->map('GET', '/bill-info/xls', CfdiApiView::class . '::getCfdiXls');
+            $group->map('GET', '/bill-info/zip-files', CfdiApiView::class . '::getBillInfoZip');
 
             $group->map('GET', '/bill-info/total', CfdiApiView::class . '::getCfdiTotal');
 
@@ -103,10 +110,17 @@ class SiteRouter
 
             // TODO: change to last-registers path
             $group->map('GET', '/process/warning', ProcessWarningApiView::class . '::getLastProcessWarnings');
+            $group->map('GET', '/process/warning/all', ProcessWarningApiView::class . '::getEveryRegister');
             $group->map('GET', '/process/error', ProcessErrorApiView::class . '::getLastProcessErrors');
 
             $group->map('GET', '/process/warning/{processWarningId:regId}', ProcessWarningApiView::class . '::getProcessWarningById');
             $group->map('GET', '/process/error/{processErrorId:regId}', ProcessErrorApiView::class . '::getProcessErrorById');
+
+            $group->map('GET', '/warning', ProcessWarningApiView::class . '::getFilteredProcessWarningsRegisters');
+            $group->map('GET', '/warning/count', ProcessWarningApiView::class . '::getFilteredProcessWarningsRegistersCount');
+
+            $group->map('GET', '/error', ProcessErrorApiView::class . '::getFilteredProcessErrorRegisters');
+            $group->map('GET', '/error/count', ProcessErrorApiView::class . '::getFilteredProcessErrorRegistersCount');
 
             // user crud routes
             SiteRouterUtils::appendCrudRoutesToRouteGroup($group, '/user', UserApiView::class, true);

@@ -144,6 +144,27 @@ class ResponseUtils
         return $response;
     }
 
+     /**
+     * @param string $content
+     * @param string $filename
+     * @return Response
+     */
+    public static function setZipFileResponse(string $content, string $filename)
+    {
+         $stream = new Stream($content, 'r');
+         $fileSize = $stream->getSize();
+
+        $response = new Response($stream, 200, [
+            'Content-Type' => 'application/zip, application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Length' => $fileSize,
+            'Content-Transfer-Encoding' => 'binary',
+            'Pragma' => 'public',
+        ]);
+
+        return $response;
+    }
+
     /**
      * @param ResponseInterface $response
      * @param string $body

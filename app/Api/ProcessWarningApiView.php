@@ -11,6 +11,8 @@ namespace App\Api;
 
 use App\Entities\ProcessWarning;
 use App\Models\GetLastRegistersRequestData;
+use App\Models\GetFilteredWarningRegistersRequestData;
+use App\Models\GetFilteredWarningRegistersCountRequestData;
 use App\Repositories\ProcessWarningRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\ProcessWarningItemTransformer;
@@ -51,6 +53,63 @@ class ProcessWarningApiView extends BaseApiView {
 
         ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    public function getEveryRegister(ServerRequestInterface $request, ResponseInterface $response){
+        $repo = $this->getEm()->getRepository(ProcessWarning::class);
+
+        $registers = $repo->findAll();
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new ProcessWarningItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    public function getFilteredProcessWarningsRegisters(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetFilteredWarningRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        $repo = $this->getEm()->getRepository(ProcessWarning::class);
+
+        $registers = $repo->getFilteredRegisters(
+            $requestData->getLimit(),
+            $requestData->getOffset(),
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getFilterDateType()
+        );
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new ProcessWarningItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    public function getFilteredProcessWarningsRegistersCount(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetFilteredWarningRegistersCountRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        $repo = $this->getEm()->getRepository(ProcessWarning::class);
+
+        $result = $repo->getFilteredRegistersCount(
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getFilterDateType()
+        );
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['count' => (int)$result]));
 
         return $response;
     }

@@ -17,5 +17,32 @@ export default class ProcessErrorService {
 
     return await api.get();
   }
+
+  async getFilteredRegisters(limit, offset, startDatetime, endDatetime, filterDateType = 1) {
+    const data = {
+      limit,
+      offset,
+      startDatetime,
+      endDatetime,
+      filterDateType,
+    };
+
+    let api = new WebApi(`${this.host}/api/error`, data);
+    api.converter = ProcessErrorRegistersResponse.makeFromObject;
+
+    return await api.get();
+  }
+
+  async getFilteredRegistersCount(startDatetime, endDatetime, filterDateType = 1) {
+    const data = {
+      startDatetime,
+      endDatetime,
+      filterDateType,
+    };
+
+    let api = new WebApi(`${this.host}/api/error/count`, data);
+
+    return await api.get();
+  }
 }
 

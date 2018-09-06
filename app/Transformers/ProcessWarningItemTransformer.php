@@ -24,6 +24,7 @@ class ProcessWarningItemTransformer extends TransformerAbstract
             'description' => $item->getDescription(),
             'email' => $item->getEmail(),
             'emailDatetime' => $item->getEmailDatetime()->format('Y-m-d H:i:s'),
+            'regDatetime' => $item->getRegDatetime()->format('Y-m-d H:i:s'),
             'cfdiId' => (int)$item->getCfdiId(),
         ];
     }

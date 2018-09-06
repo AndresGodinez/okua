@@ -11,6 +11,8 @@ namespace App\Api;
 
 use App\Entities\ProcessError;
 use App\Models\GetLastRegistersRequestData;
+use App\Models\GetFilteredErrorRegistersRequestData;
+use App\Models\GetFilteredErrorRegistersCountRequestData;
 use App\Repositories\ProcessErrorRepository;
 use App\Traits\EntityManagerViewTrait;
 use App\Transformers\ProcessErrorItemTransformer;
@@ -68,6 +70,48 @@ class ProcessErrorApiView extends BaseApiView {
 
         ResponseUtils::addContentTypeJsonHeader($response);
         $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    public function getFilteredProcessErrorRegisters(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetFilteredErrorRegistersRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        $repo = $this->getEm()->getRepository(ProcessError::class);
+
+        $registers = $repo->getFilteredRegisters(
+            $requestData->getLimit(),
+            $requestData->getOffset(),
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getFilterDateType()
+        );
+
+        $manager = new Manager();
+        $resource = new Collection($registers, new ProcessErrorItemTransformer());
+        $data = $manager->createData($resource)->toJson();
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    public function getFilteredProcessErrorRegistersCount(ServerRequestInterface $request, ResponseInterface $response){
+        $requestData = GetFilteredErrorRegistersCountRequestData::makeFromArray($request->getQueryParams());
+        $requestData->validate();
+
+        $repo = $this->getEm()->getRepository(ProcessError::class);
+
+        $result = $repo->getFilteredRegistersCount(
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getFilterDateType()
+        );
+
+        ResponseUtils::addContentTypeJsonHeader($response);
+        $response->getBody()->write(\json_encode(['count' => (int)$result]));
 
         return $response;
     }

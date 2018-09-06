@@ -13,10 +13,12 @@ export default class ProcessErrorRegisterItem {
   static makeFromObject(obj) {
     let register = new ProcessErrorRegisterItem();
 
+    register.id = obj.id;
     register.code = obj.code;
     register.description = obj.description;
     register.email = obj.email;
     register.emailDatetime = obj.emailDatetime;
+    register.regDatetime = obj.regDatetime;
 
     return register;
   }
@@ -33,6 +35,8 @@ export default class ProcessErrorRegisterItem {
      * @type {string}
      */
     this.emailDatetime = '';
+
+    this.regDatetime = '';
 
     this.code = '';
 

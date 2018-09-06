@@ -402,6 +402,109 @@ class CfdiApiView extends BaseApiView
         return $response;
     }
 
+    public function create_zip($files = array(),$destination = '',$overwrite = true) {
+        //if the zip file already exists and overwrite is false, return false
+        if(file_exists($destination) && !$overwrite) { return false; }
+    
+        $valid_files = array();
+        //if files were passed in...
+        if(is_array($files)) {
+            //cycle through each file
+            foreach($files as $file) {
+                //make sure the file exists
+                if(file_exists($file)) {
+                    $valid_files[] = $file;
+                }
+            }
+        }
+
+        //if we have good files...
+        if(count($valid_files)) {
+            //create the archive
+            echo "count";
+            $zip = new \ZipArchive();
+            if($zip->open($destination,$overwrite ? \ZIPARCHIVE::OVERWRITE : \ZIPARCHIVE::CREATE) !== true) {
+                echo "overwrite";
+                echo $overwrite;
+                echo "dewstination";
+                echo $destination;
+                return false;
+            }
+            //add the files
+            foreach($valid_files as $file) {
+                $zip->addFile($file,$file);
+            }
+            //debug
+
+            echo 'The zip archive contains ',$zip->numFiles,' files with a status of ',$zip->status;
+            
+            //close the zip -- done!
+            $zip->close();
+            
+            //check to make sure the file exists
+            return file_exists($destination);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+     /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function getBillInfoZip(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        #$requestData = GetFilteredBillInfoReportData::makeFromArray($request->getQueryParams());
+        #$requestData->validate();
+
+        /** @var BillInfoRepository $repo */
+        #$repo = $this->getEm()->getRepository(BillInfo::class);
+
+        /*$registers = $repo->getFilteredReportRegisters(
+            $requestData->getStartDatetimeObj(),
+            $requestData->getEndDatetimeObj(),
+            $requestData->getClientRfc(),
+            $requestData->getInitialAmount(),
+            $requestData->getFinalAmount(),
+            $requestData->getFilterDateType()
+        );*/
+
+        #$manager = new Manager();
+        #$resource = new Collection($registers, new BillInfoEntityWithCfdiUseNameTransformer());
+        #$data = $manager->createData($resource)->toJson();
+        #$data = json_decode($data, true);
+        #$values = array_values($data['data']);
+        
+        /*foreach ($data['data'] as $key) {
+            $array = array_values($key);
+            $writer->writeSheetRow($sheetName, $array);
+        }
+
+        $writer->writeToFile('file');*/
+/*'C:/Users/Diego/Pictures/guia-2.png',
+            'C:/Users/Diego/Pictures/guia-3.png',
+            'C:/Users/Diego/Documents/Proyectos/okua-service/facturas/done/2018-08-22/AAE050309FM0/5D6166C4-1CC6-4850-9307-CDA4E0A509CC.xml',
+            'C:/Users/Diego/Documents/Proyectos/okua-service/facturas/done/2018-08-22/AAE050309FM0/5D6166C4-1CC6-4850-9307-CDA4E0A509CC.pdf'*/
+        # generate response
+        //$response = ResponseUtils::setXlsxFileResponse('file', 'filename.xlsx');
+        $files_to_zip = array(
+            'C:/Users/Diego/Pictures/guia-1.png'
+        );
+
+        //if true, good; if false, zip creation failed
+        $zipFile = $this->create_zip($files_to_zip,'C:\Users\Diego\Documents\Proyectos\okua\storage\tmp\my-archive.zip', false);
+
+        $response = ResponseUtils::setZipFileResponse('file', 'my-archive.zip');
+        # remove the file before exit
+        //$this->localFilesystem->delete('filename.xls');
+
+        return $response;
+    }
+
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
