@@ -27,6 +27,7 @@ use App\Site\Middlewares\ValidateSessionViewMiddleware;
 use App\Utils\SiteRouterUtils;
 use App\Views\AdminConfigEmailServiceView;
 use App\Views\BillsView;
+use App\Views\CatalogsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
 use App\Views\MovementsLogView;
@@ -45,10 +46,42 @@ class SiteRouter
         $route = new RouteCollection($container);
 
         $route->addPatternMatcher('regId', '[1-9][0-9]*');
+        $route->addPatternMatcher('catalogRegId', '[0-9][0-9]*');
 
         $route->map('GET', '/', function ($request, $response) {
             return new RedirectResponse('/app');
         });
+
+        # fixme: mix the groups of admin routes
+        # todo: add middleware to secure admin route
+        $route->group('/admin', function (RouteGroup $group) {
+            //users
+            $group->get('/users', CatalogsView::class . '::usersIndex');
+            $group->get('/user/form/{id:catalogRegId}', CatalogsView::class . '::userForm');
+
+            //emitters
+            $group->get('/emitters', CatalogsView::class . '::emittersIndex');
+            $group->get('/emitter/form/{id:catalogRegId}', CatalogsView::class . '::emitterForm');
+
+            //filter-emitters
+            $group->get('/filter-emitters', CatalogsView::class . '::filterEmitterIndex');
+            $group->get('/filter-emitter/form/{id:catalogRegId}', CatalogsView::class . '::filterEmitterForm');
+
+            //filter-receptors
+            $group->get('/filter-receptors', CatalogsView::class . '::filterReceptorsIndex');
+            $group->get('/filter-receptor/form/{id:catalogRegId}', CatalogsView::class . '::filterReceptorForm');
+
+            //alert-email-responses
+            $group->get('/alert-email-responses', CatalogsView::class . '::alertEmailResponsesIndex');
+            $group->get('/alert-email-response/form/{id:catalogRegId}', CatalogsView::class . '::alertEmailResponseForm');
+        })
+            ->setScheme('http');
+
+        $route->group('/admin', function (RouteGroup $group) {
+            $group->get('/config/email-service', AdminConfigEmailServiceView::class . '::index');
+        })
+            ->middleware(new ValidateSessionViewMiddleware($container->get('config')))
+            ->setScheme('http');
 
         # SECTION: front-end views
         $route->group('/app', function (RouteGroup $group) {
@@ -69,13 +102,6 @@ class SiteRouter
             $group->get('/providers/home', ProvidersHomeView::class . '::index');
         })
             ->setScheme('http');
-
-        $route->group('/admin', function (RouteGroup $group) {
-            $group->get('/config/email-service', AdminConfigEmailServiceView::class . '::index');
-        })
-            ->middleware(new ValidateSessionViewMiddleware($container->get('config')))
-            ->setScheme('http');
-
 
         # SECTION: back-end views (API)
         $route->group('/api', function (RouteGroup $group) {

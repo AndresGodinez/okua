@@ -110,7 +110,7 @@
       this.$store.dispatch('changeEmailFilter', this.email);
     },
 
-    updateCfdiIdFilter(){
+    updateCfdiIdFilter() {
       this.$store.dispatch('changeCfdiIdFilter', this.cfdiId);
     },
   };

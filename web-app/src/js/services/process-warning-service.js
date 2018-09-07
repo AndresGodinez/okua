@@ -19,7 +19,7 @@ export default class ProcessWarningService {
     return await api.get();
   }
 
-  async getEveryProcessWarning(){
+  async getEveryProcessWarning() {
     let api = new WebApi(`${this.host}/api/process/warning/all`);
     api.converter = ProcessWarningRegistersResponse.makeFromObject;
 

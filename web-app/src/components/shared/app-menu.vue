@@ -17,6 +17,13 @@
                 </div>
 
                 <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
+                    <button class="text-left w-full h-16 px-4" :class="[selected === 'admin' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goAdminSections()">
+                        <font-awesome-icon class="w-10" :icon="iconMenuAdmin" />
+                        <span class="ml-2 uppercase">Administrador</span>
+                    </button>
+                </div>
+
+                <div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">
                     <button class="text-left w-full h-16 px-4" :class="[selected === 'bills' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goBills()">
                         <font-awesome-icon class="w-10" :icon="iconMenuBills" />
                         <span class="ml-2 uppercase">CFDI Procesados</span>
@@ -43,13 +50,6 @@
                         <span class="ml-2 uppercase">Proveedores</span>
                     </button>
                 </div>
-
-                <!--<div class="w-full uppercase text-center font-bold text-xl px-6 mt-2">-->
-                    <!--<button class="text-left w-full hover:bg-grey-light h-16 px-4" :class="[selected === 'movements' ? 'text-white bg-theme-color-3 hover:bg-theme-color-3-dark rounded-sm shadow-md' : 'text-grey-darker hover:bg-grey-light']" @click="goMovements()">-->
-                        <!--<font-awesome-icon class="w-10" :icon="iconMenuMovements" />-->
-                        <!--<span class="ml-2 uppercase">Movimientos</span>-->
-                    <!--</button>-->
-                <!--</div>-->
             </div>
 
             <!--grey overlay-->
@@ -60,7 +60,7 @@
 
 <script>
   import RouteUtils from "../../js/utils/route-utils";
-  import {faHome, faFileInvoice, faExclamationCircle, faTimes, faFileInvoiceDollar, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
+  import {faHome, faFileInvoice, faExclamationCircle, faTimes, faFileInvoiceDollar, faExchangeAlt, faUserAstronaut} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
   const props = {
@@ -94,6 +94,9 @@
     goModuleProviders() {
       RouteUtils.goModuleProviders();
     },
+    goAdminSections() {
+      RouteUtils.adminSections('/users');
+    },
 
     goMovements() {
       RouteUtils.goBills();
@@ -123,6 +126,10 @@
 
     iconMenuProviders() {
       return faFileInvoiceDollar;
+    },
+
+    iconMenuAdmin() {
+      return faUserAstronaut;
     },
 
     iconMenuMovements() {

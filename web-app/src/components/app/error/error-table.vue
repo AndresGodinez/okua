@@ -128,7 +128,7 @@
       this.dispatchGetTableData();
     },
 
-    filterDateType(){
+    filterDateType() {
       this.tablePage = 1;
       this.dispatchGetTableData();
     }

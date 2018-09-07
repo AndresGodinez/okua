@@ -99,7 +99,7 @@ class BaseServiceProvider extends AbstractServiceProvider
             ]));
             return $filesystem;
         })
-        ->withArgument('config');
+            ->withArgument('config');
 
         $container->share('local-filesystem', function () {
             $sharedDir = BASE_DIR . '/storage/local' ?? '';
@@ -112,8 +112,8 @@ class BaseServiceProvider extends AbstractServiceProvider
 
         $container->add('entity-manager', function ($config) {
             $dbEntitiesPath = $config['DOCTRINE_ENTITIES_PATH'] ?? false;
+            $host = $config['DOCTRINE_HOST'] ?? '';
             $driver = $config['DOCTRINE_DRIVER'] ?? 'pdo_mysql';
-            $host = $config['DOCTRINE_HOST'] ?? 'localhost';
             $user = $config['DOCTRINE_USERNAME'] ?? false;
             $password = $config['DOCTRINE_PSWD'] ?? false;
             $charset = $config['DOCTRINE_CHARSET'] ?? 'utf8';
@@ -137,12 +137,12 @@ class BaseServiceProvider extends AbstractServiceProvider
 
             // the connection configuration
             $dbParams = array(
-                'host'   => $host,
-                'driver'   => $driver,
-                'user'     => $user,
+                'host' => $host,
+                'driver' => $driver,
+                'user' => $user,
                 'password' => $password,
-                'dbname'   => $dbname,
-                'charset'   => $charset,
+                'dbname' => $dbname,
+                'charset' => $charset,
             );
 
             $driver = new StaticPHPDriver($paths);

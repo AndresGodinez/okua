@@ -12,11 +12,12 @@ namespace App\Site\ServicesProviders;
 use App\Views\AdminConfigEmailServiceView;
 use App\Views\BaseView;
 use App\Views\BillsView;
+use App\Views\CatalogsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
-use App\Views\ProcessWarningsView;
-use App\Views\ProcessErrorsView;
 use App\Views\MovementsLogView;
+use App\Views\ProcessErrorsView;
+use App\Views\ProcessWarningsView;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -38,6 +39,7 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         ProcessErrorsView::class,
 
         AdminConfigEmailServiceView::class,
+        CatalogsView::class,
     ];
 
     /**
@@ -59,6 +61,7 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         $container->add(ProcessErrorsView::class);
 
         $container->add(AdminConfigEmailServiceView::class);
+        $container->add(CatalogsView::class);
     }
 
     /**

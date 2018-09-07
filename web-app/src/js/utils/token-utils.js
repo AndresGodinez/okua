@@ -45,7 +45,7 @@ export default class TokenUtils {
       jwt = AES.decrypt(localStorage.token, KY).toString(Utf8);
       jwt = TokenUtils.tokenToBase64Str(jwt);
     } catch (e) {
-      console.log('Error =getting token. ' + e);
+      console.error('Error getting token. ' + e);
       jwt = null;
     }
 
@@ -65,7 +65,7 @@ export default class TokenUtils {
     try {
       jwt = AES.decrypt(localStorage.token, KY).toString(Utf8);
     } catch (e) {
-      console.log('Error getting token. ' + e);
+      console.error('Error getting token. ' + e);
       jwt = null;
     }
 
@@ -122,7 +122,7 @@ export default class TokenUtils {
       const jwtDataStr = Base64.parse(jwtParts[1]).toString(Utf8);
       return JSON.parse(jwtDataStr);
     } catch (e) {
-      console.log('Error getting data');
+      console.error('Error getting data');
       return null;
     }
   }

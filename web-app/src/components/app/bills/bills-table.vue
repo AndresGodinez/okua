@@ -81,7 +81,7 @@
       this.dispatchGetTableData();
     },
 
-    downloadZip(){
+    downloadZip() {
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
       let filterDateType = this.filterDateType;
@@ -97,7 +97,7 @@
       window.open(`${url}?${data}`);
     },
 
-    downloadXlsx(){
+    downloadXlsx() {
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
       let filterDateType = this.filterDateType;
@@ -225,7 +225,7 @@
       this.dispatchGetTableData();
     },
 
-    filterDateType(){
+    filterDateType() {
       this.tablePage = 1;
       this.dispatchGetTableData();
     }

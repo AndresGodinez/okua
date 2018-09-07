@@ -52,7 +52,6 @@
     dispatchGetTableData() {
       let page = this.tablePage;
       let limit = this.tableLimit;
-      console.log("limit" + this.tableLimit);
       let startDatetime = this.startDatetime;
       let endDatetime = this.endDatetime;
       let filterDateType = this.filterDateType;
@@ -81,7 +80,6 @@
       let service = new ProcessWarningService();
 
       if (page === 1 || !this.tableData) {
-        console.log("anyone");
         this.tableData = [];
         let {count} = await service.getFilteredRegistersCount(startDatetime, endDatetime, filterDateType);
         this.tableTotal = count;
@@ -90,13 +88,6 @@
       if (this.tableTotal === 0) return;
 
       let offset = limit * (page - 1);
-      console.log("Algo");
-      console.log(limit);
-      console.log(offset);
-      console.log(startDatetime);
-      console.log(endDatetime);
-      console.log(filterDateType);
-      console.log("End de algo");
       let response = await service.getFilteredRegisters(limit, offset, startDatetime, endDatetime, filterDateType);
 
       this.tableData = response.data;
@@ -137,7 +128,7 @@
       this.dispatchGetTableData();
     },
 
-    filterDateType(){
+    filterDateType() {
       this.tablePage = 1;
       this.dispatchGetTableData();
     }

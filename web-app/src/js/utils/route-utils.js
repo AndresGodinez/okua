@@ -22,4 +22,8 @@ export default class RouteUtils {
   static goHome() {
     window.location.replace('/app');
   }
+
+  static adminSections(urlAddress) {
+    window.location.replace('/admin' + urlAddress);
+  }
 }

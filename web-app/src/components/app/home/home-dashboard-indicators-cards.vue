@@ -92,7 +92,7 @@
         });
     },
 
-    dispatchGetBillsTransferTotal(){
+    dispatchGetBillsTransferTotal() {
       let filter = '';
 
       if (this.datetimeRangeFilter === 1) {
@@ -110,7 +110,7 @@
         });
     },
 
-    dispatchGetBillsWithheldTotal(){
+    dispatchGetBillsWithheldTotal() {
       let filter = '';
 
       if (this.datetimeRangeFilter === 1) {

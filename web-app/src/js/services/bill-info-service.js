@@ -103,7 +103,7 @@ export default class BillInfoService {
     return await api.get();
   }
 
-  async getBillInfoXls(startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1){
+  async getBillInfoXls(startDatetime, endDatetime, clientRfc = '', initialAmount = 0.00, finalAmount = 0.00, filterDateType = 1) {
     const data = {
       startDatetime,
       endDatetime,
@@ -154,7 +154,7 @@ export default class BillInfoService {
     return await api.get();
   }
 
-  async getDataGroupedByEmailAndFilter(filter){
+  async getDataGroupedByEmailAndFilter(filter) {
     const data = {
       filter,
     };

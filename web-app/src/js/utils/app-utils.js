@@ -22,4 +22,12 @@ export default class AppUtils {
     // go to login page
     RoutesUtils.goLogin();
   }
+
+  static getIdMeta() {
+    let $elements = document.head.querySelector('meta[name="okua:id"]');
+
+    if (!$elements) throw 'Error. ID not present';
+
+    return $elements.getAttribute('content');
+  }
 }

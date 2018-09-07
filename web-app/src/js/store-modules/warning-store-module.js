@@ -40,7 +40,7 @@ const actions = {
     commit(types.SET_END_DATETIME_FILTER, value);
   },
 
-  changeFilterDateType({commit}, value){
+  changeFilterDateType({commit}, value) {
     commit(types.SET_FILTER_DATE_TYPE, value);
   },
 

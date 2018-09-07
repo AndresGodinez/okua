@@ -77,7 +77,7 @@
       }
     },
 
-    changeDateType(){
+    changeDateType() {
       this.$store.dispatch('changeFilterDateType', this.dateType);
     }
   };
@@ -91,7 +91,7 @@
       return this.$store.state.section.endDatetime;
     },
 
-    filterDateType(){
+    filterDateType() {
       return this.$store.state.section.filterDateType;
     }
   };
