@@ -40,7 +40,7 @@
         </div>
         <div class="flex flex-row justify-between flex-no-shrink ">
           <button class="bg-blue hover:bg-blue-dark text-white py-2 px-4 rounded right"
-                  @click="goToEditFilterReceptor(0)"> Agregar receptor
+                  @click="goToEditFilterReceptor(0)"> AGREGAR FILTRO DE RECEPTOR
           </button>
         </div>
       </div>

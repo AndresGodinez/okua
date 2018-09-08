@@ -57,6 +57,7 @@ class SiteRouter
         $route->group('/admin', function (RouteGroup $group) {
             //users
             $group->get('/users', CatalogsView::class . '::usersIndex');
+            $group->get('/user/activities/{id:catalogRegId}', CatalogsView::class . '::userActivityForm');
             $group->get('/user/form/{id:catalogRegId}', CatalogsView::class . '::userForm');
 
             //emitters
@@ -86,6 +87,7 @@ class SiteRouter
         # SECTION: front-end views
         $route->group('/app', function (RouteGroup $group) {
             $group->get('/login', LoginView::class . '::index');
+            $group->get('/logout', LoginView::class . '::logout');
 
             $group->get('/', HomeView::class . '::index');
             $group->get('/home', HomeView::class . '::index');

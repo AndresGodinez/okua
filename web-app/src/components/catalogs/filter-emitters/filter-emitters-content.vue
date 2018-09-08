@@ -41,7 +41,7 @@
         </div>
         <div class="flex flex-row justify-between flex-no-shrink ">
           <button class="bg-blue hover:bg-blue-dark text-white py-2 px-4 rounded right"
-                  @click="goToEditFilterEmitter(0)"> agregar Emisor
+                  @click="goToEditFilterEmitter(0)"> AGREGAR FILTRO DE EMISOR
           </button>
         </div>
       </div>

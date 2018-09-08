@@ -82,6 +82,11 @@
       RouteUtils.adminSections('/filter-receptors');
     },
     async getUserData() {
+      console.log(this.registerId);
+      if(this.registerId ===0){
+        this.hideLoading();
+        return true;
+      }
       let responseApi = await this.$store.state.filterReceptorStore.filterReceptorService.getById(this.registerId);
       this.rfc = responseApi.rfc;
       this.valid = responseApi.valid;

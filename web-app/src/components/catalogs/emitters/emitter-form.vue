@@ -56,11 +56,8 @@
   import AppNavbar from "../../shared/app-navbar";
   import AppMenu from "../../shared/app-menu";
   import SubVavBar from "../catalogsNav/nav";
-  import {HOST_API} from "../../../js/utils/app-utils";
   import RouteUtils from "../../../js/utils/route-utils";
-
-  import WebApi from "../../../js/services/web-api";
-  import TokenUtils from "../../../js/utils/token-utils";
+  import FloatLabel from "vue-float-label/components/FloatLabel";
   import AppUtils from "../../../js/utils/app-utils";
 
   const data = function () {
@@ -116,6 +113,7 @@
       AppNavbar,
       AppMenu,
       SubVavBar,
+      FloatLabel,
     },
     mounted() {
       const registerId = Number(AppUtils.getIdMeta());

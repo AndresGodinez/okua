@@ -37,4 +37,16 @@ export default class UserService {
     let api = new WebApi(`${this.host}/api/user/${id}`, {}, this.headers);
     return await api.get();
   }
+
+  async getUserActivities(id) {
+    // let api = new WebApi(`${this.host}/api/user/${id}`, {}, this.headers);
+    // return await api.get();
+    let data = [
+      {label: "Secciones de Administrador", code: "1", active: 1},
+      {label: "procesadores cfdi", code: "2", active: 0},
+      {label: "Advertencias procesadas", code: "3", active: 0},
+      {label: "Sección de proveedores", code: "4", active: 1},
+    ];
+    return data;
+  }
 }

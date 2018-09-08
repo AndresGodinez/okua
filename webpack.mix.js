@@ -20,6 +20,7 @@ mix.options({
 //mix.disableNotifications();
 
 mix.less(`${ASSETS_DIR}/styles/app/login/login-index.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/login/logout-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/home/home-index.less`, 'css');
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -28,6 +29,7 @@ mix.less(`${ASSETS_DIR}/styles/app/home/home-index.less`, 'css');
 //users
 mix.less(`${ASSETS_DIR}/styles/app/catalogs/users/catalogs-user-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/catalogs/users/catalogs-user-form.less`, 'css');
+mix.less(`${ASSETS_DIR}/styles/app/catalogs/users/catalogs-user-activity-form.less`, 'css');
 //emitters
 mix.less(`${ASSETS_DIR}/styles/app/catalogs/emitters/catalogs-emitters-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/catalogs/emitters/catalogs-emitter-form.less`, 'css');
@@ -56,6 +58,7 @@ mix.less(`${ASSETS_DIR}/styles/admin/config/admin-config-email-service-index.les
 mix
   .js(`${ASSETS_DIR}/js/catalogs/users/user-index-content`, 'js')
   .js(`${ASSETS_DIR}/js/catalogs/users/user-form`, 'js')
+  .js(`${ASSETS_DIR}/js/catalogs/users/user-activity-form`, 'js')
   .js(`${ASSETS_DIR}/js/catalogs/emitters/emitters-index-content`, 'js')
   .js(`${ASSETS_DIR}/js/catalogs/emitters/emitter-form`, 'js')
   .js(`${ASSETS_DIR}/js/catalogs/alert-email-responses/alert-email-responses-index`, 'js')
@@ -68,6 +71,7 @@ mix
 mix
   .js(`${ASSETS_DIR}/js/app/providers/home/home-index`, 'js/providers-home')
   .js(`${ASSETS_DIR}/js/app/login/login-index`, 'js')
+  .js(`${ASSETS_DIR}/js/app/login/logout-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/home/home-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/bills/bills-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/warning/warning-index`, 'js')

@@ -34,4 +34,13 @@ class LoginView extends BaseView
 
         return $response;
     }
+
+    public function logout(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $params = $request->getQueryParams();
+        $body = $this->templates->render('app/logout', []);
+        ResponseUtils::addContentTypeHtmlHeader($response);
+        $response->getBody()->write($body);
+        return $response;
+    }
 }

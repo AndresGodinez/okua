@@ -55,6 +55,21 @@ class CatalogsView extends BaseView
         return $response;
     }
 
+    public function userActivityForm(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $id = $args['id'] ?? 0;
+
+        $body = $this->templates->render('app/catalogs/users/user-activity-form', [
+            'id' => $id,
+        ]);
+
+        ResponseUtils::addContentTypeHtmlHeader($response);
+        $response->getBody()->write($body);
+
+        return $response;
+
+    }
+
     ####################################################################################################################
     ### emitters
     ####################################################################################################################

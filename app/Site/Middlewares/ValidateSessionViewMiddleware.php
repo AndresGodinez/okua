@@ -45,9 +45,9 @@ class ValidateSessionViewMiddleware
     {
         SessionUtils::initSessionFromConfig($this->config);
 
-        $sessionId = $_SESSION['id'] ?? null;
-        if (!$sessionId)
-            throw new ViewInvalidSessionException('Invalid session', 400);
+        // $sessionId = $_SESSION['id'] ?? null;
+        // if (!$sessionId)
+        //    throw new ViewInvalidSessionException('Invalid session', 400);
 
         return $next($request, $response);
     }

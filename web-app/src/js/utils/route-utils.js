@@ -2,6 +2,9 @@ export default class RouteUtils {
   static getLogin() {
     window.location.replace('/app/login');
   }
+  static getlogOut(){
+    window.location.replace('/app/logout');
+  }
 
   static goBills() {
     window.location.replace('/app/bills');

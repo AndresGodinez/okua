@@ -88,6 +88,7 @@
     },
     async getFilterEmitterData() {
       if(this.registerId === 0) {
+        this.hideLoading();
         return true;
       }
       let filterEmitterData = await this.$store.state.filterEmitterStore.filterEmitterService.getById(this.registerId);

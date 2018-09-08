@@ -18,6 +18,8 @@
               <template slot-scope="scope">
                 <a class="bg-green-light hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
                    @click="goToEditUser(scope.row.id)">Editar</a>
+                <a class="bg-green-light hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
+                   @click="goToEditActivityUser(scope.row.id)">Permisos</a>
                 <button
                    class="bg-red-light hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
                    @click="userDelete(scope.row.id, scope.row.name)">Eliminar
@@ -66,6 +68,10 @@
     goToEditUser(id) {
       localStorage.userToEdit = id;
       RouteUtils.adminSections(`/user/form/${id}`);
+    },
+    goToEditActivityUser(id) {
+      localStorage.userToEdit = id;
+      RouteUtils.adminSections(`/user/activities/${id}`);
     },
     async getUserList(page) {
       let usersData = await await this.$store.state.userStore.userService.getAllUsers();
