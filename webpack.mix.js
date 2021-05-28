@@ -22,6 +22,7 @@ mix.options({
 mix.less(`${ASSETS_DIR}/styles/app/login/login-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/login/logout-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/home/home-index.less`, 'css');
+<<<<<<< Updated upstream
 
 // ---------------------------------------------------------------------------------------------------------------------
 // --- catalogs
@@ -48,6 +49,9 @@ mix.less(`${ASSETS_DIR}/styles/app/catalogs/filter-receptors/catalogs-filter-rec
 // ---------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 
+=======
+mix.less(`${ASSETS_DIR}/styles/app/catalogs/users/catalogs-user-index.less`, 'css');
+>>>>>>> Stashed changes
 mix.less(`${ASSETS_DIR}/styles/app/providers/home/home-index.less`, 'css/providers-home');
 mix.less(`${ASSETS_DIR}/styles/app/bills/bills-index.less`, 'css');
 mix.less(`${ASSETS_DIR}/styles/app/movements-log/movements-log-index.less`, 'css');
@@ -73,6 +77,7 @@ mix
   .js(`${ASSETS_DIR}/js/app/login/login-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/login/logout-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/home/home-index`, 'js')
+  .js(`${ASSETS_DIR}/js/catalogs/users/user-index-content`, 'js')
   .js(`${ASSETS_DIR}/js/app/bills/bills-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/warning/warning-index`, 'js')
   .js(`${ASSETS_DIR}/js/app/error/error-index`, 'js')

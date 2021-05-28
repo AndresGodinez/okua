@@ -2,7 +2,10 @@
 
 <?=$this->start('styles-content')?>
 <link rel="stylesheet" href="/css/catalogs-user-index.css">
+<<<<<<< Updated upstream
 <?php # todo: remove this link tag and add the font from js (vuejs) ?>
+=======
+>>>>>>> Stashed changes
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <?=$this->stop()?>
 

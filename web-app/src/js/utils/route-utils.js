@@ -26,7 +26,12 @@ export default class RouteUtils {
     window.location.replace('/app');
   }
 
+<<<<<<< Updated upstream
   static adminSections(urlAddress) {
     window.location.replace('/admin' + urlAddress);
+=======
+  static adminSections(urlAddress){
+    window.location.replace('/admin'+urlAddress);
+>>>>>>> Stashed changes
   }
 }

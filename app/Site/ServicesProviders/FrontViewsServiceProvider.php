@@ -15,6 +15,7 @@ use App\Views\BillsView;
 use App\Views\CatalogsView;
 use App\Views\HomeView;
 use App\Views\LoginView;
+use App\Views\CatalogsView;
 use App\Views\MovementsLogView;
 use App\Views\ProcessErrorsView;
 use App\Views\ProcessWarningsView;
@@ -35,10 +36,13 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         HomeView::class,
         BillsView::class,
         MovementsLogView::class,
+<<<<<<< Updated upstream
         ProcessWarningsView::class,
         ProcessErrorsView::class,
 
         AdminConfigEmailServiceView::class,
+=======
+>>>>>>> Stashed changes
         CatalogsView::class,
     ];
 
@@ -57,10 +61,13 @@ class FrontViewsServiceProvider extends AbstractServiceProvider implements Boota
         $container->add(HomeView::class);
         $container->add(BillsView::class);
         $container->add(MovementsLogView::class);
+<<<<<<< Updated upstream
         $container->add(ProcessWarningsView::class);
         $container->add(ProcessErrorsView::class);
 
         $container->add(AdminConfigEmailServiceView::class);
+=======
+>>>>>>> Stashed changes
         $container->add(CatalogsView::class);
     }
 

@@ -51,6 +51,12 @@ class SiteRouter
         $route->map('GET', '/', function ($request, $response) {
             return new RedirectResponse('/app');
         });
+        $route->group('/admin', function (RouteGroup $group) {
+            //users
+            $group->get('/users', CatalogsView::class . '::usersIndex');
+            $group->get('/user/form', CatalogsView::class . '::userForm');
+        })
+            ->setScheme('http');
 
         # fixme: mix the groups of admin routes
         # todo: add middleware to secure admin route
